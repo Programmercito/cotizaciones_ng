@@ -10,7 +10,7 @@ export class CotizacionService {
 
   /** Emite inmediatamente y luego cada 60s. Comparte la suscripción entre consumidores. */
   readonly cotizaciones$: Observable<Cotizacion[]> = timer(0, CotizacionService.POLL_INTERVAL).pipe(
-    switchMap(() => this.http.get<Cotizacion[]>('data.json')),
+    switchMap(() => this.http.get<Cotizacion[]>(`data.json?date=${Date.now()}`)),
     distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
     shareReplay({ bufferSize: 1, refCount: true }),
   );
