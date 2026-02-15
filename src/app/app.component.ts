@@ -10,6 +10,7 @@ import {
   effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import {
   Chart,
   LineController,
@@ -49,6 +50,7 @@ export class AppComponent implements OnDestroy {
 
   private readonly cotizacionService = inject(CotizacionService);
   private chart: Chart | null = null;
+  private pollSub?: Subscription;
 
   readonly allCotizaciones = signal<Cotizacion[]>([]);
   readonly loading = signal(true);
@@ -91,12 +93,13 @@ export class AppComponent implements OnDestroy {
   });
 
   constructor() {
-    this.cotizacionService.getCotizaciones().subscribe({
-      next: (data) => {
+    // Polling: se suscribe al stream que emite cada 60s y solo notifica si hay cambios
+    this.pollSub = this.cotizacionService.cotizaciones$.subscribe({
+      next: (data: Cotizacion[]) => {
         this.allCotizaciones.set(data);
         this.loading.set(false);
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.error.set('Error al cargar las cotizaciones');
         this.loading.set(false);
         console.error(err);
@@ -113,6 +116,7 @@ export class AppComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.pollSub?.unsubscribe();
     this.chart?.destroy();
   }
 
