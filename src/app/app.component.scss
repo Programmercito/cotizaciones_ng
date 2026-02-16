@@ -731,6 +731,94 @@ app-root {
   font-weight: 500;
 }
 
+// ── Pagination ─────────────────────────────
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.2rem 2rem;
+  border-top: 1px solid var(--border-secondary);
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-primary);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+
+    &--nav {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+
+      &:hover:not(:disabled) {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(139, 92, 246, 0.25);
+        color: var(--text-accent);
+        transform: scale(1.08);
+      }
+
+      &:active:not(:disabled) {
+        transform: scale(0.95);
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+
+    &--page {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0 0.5rem;
+
+      &:hover:not(.pagination__btn--active) {
+        background: rgba(99, 102, 241, 0.08);
+        border-color: rgba(139, 92, 246, 0.2);
+        color: var(--text-accent);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    &--active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.18));
+      border-color: rgba(139, 92, 246, 0.35);
+      color: #c7d2fe;
+      font-weight: 700;
+      box-shadow:
+        0 0 16px rgba(99, 102, 241, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      cursor: default;
+    }
+  }
+
+  &__ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    user-select: none;
+  }
+}
+
 // ── Footer ──────────────────────────────────
 .footer {
   text-align: center;

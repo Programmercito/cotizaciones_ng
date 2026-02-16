@@ -72,6 +72,42 @@ export class AppComponent implements OnDestroy {
     return data.slice(-100); // Last 100 records
   });
 
+  readonly pageSize = 10;
+  readonly currentPage = signal(1);
+
+  readonly totalPages = computed(() => {
+    return Math.ceil(this.cotizacionesTable().length / this.pageSize) || 1;
+  });
+
+  readonly cotizacionesPaginated = computed(() => {
+    const data = this.cotizacionesTable();
+    const start = (this.currentPage() - 1) * this.pageSize;
+    return data.slice(start, start + this.pageSize);
+  });
+
+  readonly pageOffset = computed(() => {
+    return (this.currentPage() - 1) * this.pageSize;
+  });
+
+  readonly visiblePages = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: (number | '...')[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (current > 3) pages.push('...');
+      const start = Math.max(2, current - 1);
+      const end = Math.min(total - 1, current + 1);
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (current < total - 2) pages.push('...');
+      pages.push(total);
+    }
+    return pages;
+  });
+
   readonly ultimaCotizacion = computed(() => {
     const data = this.cotizaciones();
     return data.length > 0 ? data[data.length - 1] : null;
@@ -147,6 +183,25 @@ export class AppComponent implements OnDestroy {
   toggleTheme(): void {
     this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
     this.applyTheme();
+  }
+
+  goToPage(page: number | '...'): void {
+    if (page === '...') return;
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.set(this.currentPage() + 1);
+    }
   }
 
   private applyTheme(): void {

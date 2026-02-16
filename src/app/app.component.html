@@ -171,7 +171,7 @@
     <div class="table-container glass-panel animate-in" style="--delay: 3">
       <div class="table-container__header">
         <h2>Registro Detallado</h2>
-        <span class="table-container__count">{{ cotizacionesTable().length }} entradas (últimas 100)</span>
+        <span class="table-container__count">Pagina {{ currentPage() }} de {{ totalPages() }} &middot; {{ cotizacionesTable().length }} entradas</span>
       </div>
       <div class="table-scroll">
         <table class="data-table">
@@ -185,9 +185,9 @@
             </tr>
           </thead>
           <tbody>
-            @for (item of cotizacionesTable(); track item.datetime; let i = $index) {
+            @for (item of cotizacionesPaginated(); track item.datetime; let i = $index) {
               <tr class="animate-row" [style.--row-delay]="i">
-                <td class="row-num">{{ i + 1 }}</td>
+                <td class="row-num">{{ pageOffset() + i + 1 }}</td>
                 <td>
                   <div class="datetime-cell">
                     <span class="datetime-cell__date">{{ item.datetime.split(' ')[0] }}</span>
@@ -202,6 +202,39 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <div class="pagination">
+          <button class="pagination__btn pagination__btn--nav"
+                  [disabled]="currentPage() === 1"
+                  (click)="prevPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+
+          @for (page of visiblePages(); track $index) {
+            @if (page === '...') {
+              <span class="pagination__ellipsis">&hellip;</span>
+            } @else {
+              <button class="pagination__btn pagination__btn--page"
+                      [class.pagination__btn--active]="page === currentPage()"
+                      (click)="goToPage(page)">
+                {{ page }}
+              </button>
+            }
+          }
+
+          <button class="pagination__btn pagination__btn--nav"
+                  [disabled]="currentPage() === totalPages()"
+                  (click)="nextPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      }
     </div>
 
     <!-- Footer -->
