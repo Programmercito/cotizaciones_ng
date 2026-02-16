@@ -56,11 +56,18 @@ export class AppComponent implements OnDestroy {
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
 
+  readonly theme = signal<'light' | 'dark'>('dark'); // Default to dark
+
   readonly cotizaciones = computed(() => {
     const data = this.allCotizaciones();
     const now = new Date();
     const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
     return data.filter((c) => new Date(c.datetime) >= oneMonthAgo);
+  });
+
+  readonly cotizacionesTable = computed(() => {
+    const data = this.cotizaciones();
+    return data.slice(-100); // Last 100 records
   });
 
   readonly ultimaCotizacion = computed(() => {
@@ -93,6 +100,13 @@ export class AppComponent implements OnDestroy {
   });
 
   constructor() {
+    // Load theme from localStorage
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    if (savedTheme) {
+      this.theme.set(savedTheme);
+    }
+    this.applyTheme();
+
     // Polling: se suscribe al stream que emite cada 60s y solo notifica si hay cambios
     this.pollSub = this.cotizacionService.cotizaciones$.subscribe({
       next: (data: Cotizacion[]) => {
@@ -109,15 +123,36 @@ export class AppComponent implements OnDestroy {
     effect(() => {
       const data = this.cotizaciones();
       const isLoading = this.loading();
+      const currentTheme = this.theme();
       if (data.length > 0 && !isLoading) {
         setTimeout(() => this.buildChart(data));
       }
+    });
+
+    // Save theme changes to localStorage
+    effect(() => {
+      const currentTheme = this.theme();
+      localStorage.setItem('theme', currentTheme);
+      this.applyTheme();
     });
   }
 
   ngOnDestroy(): void {
     this.pollSub?.unsubscribe();
     this.chart?.destroy();
+  }
+
+  toggleTheme(): void {
+    this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    const currentTheme = this.theme();
+    document.documentElement.classList.remove('theme-light', 'theme-dark');
+    document.documentElement.classList.add(`theme-${currentTheme}`);
+    document.body.classList.remove('theme-light', 'theme-dark');
+    document.body.classList.add(`theme-${currentTheme}`);
   }
 
   private buildChart(data: Cotizacion[]): void {
@@ -136,13 +171,20 @@ export class AppComponent implements OnDestroy {
 
     const values = data.map((c) => c.cotizacion);
     const ctx = this.chartCanvas.nativeElement.getContext('2d')!;
+    const isDark = this.theme() === 'dark';
 
     const height = this.chartCanvas.nativeElement.offsetHeight || 400;
 
     const gradientFill = ctx.createLinearGradient(0, 0, 0, height);
-    gradientFill.addColorStop(0, 'rgba(99, 102, 241, 0.3)');
-    gradientFill.addColorStop(0.4, 'rgba(139, 92, 246, 0.12)');
-    gradientFill.addColorStop(1, 'rgba(99, 102, 241, 0)');
+    if (isDark) {
+      gradientFill.addColorStop(0, 'rgba(99, 102, 241, 0.3)');
+      gradientFill.addColorStop(0.4, 'rgba(139, 92, 246, 0.12)');
+      gradientFill.addColorStop(1, 'rgba(99, 102, 241, 0)');
+    } else {
+      gradientFill.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
+      gradientFill.addColorStop(0.4, 'rgba(168, 85, 247, 0.15)');
+      gradientFill.addColorStop(1, 'rgba(99, 102, 241, 0)');
+    }
 
     const gradientLine = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
     gradientLine.addColorStop(0, '#818cf8');
@@ -161,12 +203,12 @@ export class AppComponent implements OnDestroy {
             backgroundColor: gradientFill,
             borderWidth: 3,
             pointBackgroundColor: '#6366f1',
-            pointBorderColor: 'rgba(15, 15, 30, 0.8)',
+            pointBorderColor: isDark ? 'rgba(15, 15, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)',
             pointBorderWidth: 3,
             pointRadius: 4,
             pointHoverRadius: 9,
             pointHoverBackgroundColor: '#a78bfa',
-            pointHoverBorderColor: '#fff',
+            pointHoverBorderColor: isDark ? '#fff' : '#1e293b',
             pointHoverBorderWidth: 3,
             fill: true,
             tension: 0.45,
@@ -186,15 +228,15 @@ export class AppComponent implements OnDestroy {
             display: false,
           },
           tooltip: {
-            backgroundColor: 'rgba(15, 15, 30, 0.92)',
-            titleColor: '#c7d2fe',
-            bodyColor: '#e0e7ff',
+            backgroundColor: isDark ? 'rgba(15, 15, 30, 0.92)' : 'rgba(255, 255, 255, 0.95)',
+            titleColor: isDark ? '#c7d2fe' : '#1e293b',
+            bodyColor: isDark ? '#e0e7ff' : '#475569',
             titleFont: { size: 11, weight: 'normal' },
             bodyFont: { size: 15, weight: 'bold' },
             padding: { top: 12, bottom: 12, left: 16, right: 16 },
             cornerRadius: 14,
             displayColors: false,
-            borderColor: 'rgba(99, 102, 241, 0.2)',
+            borderColor: isDark ? 'rgba(99, 102, 241, 0.2)' : 'rgba(99, 102, 241, 0.3)',
             borderWidth: 1,
             caretSize: 6,
             callbacks: {
@@ -210,11 +252,11 @@ export class AppComponent implements OnDestroy {
           x: {
             border: { display: false },
             grid: {
-              color: 'rgba(148, 163, 184, 0.04)',
+              color: isDark ? 'rgba(148, 163, 184, 0.04)' : 'rgba(0, 0, 0, 0.06)',
               drawTicks: false,
             },
             ticks: {
-              color: '#475569',
+              color: isDark ? '#475569' : '#64748b',
               font: { size: 11, weight: 500 },
               padding: 10,
             },
@@ -222,11 +264,11 @@ export class AppComponent implements OnDestroy {
           y: {
             border: { display: false },
             grid: {
-              color: 'rgba(148, 163, 184, 0.05)',
+              color: isDark ? 'rgba(148, 163, 184, 0.05)' : 'rgba(0, 0, 0, 0.04)',
               drawTicks: false,
             },
             ticks: {
-              color: '#475569',
+              color: isDark ? '#475569' : '#64748b',
               font: { size: 11, weight: 500 },
               padding: 12,
               callback: (value) => `${value}`,

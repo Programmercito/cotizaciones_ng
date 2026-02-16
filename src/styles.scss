@@ -15,13 +15,96 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --bg-primary: #0f0f1e;
+  --bg-secondary: rgba(15, 15, 30, 0.55);
+  --bg-tertiary: rgba(99, 102, 241, 0.05);
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --text-accent: #818cf8;
+  --border-primary: rgba(255, 255, 255, 0.06);
+  --border-secondary: rgba(255, 255, 255, 0.04);
+  --border-accent: rgba(139, 92, 246, 0.25);
+  --shadow-primary: rgba(0, 0, 0, 0.3);
+  --glass-backdrop: blur(24px) saturate(1.4);
+  --color-success: #34d399;
+  --color-error: #f87171;
+  --color-warning: #fbbf24;
+  --color-live: #34d399;
+  --gradient-shimmer: linear-gradient(135deg, #a78bfa, #6366f1, #818cf8);
+  --gradient-hero: linear-gradient(135deg, #f1f5f9, #c7d2fe);
+  --color-title-gradient-start: #a78bfa;
+  --color-title-gradient-end: #6366f1;
+  --color-price-value: #e0e7ff;
+  --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.12));
+  --color-badge-text: #a78bfa;
+  --color-badge-border: rgba(139, 92, 246, 0.15);
+  --color-exchange: #94a3b8;
+  --color-loading: #94a3b8;
+  --orb-1: rgba(99, 102, 241, 0.4);
+  --orb-2: rgba(168, 85, 247, 0.35);
+  --orb-3: rgba(14, 165, 233, 0.3);
+  --orb-opacity: 0.5;
+  
+  --global-bg: #06060f;
+  --global-text: #e2e8f0;
+  --global-scrollbar: rgba(99, 102, 241, 0.2);
+  --global-scrollbar-hover: rgba(99, 102, 241, 0.4);
+  --global-selection-bg: rgba(139, 92, 246, 0.35);
+  --global-selection-color: #fff;
+  --noise-opacity: 0.025;
+}
+
+.theme-light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: rgba(255, 255, 255, 0.85);
+  --bg-tertiary: rgba(99, 102, 241, 0.04);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-accent: #6366f1;
+  --border-primary: rgba(0, 0, 0, 0.08);
+  --border-secondary: rgba(0, 0, 0, 0.05);
+  --border-accent: rgba(99, 102, 241, 0.2);
+  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --glass-backdrop: blur(24px) saturate(1.2);
+  --color-success: #059669;
+  --color-error: #dc2626;
+  --color-warning: #d97706;
+  --color-live: #059669;
+  --gradient-shimmer: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
+  --gradient-hero: linear-gradient(135deg, #1e293b, #475569);
+  --color-title-gradient-start: #6366f1;
+  --color-title-gradient-end: #818cf8;
+  --color-price-value: #1e293b;
+  --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.08));
+  --color-badge-text: #6366f1;
+  --color-badge-border: rgba(99, 102, 241, 0.2);
+  --color-exchange: #64748b;
+  --color-loading: #64748b;
+  --orb-1: rgba(99, 102, 241, 0.15);
+  --orb-2: rgba(168, 85, 247, 0.12);
+  --orb-3: rgba(14, 165, 233, 0.1);
+  --orb-opacity: 0.3;
+  
+  --global-bg: #f8fafc;
+  --global-text: #1e293b;
+  --global-scrollbar: rgba(99, 102, 241, 0.3);
+  --global-scrollbar-hover: rgba(99, 102, 241, 0.5);
+  --global-selection-bg: rgba(99, 102, 241, 0.25);
+  --global-selection-color: #1e293b;
+  --noise-opacity: 0.03;
+}
+
 body {
   min-height: 100vh;
-  background: #06060f;
-  color: #e2e8f0;
+  background: var(--global-bg);
+  color: var(--global-text);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // Noise texture overlay
@@ -30,7 +113,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.025;
+  opacity: var(--noise-opacity);
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
@@ -47,15 +130,15 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.2);
+  background: var(--global-scrollbar);
   border-radius: 3px;
 
   &:hover {
-    background: rgba(99, 102, 241, 0.4);
+    background: var(--global-scrollbar-hover);
   }
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.35);
-  color: #fff;
+  background: var(--global-selection-bg);
+  color: var(--global-selection-color);
 }

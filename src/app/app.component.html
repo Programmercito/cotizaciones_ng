@@ -27,6 +27,17 @@
       </div>
     </div>
     <div class="header__right">
+      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+        @if (theme() === 'dark') {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="m12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        } @else {
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        }
+      </button>
       @if (ultimaCotizacion(); as ultima) {
         <div class="header__price-pill">
           <span class="header__price-value">{{ ultima.cotizacion | number:'1.2-2' }}</span>
@@ -153,7 +164,7 @@
     <div class="table-container glass-panel animate-in" style="--delay: 3">
       <div class="table-container__header">
         <h2>Registro Detallado</h2>
-        <span class="table-container__count">{{ cotizaciones().length }} entradas</span>
+        <span class="table-container__count">{{ cotizacionesTable().length }} entradas (últimas 100)</span>
       </div>
       <div class="table-scroll">
         <table class="data-table">
@@ -167,7 +178,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (item of cotizaciones(); track item.datetime; let i = $index) {
+            @for (item of cotizacionesTable(); track item.datetime; let i = $index) {
               <tr class="animate-row" [style.--row-delay]="i">
                 <td class="row-num">{{ i + 1 }}</td>
                 <td>
