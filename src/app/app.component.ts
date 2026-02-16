@@ -204,6 +204,30 @@ export class AppComponent implements OnDestroy {
     }
   }
 
+  readonly shareText = computed(() => {
+    const ultima = this.ultimaCotizacion();
+    if (!ultima) return '';
+    return `1 USDT = ${ultima.cotizacion.toFixed(2)} BOB\nFecha: ${ultima.datetime}\nCotizacion en tiempo real desde Binance P2P`;
+  });
+
+  readonly shareUrl = computed(() => {
+    return window.location.href;
+  });
+
+  shareWhatsApp(): void {
+    const text = this.shareText();
+    const url = this.shareUrl();
+    const message = `${text}\n\nVer mas: ${url}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+  }
+
+  shareTelegram(): void {
+    const text = this.shareText();
+    const url = this.shareUrl();
+    const message = `${text}\n\nVer mas: ${url}`;
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+  }
+
   private applyTheme(): void {
     const currentTheme = this.theme();
     document.documentElement.classList.remove('theme-light', 'theme-dark');

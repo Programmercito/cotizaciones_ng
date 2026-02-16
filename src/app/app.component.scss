@@ -230,6 +230,7 @@ app-root {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    position: relative;
   }
 
   &__price-pill {
@@ -290,6 +291,43 @@ app-root {
 
   &:active {
     transform: scale(0.95);
+  }
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--shadow-primary);
+
+  &:hover {
+    transform: scale(1.08);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 6px 20px var(--shadow-primary), 0 0 20px rgba(99, 102, 241, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:nth-child(1):hover {
+    color: #25d366;
+    background: rgba(37, 211, 102, 0.1);
+    border-color: rgba(37, 211, 102, 0.3);
+  }
+
+  &:nth-child(2):hover {
+    color: #0088cc;
+    background: rgba(0, 136, 204, 0.1);
+    border-color: rgba(0, 136, 204, 0.3);
   }
 }
 
