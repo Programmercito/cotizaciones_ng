@@ -78,7 +78,14 @@
           <span class="hero__currency">BOB</span>
           <span class="hero__amount">{{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }}</span>
         </div>
-        <span class="hero__pair">1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB</span>
+        <span class="hero__pair">
+          1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB
+          <span class="hero__separator">&middot;</span>
+          <svg class="hero__clock" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          {{ ultimaCotizacion()?.datetime }}
+        </span>
       </div>
       <div class="hero__right">
         <div class="hero__variation"

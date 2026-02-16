@@ -1,11 +1,9 @@
-:host {
+app-root {
   display: block;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
 }
-
-// ── Theme Variables (now in global styles.scss) ───────────────────────────
 
 // ── Theme Variables ───────────────────────────
 :root {
@@ -27,14 +25,23 @@
   --color-live: #34d399;
   --gradient-shimmer: linear-gradient(135deg, #a78bfa, #6366f1, #818cf8);
   --gradient-hero: linear-gradient(135deg, #f1f5f9, #c7d2fe);
-  --color-title-gradient-start: #a78bfa;
-  --color-title-gradient-end: #6366f1;
   --color-price-value: #e0e7ff;
   --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.12));
   --color-badge-text: #a78bfa;
   --color-badge-border: rgba(139, 92, 246, 0.15);
   --color-exchange: #94a3b8;
   --color-loading: #94a3b8;
+  --orb-1: rgba(99, 102, 241, 0.4);
+  --orb-2: rgba(168, 85, 247, 0.35);
+  --orb-3: rgba(14, 165, 233, 0.3);
+  --orb-opacity: 0.5;
+  --global-bg: #06060f;
+  --global-text: #e2e8f0;
+  --global-scrollbar: rgba(99, 102, 241, 0.2);
+  --global-scrollbar-hover: rgba(99, 102, 241, 0.4);
+  --global-selection-bg: rgba(139, 92, 246, 0.35);
+  --global-selection-color: #fff;
+  --noise-opacity: 0.025;
 }
 
 .theme-light {
@@ -48,7 +55,7 @@
   --border-primary: rgba(0, 0, 0, 0.08);
   --border-secondary: rgba(0, 0, 0, 0.05);
   --border-accent: rgba(99, 102, 241, 0.2);
-  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --shadow-primary: rgba(0, 0, 0, 0.08);
   --glass-backdrop: blur(24px) saturate(1.2);
   --color-success: #059669;
   --color-error: #dc2626;
@@ -56,8 +63,6 @@
   --color-live: #059669;
   --gradient-shimmer: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
   --gradient-hero: linear-gradient(135deg, #1e293b, #475569);
-  --color-title-gradient-start: #6366f1;
-  --color-title-gradient-end: #818cf8;
   --color-price-value: #1e293b;
   --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.08));
   --color-badge-text: #6366f1;
@@ -68,6 +73,13 @@
   --orb-2: rgba(168, 85, 247, 0.12);
   --orb-3: rgba(14, 165, 233, 0.1);
   --orb-opacity: 0.3;
+  --global-bg: #f8fafc;
+  --global-text: #1e293b;
+  --global-scrollbar: rgba(99, 102, 241, 0.3);
+  --global-scrollbar-hover: rgba(99, 102, 241, 0.5);
+  --global-selection-bg: rgba(99, 102, 241, 0.25);
+  --global-selection-color: #1e293b;
+  --noise-opacity: 0.03;
 }
 
 // ── Animated background orbs ────────────────
@@ -399,11 +411,23 @@
   }
 
   &__pair {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     margin-top: 0.6rem;
     font-size: 0.82rem;
     color: var(--text-muted);
     font-weight: 500;
+  }
+
+  &__separator {
+    margin: 0 0.15rem;
+    opacity: 0.5;
+  }
+
+  &__clock {
+    opacity: 0.6;
+    flex-shrink: 0;
   }
 
   &__variation {

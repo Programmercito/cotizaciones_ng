@@ -3,6 +3,7 @@ import {
   OnDestroy,
   ElementRef,
   ViewChild,
+  ViewEncapsulation,
   inject,
   signal,
   computed,
@@ -43,6 +44,7 @@ Chart.register(
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnDestroy {
   @ViewChild('chartCanvas')
