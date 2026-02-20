@@ -5296,5 +5296,35 @@
     "cotizacion": 9.05,
     "datetime": "2026-02-20 08:15:02",
     "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.05,
+    "datetime": "2026-02-20 08:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.05,
+    "datetime": "2026-02-20 08:30:07",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.05,
+    "datetime": "2026-02-20 08:30:20",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.05,
+    "datetime": "2026-02-20 08:30:51",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.05,
+    "datetime": "2026-02-20 08:31:42",
+    "exchange": "binancep2p"
   }
 ]
