@@ -1,59 +1,243 @@
-# CotizacionesNg
+# 💰 CotizacionesNg
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+> **Dashboard interactivo en tiempo real** para visualizar cotizaciones de USDT (Binance P2P) construido con Angular 19.2.5
 
-## Development server
+<div align="center">
 
-To start a local development server, run:
+![Angular](https://img.shields.io/badge/Angular-19.2.5-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+
+</div>
+
+---
+
+## 🚀 ¿De qué trata el proyecto?
+
+**CotizacionesNg** es el frontend de un sistema de monitoreo de cotizaciones de criptomonedas. Este proyecto funciona en conjunto con un [backend en Go](https://github.com/Programmercito/cotizaciones) que consulta la API de CriptoYa, almacena los datos en SQLite y genera archivos JSON que son consumidos por esta aplicación Angular.
+
+### 🎯 Características principales
+
+- 📊 **Visualización de cotizaciones** en tiempo real de USDT en Binance P2P
+- 📈 **Gráficos interactivos** con histórico de precios
+- 🔄 **Actualización automática** de datos desde el backend en Go
+- 📱 **Diseño responsive** optimizado para todos los dispositivos
+- 🎨 **UI/UX moderna** con Angular Material y SCSS
+
+---
+
+## 🛠️ Stack Tecnológico
+
+### Frontend (este repo)
+- **Framework:** Angular 19.2.5
+- **Lenguaje:** TypeScript
+- **Estilos:** SCSS
+- **Testing:** Karma + Jasmine
+
+### Backend ([cotizaciones](https://github.com/Programmercito/cotizaciones))
+- **Lenguaje:** Go
+- **Base de datos:** SQLite
+- **Notificaciones:** Telegram Bot
+- **Deploy:** Docker + Kubernetes (MicroK8s)
+- **CI/CD:** GitHub Actions
+
+---
+
+## 🏗️ Arquitectura del Sistema
+
+```mermaid
+graph LR
+    A[CriptoYa API] -->|Fetch| B[Backend Go]
+    B -->|SQLite| C[Base de Datos]
+    B -->|Genera| D[docs/data.json]
+    B -->|Git Push| E[cotizaciones_ng]
+    E -->|Lee| D
+    E -->|Visualiza| F[Dashboard Angular]
+    B -->|Notifica| G[Telegram Bot]
+```
+
+### 🔄 Flujo de Datos
+
+1. **Backend Go** (job automático vía cron o GitHub Actions):
+   - Consulta la API de CriptoYa cada X minutos
+   - Guarda las cotizaciones en SQLite
+   - Genera archivo `docs/data.json` con los datos actualizados
+   - Hace git pull/push en el repositorio `cotizaciones_ng`
+   - Envía notificaciones a Telegram
+
+2. **Frontend Angular** (este proyecto):
+   - Lee el archivo `docs/data.json` generado por el backend
+   - Renderiza los datos en componentes visuales
+   - Actualiza gráficos y tablas en tiempo real
+   - Se despliega automáticamente en GitHub Pages
+
+---
+
+## 🚀 Cómo Levantar el Proyecto
+
+### Prerrequisitos
 
 ```bash
+node >= 18.x
+npm >= 9.x
+Angular CLI 19.2.5
+```
+
+### Instalación Local
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Programmercito/cotizaciones_ng.git
+cd cotizaciones_ng
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Levantar servidor de desarrollo
 ng serve
+
+# 4. Abrir en el navegador
+# Navega a http://localhost:4200/
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicación se recargará automáticamente cuando modifiques los archivos fuente.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 📦 Cómo se Cargan los Datos (Backend Job)
 
-```bash
-ng generate component component-name
+El [backend en Go](https://github.com/Programmercito/cotizaciones) se ejecuta como un **job programado** que realiza las siguientes tareas:
+
+### 🤖 Job Automático (GitHub Actions)
+
+El workflow `.github/workflows/go.yaml` se dispara automáticamente en cada push a `main`:
+
+```yaml
+# Pasos del job:
+1. 🌐 Consultar API de CriptoYa
+2. 🗄️ Conectar a SQLite
+3. 💾 Guardar cotización en BD
+4. 📨 Enviar/Editar mensaje en Telegram
+5. 🔄 Git pull forzado en cotizaciones_ng
+6. 📝 Exportar cotizaciones a docs/data.json
+7. 📤 Git commit & push a cotizaciones_ng
+8. 🧹 Limpiar registros antiguos (>30 días)
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 📁 Estructura del archivo generado
+
+El backend genera `docs/data.json` con esta estructura (array de objetos):
+
+```json
+[
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.09,
+    "datetime": "2026-02-16 02:00:04",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.1,
+    "datetime": "2026-02-16 07:15:01",
+    "exchange": "binancep2p"
+  }
+]
+```
+
+**Campos:**
+- `moneda`: Tipo de criptomoneda (USDT)
+- `cotizacion`: Precio de compra (bid) en BOB
+- `datetime`: Timestamp del registro (formato: `YYYY-MM-DD HH:MM:SS`)
+- `exchange`: Exchange de origen (binancep2p)
+
+---
+
+## 📝 Comandos Disponibles
+
+### Desarrollo
 
 ```bash
+# Servidor de desarrollo
+ng serve
+
+# Generar componente
+ng generate component nombre-componente
+
+# Ver ayuda de scaffolding
 ng generate --help
 ```
 
-## Building
-
-To build the project run:
+### Testing
 
 ```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Ejecutar tests unitarios
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+# Ejecutar tests e2e
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Build
 
-## Additional Resources
+```bash
+# Build de desarrollo
+ng build
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Build de producción
+ng build --configuration production
+
+# Los archivos se generan en dist/
+```
+
+---
+
+## 🌐 Deployment
+
+El proyecto se despliega automáticamente en **GitHub Pages** usando GitHub Actions.
+
+```bash
+# El frontend está disponible en:
+https://programmercito.github.io/cotizaciones_ng/
+```
+
+---
+
+## 🤝 Integración con el Backend
+
+Para que el sistema funcione completamente:
+
+1. **Configurar el backend Go:**
+   - Clonar [cotizaciones](https://github.com/Programmercito/cotizaciones)
+   - Configurar variables de entorno (`TELEGRAM_BOT_TOKEN`, etc.)
+   - Ejecutar el job (manual o automático)
+
+2. **El backend automáticamente:**
+   - Actualiza el archivo `docs/data.json` en este repo
+   - Hace commit y push de los cambios
+   - Dispara el deploy del frontend
+
+---
+
+## 📚 Recursos Adicionales
+
+- 📖 [Documentación de Angular](https://angular.dev)
+- 🔧 [Angular CLI Reference](https://angular.dev/tools/cli)
+- 🐹 [Backend en Go](https://github.com/Programmercito/cotizaciones)
+- 💬 [Telegram Bot API](https://core.telegram.org/bots/api)
+
+---
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+
+---
+
+<div align="center">
+
+**Hecho con ❤️ y Angular**
+
+⭐ Si te gusta el proyecto, no olvides darle una estrella!
+
+</div>
