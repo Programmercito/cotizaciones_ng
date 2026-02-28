@@ -60,6 +60,8 @@ export class AppComponent implements OnDestroy {
 
   readonly theme = signal<'light' | 'dark'>('dark'); // Default to dark
 
+  readonly currentYear = new Date().getFullYear();
+
   readonly cotizaciones = computed(() => {
     const data = this.allCotizaciones();
     const now = new Date();
@@ -69,7 +71,8 @@ export class AppComponent implements OnDestroy {
 
   readonly cotizacionesTable = computed(() => {
     const data = this.cotizaciones();
-    return data.slice(-100); // Last 100 records
+    // Return last 100 records in descending order (newest first)
+    return data.slice(-100).reverse();
   });
 
   readonly pageSize = 10;

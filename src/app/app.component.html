@@ -3,6 +3,7 @@
   <div class="orb orb--1"></div>
   <div class="orb orb--2"></div>
   <div class="orb orb--3"></div>
+  <div class="orb orb--4"></div>
 </div>
 
 <div class="dashboard">
@@ -11,12 +12,12 @@
     <div class="header__left">
       <div class="header__logo">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#logoGrad)" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
           <defs>
             <linearGradient id="logoGrad" x1="2" y1="2" x2="22" y2="22">
-              <stop stop-color="#a78bfa"/>
-              <stop offset="1" stop-color="#6366f1"/>
+              <stop stop-color="#a78bfa" />
+              <stop offset="1" stop-color="#6366f1" />
             </linearGradient>
           </defs>
         </svg>
@@ -29,228 +30,275 @@
     <div class="header__right">
       <button class="share-btn" (click)="shareWhatsApp()" aria-label="Compartir en WhatsApp">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
       </button>
       <button class="share-btn" (click)="shareTelegram()" aria-label="Compartir en Telegram">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          <path
+            d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
         </svg>
       </button>
-      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+      <button class="theme-toggle" (click)="toggleTheme()"
+        [attr.aria-label]="theme() === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
         @if (theme() === 'dark') {
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/><path d="m12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-          </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5" />
+          <path
+            d="m12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        </svg>
         } @else {
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
         }
       </button>
       @if (ultimaCotizacion(); as ultima) {
-        <div class="header__price-pill">
-          <span class="header__price-value">{{ ultima.cotizacion | number:'1.2-2' }}</span>
-          <span class="header__price-unit">BOB</span>
-        </div>
-        <span class="header__live-dot"></span>
+      <div class="header__price-pill">
+        <span class="header__price-value">{{ ultima.cotizacion | number:'1.2-2' }}</span>
+        <span class="header__price-unit">BOB</span>
+      </div>
+      <span class="header__live-dot"></span>
       }
     </div>
   </header>
 
   <!-- Loading state -->
   @if (loading()) {
-    <div class="loading glass-panel">
-      <div class="loading__ring">
-        <div></div><div></div><div></div><div></div>
-      </div>
-      <p>Cargando cotizaciones...</p>
+  <div class="loading glass-panel">
+    <div class="loading__ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
+    <p>Cargando cotizaciones...</p>
+  </div>
   }
 
   <!-- Error state -->
   @if (error(); as err) {
-    <div class="error-card glass-panel">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-      </svg>
-      <p>{{ err }}</p>
-    </div>
+  <div class="error-card glass-panel">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="15" y1="9" x2="9" y2="15" />
+      <line x1="9" y1="9" x2="15" y2="15" />
+    </svg>
+    <p>{{ err }}</p>
+  </div>
   }
 
   <!-- Content -->
   @if (!loading() && !error()) {
-    <!-- Hero price -->
-    <section class="hero glass-panel animate-in" style="--delay: 0">
-      <div class="hero__left">
-        <span class="hero__label">Precio Actual</span>
-        <div class="hero__price">
-          <span class="hero__currency">BOB</span>
-          <span class="hero__amount">{{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }}</span>
-        </div>
-        <span class="hero__pair">
-          1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB
-          <span class="hero__separator">&middot;</span>
-          <svg class="hero__clock" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-          </svg>
-          {{ ultimaCotizacion()?.datetime }}
-        </span>
+  <!-- Hero price -->
+  <section class="hero glass-panel animate-in" style="--delay: 0">
+    <div class="hero__bg-glow"></div>
+    <div class="hero__left">
+      <span class="hero__label">
+        <span class="hero__label-dot"></span>
+        Precio Actual
+      </span>
+      <div class="hero__price">
+        <span class="hero__currency">BOB</span>
+        <span class="hero__amount">{{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }}</span>
       </div>
-      <div class="hero__right">
-        <div class="hero__variation"
-             [class.hero__variation--up]="variacion() >= 0"
-             [class.hero__variation--down]="variacion() < 0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            @if (variacion() >= 0) {
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-              <polyline points="17 6 23 6 23 12"/>
-            } @else {
-              <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
-              <polyline points="17 18 23 18 23 12"/>
-            }
-          </svg>
-          <span>{{ variacion() >= 0 ? '+' : '' }}{{ variacion() | number:'1.2-4' }}%</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat-card glass-panel animate-in" style="--delay: 1">
-        <div class="stat-card__icon stat-card__icon--max">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-          </svg>
-        </div>
-        <span class="stat-card__label">Maximo</span>
-        <span class="stat-card__value">{{ cotizacionMax() | number:'1.2-2' }}</span>
-      </div>
-
-      <div class="stat-card glass-panel animate-in" style="--delay: 2">
-        <div class="stat-card__icon stat-card__icon--min">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
-          </svg>
-        </div>
-        <span class="stat-card__label">Minimo</span>
-        <span class="stat-card__value">{{ cotizacionMin() | number:'1.2-2' }}</span>
-      </div>
-
-      <div class="stat-card glass-panel animate-in" style="--delay: 3">
-        <div class="stat-card__icon stat-card__icon--count">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-          </svg>
-        </div>
-        <span class="stat-card__label">Registros</span>
-        <span class="stat-card__value">{{ cotizaciones().length }}</span>
-      </div>
-
-      <div class="stat-card glass-panel animate-in" style="--delay: 4">
-        <div class="stat-card__icon stat-card__icon--exchange">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-            <polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-          </svg>
-        </div>
-        <span class="stat-card__label">Exchange</span>
-        <span class="stat-card__value stat-card__value--text">{{ ultimaCotizacion()?.exchange }}</span>
-      </div>
+      <span class="hero__pair">
+        1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB
+        <span class="hero__separator">&middot;</span>
+        <svg class="hero__clock" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        {{ ultimaCotizacion()?.datetime }}
+      </span>
     </div>
-
-    <!-- Chart -->
-    <div class="chart-container glass-panel animate-in" style="--delay: 2">
-      <div class="chart-container__header">
-        <div>
-          <h2>Historial de Cotizaciones</h2>
-          <p class="chart-container__range">Ultimo mes &middot; {{ cotizaciones().length }} puntos de datos</p>
-        </div>
-        <div class="chart-container__live">
-          <span class="live-pulse"></span>
-          En vivo
-        </div>
-      </div>
-      <div class="chart-container__body">
-        <canvas #chartCanvas></canvas>
-      </div>
-    </div>
-
-    <!-- Table -->
-    <div class="table-container glass-panel animate-in" style="--delay: 3">
-      <div class="table-container__header">
-        <h2>Registro Detallado</h2>
-        <span class="table-container__count">Pagina {{ currentPage() }} de {{ totalPages() }} &middot; {{ cotizacionesTable().length }} entradas</span>
-      </div>
-      <div class="table-scroll">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Fecha y Hora</th>
-              <th>Moneda</th>
-              <th>Cotizacion (BOB)</th>
-              <th>Exchange</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (item of cotizacionesPaginated(); track item.datetime; let i = $index) {
-              <tr class="animate-row" [style.--row-delay]="i">
-                <td class="row-num">{{ pageOffset() + i + 1 }}</td>
-                <td>
-                  <div class="datetime-cell">
-                    <span class="datetime-cell__date">{{ item.datetime.split(' ')[0] }}</span>
-                    <span class="datetime-cell__time">{{ item.datetime.split(' ')[1] }}</span>
-                  </div>
-                </td>
-                <td><span class="badge-glow">{{ item.moneda }}</span></td>
-                <td class="price">{{ item.cotizacion | number:'1.2-2' }}</td>
-                <td><span class="exchange-tag">{{ item.exchange }}</span></td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      @if (totalPages() > 1) {
-        <div class="pagination">
-          <button class="pagination__btn pagination__btn--nav"
-                  [disabled]="currentPage() === 1"
-                  (click)="prevPage()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-          </button>
-
-          @for (page of visiblePages(); track $index) {
-            @if (page === '...') {
-              <span class="pagination__ellipsis">&hellip;</span>
-            } @else {
-              <button class="pagination__btn pagination__btn--page"
-                      [class.pagination__btn--active]="page === currentPage()"
-                      (click)="goToPage(page)">
-                {{ page }}
-              </button>
-            }
+    <div class="hero__right">
+      <div class="hero__variation" [class.hero__variation--up]="variacion() >= 0"
+        [class.hero__variation--down]="variacion() < 0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          @if (variacion() >= 0) {
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+          <polyline points="17 6 23 6 23 12" />
+          } @else {
+          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+          <polyline points="17 18 23 18 23 12" />
           }
+        </svg>
+        <span>{{ variacion() >= 0 ? '+' : '' }}{{ variacion() | number:'1.2-4' }}%</span>
+      </div>
+      <div class="hero__period-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        Último mes
+      </div>
+    </div>
+  </section>
 
-          <button class="pagination__btn pagination__btn--nav"
-                  [disabled]="currentPage() === totalPages()"
-                  (click)="nextPage()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
-          </button>
-        </div>
-      }
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card glass-panel animate-in" style="--delay: 1">
+      <div class="stat-card__icon stat-card__icon--max">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        </svg>
+      </div>
+      <span class="stat-card__label">Maximo</span>
+      <span class="stat-card__value">{{ cotizacionMax() | number:'1.2-2' }}</span>
+      <span class="stat-card__sub">BOB / USDT</span>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer animate-in" style="--delay: 4">
-      <div class="footer__line"></div>
-      <p>Datos obtenidos de <strong>Binance P2P</strong> &mdash; Ultima actualizacion: <strong>{{ ultimaCotizacion()?.datetime }}</strong></p>
-    </footer>
+    <div class="stat-card glass-panel animate-in" style="--delay: 2">
+      <div class="stat-card__icon stat-card__icon--min">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+        </svg>
+      </div>
+      <span class="stat-card__label">Minimo</span>
+      <span class="stat-card__value">{{ cotizacionMin() | number:'1.2-2' }}</span>
+      <span class="stat-card__sub">BOB / USDT</span>
+    </div>
+
+    <div class="stat-card glass-panel animate-in" style="--delay: 3">
+      <div class="stat-card__icon stat-card__icon--count">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+        </svg>
+      </div>
+      <span class="stat-card__label">Registros</span>
+      <span class="stat-card__value">{{ cotizaciones().length }}</span>
+      <span class="stat-card__sub">entradas totales</span>
+    </div>
+
+    <div class="stat-card glass-panel animate-in" style="--delay: 4">
+      <div class="stat-card__icon stat-card__icon--exchange">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="17 1 21 5 17 9" />
+          <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+          <polyline points="7 23 3 19 7 15" />
+          <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+        </svg>
+      </div>
+      <span class="stat-card__label">Exchange</span>
+      <span class="stat-card__value stat-card__value--text">{{ ultimaCotizacion()?.exchange }}</span>
+      <span class="stat-card__sub">fuente de datos</span>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-container glass-panel animate-in" style="--delay: 2">
+    <div class="chart-container__header">
+      <div>
+        <h2>Historial de Cotizaciones</h2>
+        <p class="chart-container__range">Ultimo mes &middot; {{ cotizaciones().length }} puntos de datos</p>
+      </div>
+      <div class="chart-container__live">
+        <span class="live-pulse"></span>
+        En vivo
+      </div>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartCanvas></canvas>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container glass-panel animate-in" style="--delay: 3">
+    <div class="table-container__header">
+      <div>
+        <h2>Registro Detallado</h2>
+        <p class="table-container__subtitle">Mostrando las últimas entradas primero</p>
+      </div>
+      <span class="table-container__count">Pág. {{ currentPage() }} / {{ totalPages() }} &middot; {{
+        cotizacionesTable().length }} registros</span>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha y Hora</th>
+            <th>Moneda</th>
+            <th>Cotizacion (BOB)</th>
+            <th>Exchange</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of cotizacionesPaginated(); track item.datetime; let i = $index) {
+          <tr class="animate-row" [style.--row-delay]="i">
+            <td class="row-num">{{ pageOffset() + i + 1 }}</td>
+            <td>
+              <div class="datetime-cell">
+                <span class="datetime-cell__date">{{ item.datetime.split(' ')[0] }}</span>
+                <span class="datetime-cell__time">{{ item.datetime.split(' ')[1] }}</span>
+              </div>
+            </td>
+            <td><span class="badge-glow">{{ item.moneda }}</span></td>
+            <td class="price">{{ item.cotizacion | number:'1.2-2' }}</td>
+            <td><span class="exchange-tag">{{ item.exchange }}</span></td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+    <div class="pagination">
+      <button class="pagination__btn pagination__btn--nav" [disabled]="currentPage() === 1" (click)="prevPage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      @for (page of visiblePages(); track $index) {
+      @if (page === '...') {
+      <span class="pagination__ellipsis">&hellip;</span>
+      } @else {
+      <button class="pagination__btn pagination__btn--page" [class.pagination__btn--active]="page === currentPage()"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+      }
+      }
+
+      <button class="pagination__btn pagination__btn--nav" [disabled]="currentPage() === totalPages()"
+        (click)="nextPage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </div>
+    }
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer animate-in" style="--delay: 5">
+    <div class="footer__divider">
+      <div class="footer__divider-line"></div>
+      <div class="footer__divider-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <div class="footer__divider-line"></div>
+    </div>
+    <p class="footer__data-info">
+      Datos de <strong>Binance P2P</strong> &mdash; Actualizado: <strong>{{ ultimaCotizacion()?.datetime }}</strong>
+    </p>
+    <p class="footer__credit">
+      Hecho con <span class="footer__heart">❤️</span> por
+      <a href="https://devcito.org" target="_blank" rel="noopener noreferrer" class="footer__brand-link">devcito</a>
+      &nbsp;&middot;&nbsp; &copy; {{ currentYear }}
+    </p>
+  </footer>
   }
 </div>
