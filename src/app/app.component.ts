@@ -60,6 +60,10 @@ export class AppComponent implements OnDestroy {
 
   readonly theme = signal<'light' | 'dark'>('dark'); // Default to dark
 
+  // Señal para la animación fluida del precio
+  readonly displayCotizacion = signal<number>(0);
+  private animationFrameId?: number;
+
   readonly currentYear = new Date().getFullYear();
 
   readonly cotizaciones = computed(() => {
@@ -176,6 +180,50 @@ export class AppComponent implements OnDestroy {
       localStorage.setItem('theme', currentTheme);
       this.applyTheme();
     });
+
+    // Animar la cotización del Hero cuando llega un nuevo valor
+    effect(() => {
+      const ultima = this.ultimaCotizacion();
+      if (ultima && !this.loading()) {
+        const target = ultima.cotizacion;
+        let start = this.displayCotizacion();
+
+        // Si está en 0 (app recién abierta), empezar un 15% por debajo para un efecto dramático
+        if (start === 0) {
+          start = target - (target * 0.15);
+        }
+
+        this.animateValue(start, target, 1400); // 1.4s de animación
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  private animateValue(start: number, end: number, duration: number): void {
+    if (start === end) return;
+
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Easing function: easeOutExpo (efecto rápido al inicio, muy suave al final)
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+      this.displayCotizacion.set(start + (end - start) * ease);
+
+      if (progress < 1) {
+        this.animationFrameId = requestAnimationFrame(step);
+      } else {
+        this.displayCotizacion.set(end);
+      }
+    };
+
+    this.animationFrameId = requestAnimationFrame(step);
   }
 
   ngOnDestroy(): void {

@@ -6,7 +6,7 @@
   <div class="orb orb--4"></div>
 </div>
 
-<div class="dashboard">
+<main class="dashboard" id="main-content" aria-label="Dashboard de cotizaciones USDT en bolivianos">
   <!-- Header -->
   <header class="header glass-panel">
     <div class="header__left">
@@ -92,16 +92,16 @@
   <!-- Content -->
   @if (!loading() && !error()) {
   <!-- Hero price -->
-  <section class="hero glass-panel animate-in" style="--delay: 0">
+  <section class="hero glass-panel animate-in" style="--delay: 0" aria-label="Precio actual del USDT">
     <div class="hero__bg-glow"></div>
     <div class="hero__left">
       <span class="hero__label">
         <span class="hero__label-dot"></span>
         Precio Actual
       </span>
-      <div class="hero__price">
+      <div class="hero__price" aria-live="polite" aria-atomic="true">
         <span class="hero__currency">BOB</span>
-        <span class="hero__amount">{{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }}</span>
+        <span class="hero__amount">{{ displayCotizacion() | number:'1.2-2' }}</span>
       </div>
       <span class="hero__pair">
         1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB
@@ -221,7 +221,7 @@
         cotizacionesTable().length }} registros</span>
     </div>
     <div class="table-scroll">
-      <table class="data-table">
+      <table class="data-table" aria-label="Registro detallado de cotizaciones USDT en bolivianos">
         <thead>
           <tr>
             <th>#</th>
@@ -301,4 +301,4 @@
     </p>
   </footer>
   }
-</div>
+</main>

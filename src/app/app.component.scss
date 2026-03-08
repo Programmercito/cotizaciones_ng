@@ -3,46 +3,53 @@ app-root {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  background-color: var(--global-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-attachment: fixed;
 }
+
 
 // ── Theme Variables ───────────────────────────
 :root {
-  --bg-primary: #0f0f1e;
-  --bg-secondary: rgba(15, 15, 30, 0.55);
-  --bg-tertiary: rgba(99, 102, 241, 0.05);
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --text-accent: #818cf8;
-  --border-primary: rgba(255, 255, 255, 0.07);
-  --border-secondary: rgba(255, 255, 255, 0.04);
-  --border-accent: rgba(139, 92, 246, 0.3);
-  --shadow-primary: rgba(0, 0, 0, 0.35);
-  --glass-backdrop: blur(28px) saturate(1.5);
-  --color-success: #34d399;
-  --color-error: #f87171;
-  --color-warning: #fbbf24;
-  --color-live: #34d399;
-  --gradient-shimmer: linear-gradient(135deg, #a78bfa, #6366f1, #818cf8);
-  --gradient-hero: linear-gradient(135deg, #f8faff, #c7d2fe, #a5b4fc);
-  --color-price-value: #e0e7ff;
-  --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.14));
-  --color-badge-text: #a78bfa;
-  --color-badge-border: rgba(139, 92, 246, 0.2);
-  --color-exchange: #94a3b8;
-  --color-loading: #94a3b8;
-  --orb-1: rgba(99, 102, 241, 0.45);
-  --orb-2: rgba(168, 85, 247, 0.4);
-  --orb-3: rgba(14, 165, 233, 0.3);
-  --orb-4: rgba(236, 72, 153, 0.25);
-  --orb-opacity: 0.5;
-  --global-bg: #06060f;
-  --global-text: #e2e8f0;
-  --global-scrollbar: rgba(99, 102, 241, 0.2);
-  --global-scrollbar-hover: rgba(99, 102, 241, 0.4);
-  --global-selection-bg: rgba(139, 92, 246, 0.35);
+  --bg-primary: #05050a;
+  --bg-secondary: rgba(10, 10, 18, 0.45);
+  --bg-tertiary: rgba(99, 102, 241, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-accent: #a78bfa;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.03);
+  --border-accent: rgba(168, 85, 247, 0.4);
+  --shadow-primary: rgba(0, 0, 0, 0.5);
+  --glass-backdrop: blur(40px) saturate(200%);
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-live: #10b981;
+  --gradient-shimmer: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
+  --gradient-hero: linear-gradient(135deg, #ffffff, #c7d2fe, #a78bfa);
+  --color-price-value: #ffffff;
+  --color-badge-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.18));
+  --color-badge-text: #c084fc;
+  --color-badge-border: rgba(168, 85, 247, 0.35);
+  --color-exchange: #cbd5e1;
+  --color-loading: #cbd5e1;
+  --orb-1: rgba(99, 102, 241, 0.5);
+  --orb-2: rgba(168, 85, 247, 0.45);
+  --orb-3: rgba(56, 189, 248, 0.35);
+  --orb-4: rgba(2ec4b6, 0.3);
+  --orb-opacity: 0.6;
+  --global-bg: #030308;
+  --global-text: #f8fafc;
+  --global-scrollbar: rgba(139, 92, 246, 0.3);
+  --global-scrollbar-hover: rgba(139, 92, 246, 0.6);
+  --global-selection-bg: rgba(168, 85, 247, 0.4);
   --global-selection-color: #fff;
-  --noise-opacity: 0.025;
+  --noise-opacity: 0.04;
 }
 
 .theme-light {
@@ -166,10 +173,13 @@ app-root {
   backdrop-filter: var(--glass-backdrop);
   -webkit-backdrop-filter: var(--glass-backdrop);
   border: 1px solid var(--border-primary);
-  border-radius: 22px;
+  border-top-color: rgba(255, 255, 255, 0.12);
+  border-left-color: rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
   box-shadow:
-    0 8px 32px var(--shadow-primary),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 12px 40px var(--shadow-primary),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
 }
 
 // ── Animate in ──────────────────────────────
@@ -224,19 +234,19 @@ app-root {
   }
 
   &__logo {
-    width: 54px;
-    height: 54px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.18));
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.25));
+    border: 1px solid rgba(168, 85, 247, 0.4);
     display: grid;
     place-items: center;
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+    box-shadow: 0 0 35px rgba(139, 92, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
 
     &:hover {
-      transform: rotate(-10deg) scale(1.08);
-      box-shadow: 0 0 50px rgba(99, 102, 241, 0.4);
+      transform: rotate(-12deg) scale(1.15);
+      box-shadow: 0 0 60px rgba(168, 85, 247, 0.6);
     }
   }
 
@@ -518,15 +528,19 @@ app-root {
   }
 
   &__amount {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 900;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.06em;
     background: var(--gradient-hero);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1;
-    filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3));
+    padding: 0 0.15em;
+    /* Añadimos padding para evitar que se corte el borde del texto por el clip */
+    margin: 0 -0.15em;
+    /* Compensamos el padding visualmente */
+    filter: drop-shadow(0 0 45px rgba(168, 85, 247, 0.4));
   }
 
   &__pair {
@@ -628,15 +642,17 @@ app-root {
   }
 
   &:hover {
-    transform: translateY(-6px);
-    border-color: rgba(139, 92, 246, 0.25);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(168, 85, 247, 0.35);
+    background: rgba(168, 85, 247, 0.05);
     box-shadow:
-      0 16px 48px rgba(0, 0, 0, 0.35),
-      0 0 28px rgba(99, 102, 241, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      0 20px 50px rgba(0, 0, 0, 0.4),
+      0 0 35px rgba(168, 85, 247, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
     &::after {
-      opacity: 0.6;
+      opacity: 0.8;
+      height: 3px;
     }
   }
 
