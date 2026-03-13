@@ -20506,5 +20506,11 @@
     "cotizacion": 9.28,
     "datetime": "2026-03-13 00:30:09",
     "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "datetime": "2026-03-13 00:45:03",
+    "exchange": "binancep2p"
   }
 ]
