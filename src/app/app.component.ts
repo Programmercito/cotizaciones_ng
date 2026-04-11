@@ -37,6 +37,50 @@ Chart.register(
   Legend
 );
 
+export interface CurrencyConfig {
+  key: string;
+  label: string;
+  exchange: string;
+  sellColor: string;
+  buyColor: string;
+  sellRgb: string;
+  buyRgb: string;
+  accentColor: string;
+}
+
+export const CURRENCIES: CurrencyConfig[] = [
+  {
+    key: 'usd referencial',
+    label: 'USD Referencial',
+    exchange: 'BCB',
+    sellColor: '#06b6d4',
+    buyColor: '#10b981',
+    sellRgb: '6, 182, 212',
+    buyRgb: '16, 185, 129',
+    accentColor: '#22d3ee',
+  },
+  {
+    key: 'usd oficial',
+    label: 'USD Oficial',
+    exchange: 'BCB',
+    sellColor: '#8b5cf6',
+    buyColor: '#f59e0b',
+    sellRgb: '139, 92, 246',
+    buyRgb: '245, 158, 11',
+    accentColor: '#a78bfa',
+  },
+  {
+    key: 'USDT',
+    label: 'USDT Binance P2P',
+    exchange: 'Binance P2P',
+    sellColor: '#6366f1',
+    buyColor: '#ec4899',
+    sellRgb: '99, 102, 241',
+    buyRgb: '236, 72, 153',
+    accentColor: '#818cf8',
+  },
+];
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -47,44 +91,66 @@ Chart.register(
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnDestroy {
-  @ViewChild('chartCanvas')
-  chartCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartRef') chartRefCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartOficial') chartOficialCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartUsdt') chartUsdtCanvas?: ElementRef<HTMLCanvasElement>;
 
   private readonly cotizacionService = inject(CotizacionService);
-  private chart: Chart | null = null;
+  private charts: Record<string, Chart | null> = { ref: null, oficial: null, usdt: null };
   private pollSub?: Subscription;
 
   readonly allCotizaciones = signal<Cotizacion[]>([]);
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
-
-  readonly theme = signal<'light' | 'dark'>('dark'); // Default to dark
-
-  // Señal para la animación fluida del precio
-  readonly displayCotizacion = signal<number>(0);
-  private animationFrameId?: number;
-
+  readonly theme = signal<'light' | 'dark'>('dark');
   readonly currentYear = new Date().getFullYear();
+  readonly currencies = CURRENCIES;
 
-  readonly cotizaciones = computed(() => {
-    const data = this.allCotizaciones();
+  private filterLastMonth(data: Cotizacion[]): Cotizacion[] {
     const now = new Date();
     const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
     return data.filter((c) => new Date(c.datetime) >= oneMonthAgo);
-  });
+  }
+
+  readonly refData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'usd referencial'))
+  );
+  readonly oficialData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'usd oficial'))
+  );
+  readonly usdtData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'USDT'))
+  );
+
+  readonly latestRef = computed(() => { const d = this.refData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestOficial = computed(() => { const d = this.oficialData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestUsdt = computed(() => { const d = this.usdtData(); return d.length ? d[d.length - 1] : null; });
+
+  readonly statsRef = computed(() => this.buildStats(this.refData()));
+  readonly statsOficial = computed(() => this.buildStats(this.oficialData()));
+  readonly statsUsdt = computed(() => this.buildStats(this.usdtData()));
+
+  // Animated price signals
+  readonly animRefBuy = signal(0);
+  readonly animRefSell = signal(0);
+  readonly animOfiBuy = signal(0);
+  readonly animOfiSell = signal(0);
+  readonly animUsdtBuy = signal(0);
+  readonly animUsdtSell = signal(0);
+  private countUpTimers: number[] = [];
+
+  readonly cotizaciones = computed(() => this.filterLastMonth(this.allCotizaciones()));
 
   readonly cotizacionesTable = computed(() => {
-    const data = this.cotizaciones();
-    // Return last 100 records in descending order (newest first)
-    return data.slice(-100).reverse();
+    return this.cotizaciones().slice(-100).reverse();
   });
 
   readonly pageSize = 10;
   readonly currentPage = signal(1);
 
-  readonly totalPages = computed(() => {
-    return Math.ceil(this.cotizacionesTable().length / this.pageSize) || 1;
-  });
+  readonly totalPages = computed(() =>
+    Math.ceil(this.cotizacionesTable().length / this.pageSize) || 1
+  );
 
   readonly cotizacionesPaginated = computed(() => {
     const data = this.cotizacionesTable();
@@ -92,15 +158,12 @@ export class AppComponent implements OnDestroy {
     return data.slice(start, start + this.pageSize);
   });
 
-  readonly pageOffset = computed(() => {
-    return (this.currentPage() - 1) * this.pageSize;
-  });
+  readonly pageOffset = computed(() => (this.currentPage() - 1) * this.pageSize);
 
   readonly visiblePages = computed(() => {
     const total = this.totalPages();
     const current = this.currentPage();
     const pages: (number | '...')[] = [];
-
     if (total <= 7) {
       for (let i = 1; i <= total; i++) pages.push(i);
     } else {
@@ -115,44 +178,29 @@ export class AppComponent implements OnDestroy {
     return pages;
   });
 
-  readonly ultimaCotizacion = computed(() => {
-    const data = this.cotizaciones();
-    return data.length > 0 ? data[data.length - 1] : null;
-  });
-
-  readonly primeraCotizacion = computed(() => {
-    const data = this.cotizaciones();
-    return data.length > 0 ? data[0] : null;
-  });
-
-  readonly variacion = computed(() => {
-    const primera = this.primeraCotizacion();
-    const ultima = this.ultimaCotizacion();
-    if (!primera || !ultima) return 0;
-    return ((ultima.cotizacion - primera.cotizacion) / primera.cotizacion) * 100;
-  });
-
-  readonly cotizacionMax = computed(() => {
-    const data = this.cotizaciones();
-    if (data.length === 0) return 0;
-    return Math.max(...data.map((c) => c.cotizacion));
-  });
-
-  readonly cotizacionMin = computed(() => {
-    const data = this.cotizaciones();
-    if (data.length === 0) return 0;
-    return Math.min(...data.map((c) => c.cotizacion));
-  });
+  private buildStats(data: Cotizacion[]) {
+    if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, variation: 0 };
+    const sells = data.map((c) => c.cotizacion).filter((v) => v > 0);
+    const buys = data.map((c) => c.purchase).filter((v) => v > 0);
+    const first = data[0];
+    const last = data[data.length - 1];
+    const variation = first.cotizacion > 0
+      ? ((last.cotizacion - first.cotizacion) / first.cotizacion) * 100 : 0;
+    return {
+      maxSell: sells.length ? Math.max(...sells) : 0,
+      minSell: sells.length ? Math.min(...sells) : 0,
+      maxBuy: buys.length ? Math.max(...buys) : 0,
+      minBuy: buys.length ? Math.min(...buys) : 0,
+      count: data.length,
+      variation,
+    };
+  }
 
   constructor() {
-    // Load theme from localStorage
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    if (savedTheme) {
-      this.theme.set(savedTheme);
-    }
+    if (savedTheme) this.theme.set(savedTheme);
     this.applyTheme();
 
-    // Polling: se suscribe al stream que emite cada 60s y solo notifica si hay cambios
     this.pollSub = this.cotizacionService.cotizaciones$.subscribe({
       next: (data: Cotizacion[]) => {
         this.allCotizaciones.set(data);
@@ -166,251 +214,240 @@ export class AppComponent implements OnDestroy {
     });
 
     effect(() => {
-      const data = this.cotizaciones();
+      const ref = this.refData();
+      const ofi = this.oficialData();
+      const usdt = this.usdtData();
       const isLoading = this.loading();
-      const currentTheme = this.theme();
-      if (data.length > 0 && !isLoading) {
-        setTimeout(() => this.buildChart(data));
+      const _ = this.theme(); // re-render on theme change
+      if (!isLoading) {
+        setTimeout(() => {
+          this.buildCurrencyChart('ref', ref, CURRENCIES[0], this.chartRefCanvas);
+          this.buildCurrencyChart('oficial', ofi, CURRENCIES[1], this.chartOficialCanvas);
+          this.buildCurrencyChart('usdt', usdt, CURRENCIES[2], this.chartUsdtCanvas);
+        });
       }
     });
 
-    // Save theme changes to localStorage
+    // Count-up animations when latest values change
+    effect(() => {
+      const ref = this.latestRef();
+      if (ref) {
+        this.animateCountUp(ref.purchase, this.animRefBuy, 800);
+        this.animateCountUp(ref.cotizacion, this.animRefSell, 900);
+      }
+    }, { allowSignalWrites: true });
+    effect(() => {
+      const ofi = this.latestOficial();
+      if (ofi) {
+        this.animateCountUp(ofi.purchase, this.animOfiBuy, 850);
+        this.animateCountUp(ofi.cotizacion, this.animOfiSell, 950);
+      }
+    }, { allowSignalWrites: true });
+    effect(() => {
+      const usdt = this.latestUsdt();
+      if (usdt) {
+        this.animateCountUp(usdt.purchase, this.animUsdtBuy, 750);
+        this.animateCountUp(usdt.cotizacion, this.animUsdtSell, 1000);
+      }
+    }, { allowSignalWrites: true });
+
     effect(() => {
       const currentTheme = this.theme();
       localStorage.setItem('theme', currentTheme);
       this.applyTheme();
     });
-
-    // Animar la cotización del Hero cuando llega un nuevo valor
-    effect(() => {
-      const ultima = this.ultimaCotizacion();
-      if (ultima && !this.loading()) {
-        const target = ultima.cotizacion;
-        let start = this.displayCotizacion();
-
-        // Si está en 0 (app recién abierta), empezar un 15% por debajo para un efecto dramático
-        if (start === 0) {
-          start = target - (target * 0.15);
-        }
-
-        this.animateValue(start, target, 1400); // 1.4s de animación
-      }
-    }, { allowSignalWrites: true });
-  }
-
-  private animateValue(start: number, end: number, duration: number): void {
-    if (start === end) return;
-
-    if (this.animationFrameId) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-
-    const startTime = performance.now();
-
-    const step = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function: easeOutExpo (efecto rápido al inicio, muy suave al final)
-      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-
-      this.displayCotizacion.set(start + (end - start) * ease);
-
-      if (progress < 1) {
-        this.animationFrameId = requestAnimationFrame(step);
-      } else {
-        this.displayCotizacion.set(end);
-      }
-    };
-
-    this.animationFrameId = requestAnimationFrame(step);
   }
 
   ngOnDestroy(): void {
     this.pollSub?.unsubscribe();
-    this.chart?.destroy();
+    this.countUpTimers.forEach((t) => cancelAnimationFrame(t));
+    Object.values(this.charts).forEach((c) => c?.destroy());
   }
 
   toggleTheme(): void {
     this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
-    this.applyTheme();
   }
 
   goToPage(page: number | '...'): void {
     if (page === '...') return;
-    if (page >= 1 && page <= this.totalPages()) {
-      this.currentPage.set(page);
-    }
+    if (page >= 1 && page <= this.totalPages()) this.currentPage.set(page);
   }
 
   prevPage(): void {
-    if (this.currentPage() > 1) {
-      this.currentPage.set(this.currentPage() - 1);
-    }
+    if (this.currentPage() > 1) this.currentPage.set(this.currentPage() - 1);
   }
 
   nextPage(): void {
-    if (this.currentPage() < this.totalPages()) {
-      this.currentPage.set(this.currentPage() + 1);
-    }
+    if (this.currentPage() < this.totalPages()) this.currentPage.set(this.currentPage() + 1);
+  }
+
+  private animateCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration = 1200): void {
+    const minOffset = 1.5;
+    const maxOffset = 4;
+    const offset = minOffset + Math.random() * (maxOffset - minOffset);
+    const start = Math.max(0, +(target - offset).toFixed(2));
+    sig.set(start);
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = start + (target - start) * eased;
+      sig.set(progress >= 1 ? target : +(current).toFixed(2));
+      if (progress < 1) {
+        this.countUpTimers.push(requestAnimationFrame(step));
+      }
+    };
+    this.countUpTimers.push(requestAnimationFrame(step));
   }
 
   readonly shareText = computed(() => {
-    const ultima = this.ultimaCotizacion();
-    if (!ultima) return '';
-    return `1 USDT = ${ultima.cotizacion.toFixed(2)} BOB\nFecha: ${ultima.datetime}\nCotizacion en tiempo real desde Binance P2P`;
+    const ref = this.latestRef();
+    const ofi = this.latestOficial();
+    const usdt = this.latestUsdt();
+    let t = 'Cotizaciones BOB:\n';
+    if (ref) t += `USD Ref: Compra ${ref.purchase.toFixed(2)} / Venta ${ref.cotizacion.toFixed(2)}\n`;
+    if (ofi) t += `USD Ofi: Compra ${ofi.purchase.toFixed(2)} / Venta ${ofi.cotizacion.toFixed(2)}\n`;
+    if (usdt) t += `USDT: Venta ${usdt.cotizacion.toFixed(2)}${usdt.purchase > 0 ? ` / Compra ${usdt.purchase.toFixed(2)}` : ''}\n`;
+    return t + 'En tiempo real';
   });
 
-  readonly shareUrl = computed(() => {
-    return window.location.href;
-  });
+  readonly shareUrl = computed(() => window.location.href);
 
   shareWhatsApp(): void {
-    const text = this.shareText();
-    const url = this.shareUrl();
-    const message = `${text}\n\nVer mas: ${url}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    const msg = `${this.shareText()}\n\nVer mas: ${this.shareUrl()}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   shareTelegram(): void {
-    const text = this.shareText();
-    const url = this.shareUrl();
-    const message = `${text}\n\nVer mas: ${url}`;
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(this.shareUrl())}&text=${encodeURIComponent(this.shareText())}`, '_blank');
   }
 
   private applyTheme(): void {
-    const currentTheme = this.theme();
+    const t = this.theme();
     document.documentElement.classList.remove('theme-light', 'theme-dark');
-    document.documentElement.classList.add(`theme-${currentTheme}`);
+    document.documentElement.classList.add(`theme-${t}`);
     document.body.classList.remove('theme-light', 'theme-dark');
-    document.body.classList.add(`theme-${currentTheme}`);
+    document.body.classList.add(`theme-${t}`);
   }
 
-  private buildChart(data: Cotizacion[]): void {
-    if (!this.chartCanvas) return;
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  private buildCurrencyChart(
+    key: string,
+    data: Cotizacion[],
+    cfg: CurrencyConfig,
+    canvasRef?: ElementRef<HTMLCanvasElement>
+  ): void {
+    if (!canvasRef) return;
+    if (this.charts[key]) this.charts[key]!.destroy();
+    if (!data.length) { this.charts[key] = null; return; }
+
+    const isDark = this.theme() === 'dark';
+    const ctx = canvasRef.nativeElement.getContext('2d')!;
+    const h = canvasRef.nativeElement.offsetHeight || 300;
 
     const labels = data.map((c) => {
-      const date = new Date(c.datetime);
-      return date.toLocaleTimeString('es-AR', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
+      const d = new Date(c.datetime);
+      return key === 'usdt'
+        ? d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+        : d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
     });
 
-    const values = data.map((c) => c.cotizacion);
-    const ctx = this.chartCanvas.nativeElement.getContext('2d')!;
-    const isDark = this.theme() === 'dark';
+    const sellVals = data.map((c) => c.cotizacion);
+    const buyVals = data.map((c) => c.purchase);
+    const hasBuy = buyVals.some((v) => v > 0);
 
-    const height = this.chartCanvas.nativeElement.offsetHeight || 400;
+    const sellGrad = ctx.createLinearGradient(0, 0, 0, h);
+    sellGrad.addColorStop(0, `rgba(${cfg.sellRgb}, ${isDark ? 0.25 : 0.35})`);
+    sellGrad.addColorStop(1, `rgba(${cfg.sellRgb}, 0)`);
 
-    const gradientFill = ctx.createLinearGradient(0, 0, 0, height);
-    if (isDark) {
-      gradientFill.addColorStop(0, 'rgba(99, 102, 241, 0.3)');
-      gradientFill.addColorStop(0.4, 'rgba(139, 92, 246, 0.12)');
-      gradientFill.addColorStop(1, 'rgba(99, 102, 241, 0)');
-    } else {
-      gradientFill.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
-      gradientFill.addColorStop(0.4, 'rgba(168, 85, 247, 0.15)');
-      gradientFill.addColorStop(1, 'rgba(99, 102, 241, 0)');
+    const buyGrad = ctx.createLinearGradient(0, 0, 0, h);
+    buyGrad.addColorStop(0, `rgba(${cfg.buyRgb}, ${isDark ? 0.15 : 0.2})`);
+    buyGrad.addColorStop(1, `rgba(${cfg.buyRgb}, 0)`);
+
+    const datasets: any[] = [];
+
+    if (hasBuy) {
+      datasets.push({
+        label: 'Compra',
+        data: buyVals.map((v) => v > 0 ? v : null),
+        borderColor: cfg.buyColor,
+        backgroundColor: buyGrad,
+        borderWidth: 2.5,
+        pointRadius: data.length > 50 ? 0 : 3,
+        pointHoverRadius: 6,
+        pointBackgroundColor: cfg.buyColor,
+        pointBorderColor: isDark ? 'rgba(15,15,30,0.8)' : 'rgba(255,255,255,0.8)',
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        spanGaps: true,
+      });
     }
 
-    const gradientLine = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
-    gradientLine.addColorStop(0, '#818cf8');
-    gradientLine.addColorStop(0.5, '#6366f1');
-    gradientLine.addColorStop(1, '#a78bfa');
+    datasets.push({
+      label: 'Venta',
+      data: sellVals,
+      borderColor: cfg.sellColor,
+      backgroundColor: sellGrad,
+      borderWidth: 2.5,
+      pointRadius: data.length > 50 ? 0 : 3,
+      pointHoverRadius: 6,
+      pointBackgroundColor: cfg.sellColor,
+      pointBorderColor: isDark ? 'rgba(15,15,30,0.8)' : 'rgba(255,255,255,0.8)',
+      pointBorderWidth: 2,
+      fill: true,
+      tension: 0.4,
+    });
 
-    this.chart = new Chart(ctx, {
+    this.charts[key] = new Chart(ctx, {
       type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'USDT / BOB',
-            data: values,
-            borderColor: gradientLine,
-            backgroundColor: gradientFill,
-            borderWidth: 3,
-            pointBackgroundColor: '#6366f1',
-            pointBorderColor: isDark ? 'rgba(15, 15, 30, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-            pointBorderWidth: 3,
-            pointRadius: 4,
-            pointHoverRadius: 9,
-            pointHoverBackgroundColor: '#a78bfa',
-            pointHoverBorderColor: isDark ? '#fff' : '#1e293b',
-            pointHoverBorderWidth: 3,
-            fill: true,
-            tension: 0.45,
-            cubicInterpolationMode: 'monotone',
-          },
-        ],
-      },
+      data: { labels, datasets },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-          duration: 1200,
-          easing: 'easeInOutQuart',
-        },
+        animation: { duration: 1000, easing: 'easeInOutQuart' },
         plugins: {
           legend: {
-            display: false,
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+              color: isDark ? '#94a3b8' : '#64748b',
+              font: { size: 11, weight: 600 },
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 16,
+            },
           },
           tooltip: {
-            backgroundColor: isDark ? 'rgba(15, 15, 30, 0.92)' : 'rgba(255, 255, 255, 0.95)',
+            backgroundColor: isDark ? 'rgba(15,15,30,0.92)' : 'rgba(255,255,255,0.95)',
             titleColor: isDark ? '#c7d2fe' : '#1e293b',
             bodyColor: isDark ? '#e0e7ff' : '#475569',
             titleFont: { size: 11, weight: 'normal' },
-            bodyFont: { size: 15, weight: 'bold' },
-            padding: { top: 12, bottom: 12, left: 16, right: 16 },
-            cornerRadius: 14,
-            displayColors: false,
-            borderColor: isDark ? 'rgba(99, 102, 241, 0.2)' : 'rgba(99, 102, 241, 0.3)',
+            bodyFont: { size: 13, weight: 'bold' },
+            padding: { top: 10, bottom: 10, left: 14, right: 14 },
+            cornerRadius: 12,
+            borderColor: isDark ? 'rgba(99,102,241,0.2)' : 'rgba(99,102,241,0.3)',
             borderWidth: 1,
-            caretSize: 6,
             callbacks: {
-              title: (items) => {
-                const idx = items[0].dataIndex;
-                return data[idx].datetime;
-              },
-              label: (item) => `BOB ${(item.parsed.y ?? 0).toFixed(2)}`,
+              title: (items) => data[items[0].dataIndex]?.datetime ?? '',
+              label: (item) => `${item.dataset.label}: BOB ${(item.parsed.y ?? 0).toFixed(2)}`,
             },
           },
         },
         scales: {
           x: {
             border: { display: false },
-            grid: {
-              color: isDark ? 'rgba(148, 163, 184, 0.04)' : 'rgba(0, 0, 0, 0.06)',
-              drawTicks: false,
-            },
-            ticks: {
-              color: isDark ? '#475569' : '#64748b',
-              font: { size: 11, weight: 500 },
-              padding: 10,
-            },
+            grid: { color: isDark ? 'rgba(148,163,184,0.04)' : 'rgba(0,0,0,0.06)', drawTicks: false },
+            ticks: { color: isDark ? '#475569' : '#64748b', font: { size: 10, weight: 500 }, padding: 8, maxRotation: 45 },
           },
           y: {
             border: { display: false },
-            grid: {
-              color: isDark ? 'rgba(148, 163, 184, 0.05)' : 'rgba(0, 0, 0, 0.04)',
-              drawTicks: false,
-            },
-            ticks: {
-              color: isDark ? '#475569' : '#64748b',
-              font: { size: 11, weight: 500 },
-              padding: 12,
-              callback: (value) => `${value}`,
-            },
+            grid: { color: isDark ? 'rgba(148,163,184,0.05)' : 'rgba(0,0,0,0.04)', drawTicks: false },
+            ticks: { color: isDark ? '#475569' : '#64748b', font: { size: 10, weight: 500 }, padding: 10 },
           },
         },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
+        interaction: { intersect: false, mode: 'index' },
       },
     });
   }

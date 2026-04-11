@@ -6,7 +6,7 @@
   <div class="orb orb--4"></div>
 </div>
 
-<main class="dashboard" id="main-content" aria-label="Dashboard de cotizaciones USDT en bolivianos">
+<main class="dashboard" id="main-content" aria-label="Dashboard de cotizaciones en bolivianos">
   <!-- Header -->
   <header class="header glass-panel">
     <div class="header__left">
@@ -23,8 +23,8 @@
         </svg>
       </div>
       <div>
-        <h1 class="header__title">Cotizaciones <span>USDT</span></h1>
-        <p class="header__subtitle">Binance P2P &middot; Ultimo mes</p>
+        <h1 class="header__title">Cotizaciones <span>USD/BOB</span></h1>
+        <p class="header__subtitle">Referencial &middot; Oficial &middot; USDT &middot; Último mes</p>
       </div>
     </div>
     <div class="header__right">
@@ -54,13 +54,7 @@
         </svg>
         }
       </button>
-      @if (ultimaCotizacion(); as ultima) {
-      <div class="header__price-pill">
-        <span class="header__price-value">{{ ultima.cotizacion | number:'1.2-2' }}</span>
-        <span class="header__price-unit">BOB</span>
-      </div>
       <span class="header__live-dot"></span>
-      }
     </div>
   </header>
 
@@ -91,114 +85,234 @@
 
   <!-- Content -->
   @if (!loading() && !error()) {
-  <!-- Hero price -->
-  <section class="hero glass-panel animate-in" style="--delay: 0" aria-label="Precio actual del USDT">
-    <div class="hero__bg-glow"></div>
-    <div class="hero__left">
-      <span class="hero__label">
-        <span class="hero__label-dot"></span>
-        Precio Actual
-      </span>
-      <div class="hero__price" aria-live="polite" aria-atomic="true">
-        <span class="hero__currency">BOB</span>
-        <span class="hero__amount">{{ displayCotizacion() | number:'1.2-2' }}</span>
-      </div>
-      <span class="hero__pair">
-        1 USDT = {{ ultimaCotizacion()?.cotizacion | number:'1.2-2' }} BOB
-        <span class="hero__separator">&middot;</span>
-        <svg class="hero__clock" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2">
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-        {{ ultimaCotizacion()?.datetime }}
-      </span>
-    </div>
-    <div class="hero__right">
-      <div class="hero__variation" [class.hero__variation--up]="variacion() >= 0"
-        [class.hero__variation--down]="variacion() < 0">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          @if (variacion() >= 0) {
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-          <polyline points="17 6 23 6 23 12" />
-          } @else {
-          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
-          <polyline points="17 18 23 18 23 12" />
-          }
-        </svg>
-        <span>{{ variacion() >= 0 ? '+' : '' }}{{ variacion() | number:'1.2-4' }}%</span>
-      </div>
-      <div class="hero__period-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-        </svg>
-        Último mes
-      </div>
-    </div>
-  </section>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat-card glass-panel animate-in" style="--delay: 1">
-      <div class="stat-card__icon stat-card__icon--max">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-        </svg>
-      </div>
-      <span class="stat-card__label">Maximo</span>
-      <span class="stat-card__value">{{ cotizacionMax() | number:'1.2-2' }}</span>
-      <span class="stat-card__sub">BOB / USDT</span>
-    </div>
+  <!-- ═══════ CURRENCY CARDS ═══════ -->
+  <div class="currency-cards">
 
-    <div class="stat-card glass-panel animate-in" style="--delay: 2">
-      <div class="stat-card__icon stat-card__icon--min">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
-        </svg>
+    <!-- Card 1: USD Referencial -->
+    @if (latestRef(); as ref) {
+    <div class="currency-card currency-card--ref glass-panel animate-in" style="--delay: 0">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--ref">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">USD Referencial</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsRef().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsRef().variation < 0">
+          {{ statsRef().variation >= 0 ? '+' : '' }}{{ statsRef().variation | number:'1.2-2' }}%
+        </div>
       </div>
-      <span class="stat-card__label">Minimo</span>
-      <span class="stat-card__value">{{ cotizacionMin() | number:'1.2-2' }}</span>
-      <span class="stat-card__sub">BOB / USDT</span>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block">
+          <span class="currency-card__price-label">Compra</span>
+          <span class="currency-card__price-value currency-card__price-value--buy price-animated">{{ animRefBuy() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+        <div class="currency-card__divider"></div>
+        <div class="currency-card__price-block">
+          <span class="currency-card__price-label">Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animRefSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ ref.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsRef().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsRef().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsRef().count }}</span>
+        </div>
+      </div>
     </div>
+    }
 
-    <div class="stat-card glass-panel animate-in" style="--delay: 3">
-      <div class="stat-card__icon stat-card__icon--count">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7" />
-          <rect x="14" y="3" width="7" height="7" />
-          <rect x="3" y="14" width="7" height="7" />
-          <rect x="14" y="14" width="7" height="7" />
-        </svg>
+    <!-- Card 2: USD Oficial -->
+    @if (latestOficial(); as ofi) {
+    <div class="currency-card currency-card--oficial glass-panel animate-in" style="--delay: 1">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--oficial">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">USD Oficial</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsOficial().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsOficial().variation < 0">
+          {{ statsOficial().variation >= 0 ? '+' : '' }}{{ statsOficial().variation | number:'1.2-2' }}%
+        </div>
       </div>
-      <span class="stat-card__label">Registros</span>
-      <span class="stat-card__value">{{ cotizaciones().length }}</span>
-      <span class="stat-card__sub">entradas totales</span>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block">
+          <span class="currency-card__price-label">Compra</span>
+          <span class="currency-card__price-value currency-card__price-value--buy price-animated">{{ animOfiBuy() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+        <div class="currency-card__divider"></div>
+        <div class="currency-card__price-block">
+          <span class="currency-card__price-label">Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animOfiSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ ofi.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsOficial().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsOficial().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsOficial().count }}</span>
+        </div>
+      </div>
     </div>
+    }
 
-    <div class="stat-card glass-panel animate-in" style="--delay: 4">
-      <div class="stat-card__icon stat-card__icon--exchange">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="17 1 21 5 17 9" />
-          <path d="M3 11V9a4 4 0 0 1 4-4h14" />
-          <polyline points="7 23 3 19 7 15" />
-          <path d="M21 13v2a4 4 0 0 1-4 4H3" />
-        </svg>
+    <!-- Card 3: USDT -->
+    @if (latestUsdt(); as usdt) {
+    <div class="currency-card currency-card--usdt glass-panel animate-in" style="--delay: 2">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--usdt">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">USDT</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsUsdt().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsUsdt().variation < 0">
+          {{ statsUsdt().variation >= 0 ? '+' : '' }}{{ statsUsdt().variation | number:'1.2-2' }}%
+        </div>
       </div>
-      <span class="stat-card__label">Exchange</span>
-      <span class="stat-card__value stat-card__value--text">{{ ultimaCotizacion()?.exchange }}</span>
-      <span class="stat-card__sub">fuente de datos</span>
+      <div class="currency-card__prices">
+        @if (usdt.purchase > 0) {
+        <div class="currency-card__price-block">
+          <span class="currency-card__price-label">Compra</span>
+          <span class="currency-card__price-value currency-card__price-value--buy price-animated">{{ animUsdtBuy() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+        <div class="currency-card__divider"></div>
+        }
+        <div class="currency-card__price-block" [class.currency-card__price-block--full]="usdt.purchase === 0">
+          <span class="currency-card__price-label">Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animUsdtSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">BOB</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">Binance P2P</span>
+        <span class="currency-card__info-time">{{ usdt.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsUsdt().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsUsdt().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsUsdt().count }}</span>
+        </div>
+      </div>
     </div>
+    }
   </div>
 
-  <!-- Chart -->
-  <div class="chart-container glass-panel animate-in" style="--delay: 2">
+  <!-- ═══════ CHARTS ═══════ -->
+
+  <!-- Chart: USD Referencial -->
+  @if (refData().length > 0) {
+  <div class="chart-container chart-container--ref glass-panel animate-in" style="--delay: 3">
     <div class="chart-container__header">
       <div>
-        <h2>Historial de Cotizaciones</h2>
-        <p class="chart-container__range">Ultimo mes &middot; {{ cotizaciones().length }} puntos de datos</p>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--ref"></span>
+          USD Referencial
+        </h2>
+        <p class="chart-container__range">Compra &amp; Venta &middot; {{ refData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--ref">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartRef></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- Chart: USD Oficial -->
+  @if (oficialData().length > 0) {
+  <div class="chart-container chart-container--oficial glass-panel animate-in" style="--delay: 4">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--oficial"></span>
+          USD Oficial
+        </h2>
+        <p class="chart-container__range">Compra &amp; Venta &middot; {{ oficialData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--oficial">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartOficial></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- Chart: USDT -->
+  @if (usdtData().length > 0) {
+  <div class="chart-container chart-container--usdt glass-panel animate-in" style="--delay: 5">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--usdt"></span>
+          USDT Binance P2P
+        </h2>
+        <p class="chart-container__range">Compra &amp; Venta &middot; {{ usdtData().length }} puntos</p>
       </div>
       <div class="chart-container__live">
         <span class="live-pulse"></span>
@@ -206,33 +320,35 @@
       </div>
     </div>
     <div class="chart-container__body">
-      <canvas #chartCanvas></canvas>
+      <canvas #chartUsdt></canvas>
     </div>
   </div>
+  }
 
-  <!-- Table -->
-  <div class="table-container glass-panel animate-in" style="--delay: 3">
+  <!-- ═══════ TABLE ═══════ -->
+  <div class="table-container glass-panel animate-in" style="--delay: 6">
     <div class="table-container__header">
       <div>
         <h2>Registro Detallado</h2>
-        <p class="table-container__subtitle">Mostrando las últimas entradas primero</p>
+        <p class="table-container__subtitle">Todas las monedas &middot; Últimas entradas primero</p>
       </div>
       <span class="table-container__count">Pág. {{ currentPage() }} / {{ totalPages() }} &middot; {{
         cotizacionesTable().length }} registros</span>
     </div>
     <div class="table-scroll">
-      <table class="data-table" aria-label="Registro detallado de cotizaciones USDT en bolivianos">
+      <table class="data-table" aria-label="Registro detallado de cotizaciones">
         <thead>
           <tr>
             <th>#</th>
             <th>Fecha y Hora</th>
             <th>Moneda</th>
-            <th>Cotizacion (BOB)</th>
+            <th>Compra (BOB)</th>
+            <th>Venta (BOB)</th>
             <th>Exchange</th>
           </tr>
         </thead>
         <tbody>
-          @for (item of cotizacionesPaginated(); track item.datetime; let i = $index) {
+          @for (item of cotizacionesPaginated(); track item.datetime + item.moneda; let i = $index) {
           <tr class="animate-row" [style.--row-delay]="i">
             <td class="row-num">{{ pageOffset() + i + 1 }}</td>
             <td>
@@ -241,7 +357,11 @@
                 <span class="datetime-cell__time">{{ item.datetime.split(' ')[1] }}</span>
               </div>
             </td>
-            <td><span class="badge-glow">{{ item.moneda }}</span></td>
+            <td><span class="badge-glow"
+              [class.badge-glow--ref]="item.moneda === 'usd referencial'"
+              [class.badge-glow--oficial]="item.moneda === 'usd oficial'"
+              [class.badge-glow--usdt]="item.moneda === 'USDT'">{{ item.moneda }}</span></td>
+            <td class="price">{{ item.purchase > 0 ? (item.purchase | number:'1.2-2') : '—' }}</td>
             <td class="price">{{ item.cotizacion | number:'1.2-2' }}</td>
             <td><span class="exchange-tag">{{ item.exchange }}</span></td>
           </tr>
@@ -281,7 +401,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer animate-in" style="--delay: 5">
+  <footer class="footer animate-in" style="--delay: 7">
     <div class="footer__divider">
       <div class="footer__divider-line"></div>
       <div class="footer__divider-icon">
@@ -292,7 +412,7 @@
       <div class="footer__divider-line"></div>
     </div>
     <p class="footer__data-info">
-      Datos de <strong>Binance P2P</strong> &mdash; Actualizado: <strong>{{ ultimaCotizacion()?.datetime }}</strong>
+      Datos de <strong>BCB</strong> y <strong>Binance P2P</strong> &mdash; Actualizado: <strong>{{ latestUsdt()?.datetime }}</strong>
     </p>
     <p class="footer__credit">
       Hecho con <span class="footer__heart">❤️</span> por
