@@ -282,8 +282,10 @@ export class AppComponent implements OnDestroy {
   }
 
   private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
-    const offset = 2 + Math.floor(Math.random() * 3); // 2, 3, or 4
-    const start = Math.max(0, Math.floor(target) - offset);
+    // Random start between 1.5 and 5 BOB below (with random decimals)
+    const offset = 1.5 + Math.random() * 3.5;
+    const startVal = Math.max(0, target - offset);
+    const start = +(Math.floor(startVal * 100) / 100); // clean 2 decimal float
     sig.set(start);
 
     setTimeout(() => {
