@@ -325,79 +325,176 @@
   </div>
   }
 
-  <!-- ═══════ TABLE ═══════ -->
-  <div class="table-container glass-panel animate-in" style="--delay: 6">
-    <div class="table-container__header">
-      <div>
-        <h2>Registro Detallado</h2>
-        <p class="table-container__subtitle">Todas las monedas &middot; Últimas entradas primero</p>
+  <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
+  <div class="stats-section animate-in" style="--delay: 6">
+    <h2 class="stats-section__title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 20V10M12 20V4M6 20v-6"/>
+      </svg>
+      Estadísticas del Mercado
+    </h2>
+
+    <div class="stats-grid">
+      <!-- Spread cards -->
+      <div class="stat-card glass-panel stat-card--spread">
+        <div class="stat-card__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17l9.2-9.2M17 17V7H7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Spread Referencial</span>
+          <span class="stat-card__value">{{ statsRef().spread | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
       </div>
-      <span class="table-container__count">Pág. {{ currentPage() }} / {{ totalPages() }} &middot; {{
-        cotizacionesTable().length }} registros</span>
-    </div>
-    <div class="table-scroll">
-      <table class="data-table" aria-label="Registro detallado de cotizaciones">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Fecha y Hora</th>
-            <th>Moneda</th>
-            <th>Compra (BOB)</th>
-            <th>Venta (BOB)</th>
-            <th>Exchange</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (item of cotizacionesPaginated(); track item.datetime + item.moneda; let i = $index) {
-          <tr class="animate-row" [style.--row-delay]="i">
-            <td class="row-num">{{ pageOffset() + i + 1 }}</td>
-            <td>
-              <div class="datetime-cell">
-                <span class="datetime-cell__date">{{ item.datetime.split(' ')[0] }}</span>
-                <span class="datetime-cell__time">{{ item.datetime.split(' ')[1] }}</span>
-              </div>
-            </td>
-            <td><span class="badge-glow"
-              [class.badge-glow--ref]="item.moneda === 'usd referencial'"
-              [class.badge-glow--oficial]="item.moneda === 'usd oficial'"
-              [class.badge-glow--usdt]="item.moneda === 'USDT'">{{ item.moneda }}</span></td>
-            <td class="price">{{ item.purchase > 0 ? (item.purchase | number:'1.2-2') : '—' }}</td>
-            <td class="price">{{ item.cotizacion | number:'1.2-2' }}</td>
-            <td><span class="exchange-tag">{{ item.exchange }}</span></td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
 
-    <!-- Pagination -->
-    @if (totalPages() > 1) {
-    <div class="pagination">
-      <button class="pagination__btn pagination__btn--nav" [disabled]="currentPage() === 1" (click)="prevPage()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
+      <div class="stat-card glass-panel stat-card--spread">
+        <div class="stat-card__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17l9.2-9.2M17 17V7H7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Spread Oficial</span>
+          <span class="stat-card__value">{{ statsOficial().spread | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
+      </div>
 
-      @for (page of visiblePages(); track $index) {
-      @if (page === '...') {
-      <span class="pagination__ellipsis">&hellip;</span>
-      } @else {
-      <button class="pagination__btn pagination__btn--page" [class.pagination__btn--active]="page === currentPage()"
-        (click)="goToPage(page)">
-        {{ page }}
-      </button>
-      }
-      }
+      <div class="stat-card glass-panel stat-card--spread">
+        <div class="stat-card__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17l9.2-9.2M17 17V7H7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Spread USDT</span>
+          <span class="stat-card__value">{{ statsUsdt().spread | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
+      </div>
 
-      <button class="pagination__btn pagination__btn--nav" [disabled]="currentPage() === totalPages()"
-        (click)="nextPage()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
+      <!-- Average cards -->
+      <div class="stat-card glass-panel stat-card--avg">
+        <div class="stat-card__icon stat-card__icon--cyan">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Promedio Venta Ref</span>
+          <span class="stat-card__value">{{ statsRef().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--avg">
+        <div class="stat-card__icon stat-card__icon--violet">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Promedio Venta Ofi</span>
+          <span class="stat-card__value">{{ statsOficial().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--avg">
+        <div class="stat-card__icon stat-card__icon--indigo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Promedio Venta USDT</span>
+          <span class="stat-card__value">{{ statsUsdt().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+        </div>
+      </div>
+
+      <!-- Max/Min range cards -->
+      <div class="stat-card glass-panel stat-card--range">
+        <div class="stat-card__icon stat-card__icon--green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 7l-10 10M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Rango Compra Ref</span>
+          <span class="stat-card__value stat-card__value--range">
+            {{ statsRef().minBuy | number:'1.2-2' }}
+            <span class="stat-card__arrow">→</span>
+            {{ statsRef().maxBuy | number:'1.2-2' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--range">
+        <div class="stat-card__icon stat-card__icon--amber">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 7l-10 10M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Rango Compra Ofi</span>
+          <span class="stat-card__value stat-card__value--range">
+            {{ statsOficial().minBuy | number:'1.2-2' }}
+            <span class="stat-card__arrow">→</span>
+            {{ statsOficial().maxBuy | number:'1.2-2' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--range">
+        <div class="stat-card__icon stat-card__icon--pink">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 7l-10 10M7 7h10v10"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Rango Compra USDT</span>
+          <span class="stat-card__value stat-card__value--range">
+            {{ statsUsdt().minBuy | number:'1.2-2' }}
+            <span class="stat-card__arrow">→</span>
+            {{ statsUsdt().maxBuy | number:'1.2-2' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Data points / registros -->
+      <div class="stat-card glass-panel stat-card--count">
+        <div class="stat-card__icon stat-card__icon--cyan">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Registros Ref</span>
+          <span class="stat-card__value">{{ statsRef().count }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--count">
+        <div class="stat-card__icon stat-card__icon--violet">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Registros Ofi</span>
+          <span class="stat-card__value">{{ statsOficial().count }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel stat-card--count">
+        <div class="stat-card__icon stat-card__icon--indigo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="stat-card__content">
+          <span class="stat-card__label">Registros USDT</span>
+          <span class="stat-card__value">{{ statsUsdt().count }}</span>
+        </div>
+      </div>
     </div>
-    }
   </div>
 
   <!-- Footer -->

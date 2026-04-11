@@ -1492,6 +1492,160 @@ app-root {
   }
 }
 
+// ── Statistics Section ───────────────────────
+.stats-section {
+  margin-top: 0.5rem;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.02em;
+
+    svg {
+      color: var(--color-primary);
+      opacity: 0.8;
+    }
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
+  animation: statSlideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(12px);
+
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.15s; }
+  &:nth-child(3) { animation-delay: 0.2s; }
+  &:nth-child(4) { animation-delay: 0.25s; }
+  &:nth-child(5) { animation-delay: 0.3s; }
+  &:nth-child(6) { animation-delay: 0.35s; }
+  &:nth-child(7) { animation-delay: 0.4s; }
+  &:nth-child(8) { animation-delay: 0.45s; }
+  &:nth-child(9) { animation-delay: 0.5s; }
+  &:nth-child(10) { animation-delay: 0.55s; }
+  &:nth-child(11) { animation-delay: 0.6s; }
+  &:nth-child(12) { animation-delay: 0.65s; }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-shimmer);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  &:hover::before {
+    opacity: 0.6;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &--cyan { background: rgba(6, 182, 212, 0.1); color: #22d3ee; border-color: rgba(6, 182, 212, 0.15); }
+    &--violet { background: rgba(139, 92, 246, 0.1); color: #a78bfa; border-color: rgba(139, 92, 246, 0.15); }
+    &--indigo { background: rgba(99, 102, 241, 0.1); color: #818cf8; border-color: rgba(99, 102, 241, 0.15); }
+    &--green { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.15); }
+    &--amber { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: rgba(245, 158, 11, 0.15); }
+    &--pink { background: rgba(236, 72, 153, 0.1); color: #f472b6; border-color: rgba(236, 72, 153, 0.15); }
+  }
+
+  &:hover &__icon {
+    transform: scale(1.1) rotate(6deg);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__value {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+
+    small {
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 0.15rem;
+    }
+
+    &--range {
+      font-size: 0.95rem;
+    }
+  }
+
+  &__arrow {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 400;
+    margin: 0 0.25rem;
+    opacity: 0.6;
+  }
+}
+
+@keyframes statSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 // ── Footer ──────────────────────────────────
 .footer {
   text-align: center;
@@ -1637,7 +1791,7 @@ app-root {
     }
   }
 
-  .stats {
+  .stats-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -1651,12 +1805,16 @@ app-root {
 }
 
 @media (max-width: 480px) {
-  .stats {
-    grid-template-columns: 1fr 1fr;
+  .stats-grid {
+    grid-template-columns: 1fr;
   }
 
   .currency-card__price-value {
     font-size: 1.3rem;
+  }
+
+  .stat-card__value {
+    font-size: 1rem;
   }
 
   .header__price-pill {

@@ -141,51 +141,17 @@ export class AppComponent implements OnDestroy {
 
   readonly cotizaciones = computed(() => this.filterLastMonth(this.allCotizaciones()));
 
-  readonly cotizacionesTable = computed(() => {
-    return this.cotizaciones().slice(-100).reverse();
-  });
-
-  readonly pageSize = 10;
-  readonly currentPage = signal(1);
-
-  readonly totalPages = computed(() =>
-    Math.ceil(this.cotizacionesTable().length / this.pageSize) || 1
-  );
-
-  readonly cotizacionesPaginated = computed(() => {
-    const data = this.cotizacionesTable();
-    const start = (this.currentPage() - 1) * this.pageSize;
-    return data.slice(start, start + this.pageSize);
-  });
-
-  readonly pageOffset = computed(() => (this.currentPage() - 1) * this.pageSize);
-
-  readonly visiblePages = computed(() => {
-    const total = this.totalPages();
-    const current = this.currentPage();
-    const pages: (number | '...')[] = [];
-    if (total <= 7) {
-      for (let i = 1; i <= total; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (current > 3) pages.push('...');
-      const start = Math.max(2, current - 1);
-      const end = Math.min(total - 1, current + 1);
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (current < total - 2) pages.push('...');
-      pages.push(total);
-    }
-    return pages;
-  });
-
   private buildStats(data: Cotizacion[]) {
-    if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, variation: 0 };
+    if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, variation: 0, avgSell: 0, avgBuy: 0, spread: 0, lastUpdate: '' };
     const sells = data.map((c) => c.cotizacion).filter((v) => v > 0);
     const buys = data.map((c) => c.purchase).filter((v) => v > 0);
     const first = data[0];
     const last = data[data.length - 1];
     const variation = first.cotizacion > 0
       ? ((last.cotizacion - first.cotizacion) / first.cotizacion) * 100 : 0;
+    const avgSell = sells.length ? sells.reduce((a, b) => a + b, 0) / sells.length : 0;
+    const avgBuy = buys.length ? buys.reduce((a, b) => a + b, 0) / buys.length : 0;
+    const spread = (last.cotizacion > 0 && last.purchase > 0) ? last.cotizacion - last.purchase : 0;
     return {
       maxSell: sells.length ? Math.max(...sells) : 0,
       minSell: sells.length ? Math.min(...sells) : 0,
@@ -193,6 +159,10 @@ export class AppComponent implements OnDestroy {
       minBuy: buys.length ? Math.min(...buys) : 0,
       count: data.length,
       variation,
+      avgSell,
+      avgBuy,
+      spread,
+      lastUpdate: last.datetime,
     };
   }
 
@@ -268,19 +238,6 @@ export class AppComponent implements OnDestroy {
     this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
   }
 
-  goToPage(page: number | '...'): void {
-    if (page === '...') return;
-    if (page >= 1 && page <= this.totalPages()) this.currentPage.set(page);
-  }
-
-  prevPage(): void {
-    if (this.currentPage() > 1) this.currentPage.set(this.currentPage() - 1);
-  }
-
-  nextPage(): void {
-    if (this.currentPage() < this.totalPages()) this.currentPage.set(this.currentPage() + 1);
-  }
-
   private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
     // Random start between 1.5 and 5 BOB below (with random decimals)
     const offset = 1.5 + Math.random() * 3.5;
@@ -313,11 +270,32 @@ export class AppComponent implements OnDestroy {
     const ref = this.latestRef();
     const ofi = this.latestOficial();
     const usdt = this.latestUsdt();
-    let t = 'Cotizaciones BOB:\n';
-    if (ref) t += `USD Ref: Compra ${ref.purchase.toFixed(2)} / Venta ${ref.cotizacion.toFixed(2)}\n`;
-    if (ofi) t += `USD Ofi: Compra ${ofi.purchase.toFixed(2)} / Venta ${ofi.cotizacion.toFixed(2)}\n`;
-    if (usdt) t += `USDT: Venta ${usdt.cotizacion.toFixed(2)}${usdt.purchase > 0 ? ` / Compra ${usdt.purchase.toFixed(2)}` : ''}\n`;
-    return t + 'En tiempo real';
+    const sRef = this.statsRef();
+    const sOfi = this.statsOficial();
+    const sUsdt = this.statsUsdt();
+    let t = 'Cotizaciones USD/BOB\n';
+    t += '----------------------------\n';
+    if (ref) {
+      t += `USD Referencial (BCB)\n`;
+      t += `  Compra: ${ref.purchase.toFixed(2)} BOB\n`;
+      t += `  Venta: ${ref.cotizacion.toFixed(2)} BOB\n`;
+      t += `  Variacion: ${sRef.variation >= 0 ? '+' : ''}${sRef.variation.toFixed(2)}%\n\n`;
+    }
+    if (ofi) {
+      t += `USD Oficial (BCB)\n`;
+      t += `  Compra: ${ofi.purchase.toFixed(2)} BOB\n`;
+      t += `  Venta: ${ofi.cotizacion.toFixed(2)} BOB\n`;
+      t += `  Variacion: ${sOfi.variation >= 0 ? '+' : ''}${sOfi.variation.toFixed(2)}%\n\n`;
+    }
+    if (usdt) {
+      t += `USDT (Binance P2P)\n`;
+      t += `  Venta: ${usdt.cotizacion.toFixed(2)} BOB\n`;
+      if (usdt.purchase > 0) t += `  Compra: ${usdt.purchase.toFixed(2)} BOB\n`;
+      t += `  Variacion: ${sUsdt.variation >= 0 ? '+' : ''}${sUsdt.variation.toFixed(2)}%\n\n`;
+    }
+    t += '----------------------------\n';
+    t += 'Datos en tiempo real';
+    return t;
   });
 
   readonly shareUrl = computed(() => window.location.href);
