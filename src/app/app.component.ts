@@ -232,24 +232,24 @@ export class AppComponent implements OnDestroy {
     effect(() => {
       const ref = this.latestRef();
       if (ref) {
-        this.animateCountUp(ref.purchase, this.animRefBuy, 800);
-        this.animateCountUp(ref.cotizacion, this.animRefSell, 900);
+        this.triggerCountUp(ref.purchase, this.animRefBuy, 800);
+        this.triggerCountUp(ref.cotizacion, this.animRefSell, 900);
       }
-    }, { allowSignalWrites: true });
+    });
     effect(() => {
       const ofi = this.latestOficial();
       if (ofi) {
-        this.animateCountUp(ofi.purchase, this.animOfiBuy, 850);
-        this.animateCountUp(ofi.cotizacion, this.animOfiSell, 950);
+        this.triggerCountUp(ofi.purchase, this.animOfiBuy, 850);
+        this.triggerCountUp(ofi.cotizacion, this.animOfiSell, 950);
       }
-    }, { allowSignalWrites: true });
+    });
     effect(() => {
       const usdt = this.latestUsdt();
       if (usdt) {
-        this.animateCountUp(usdt.purchase, this.animUsdtBuy, 750);
-        this.animateCountUp(usdt.cotizacion, this.animUsdtSell, 1000);
+        this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 750);
+        this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1000);
       }
-    }, { allowSignalWrites: true });
+    });
 
     effect(() => {
       const currentTheme = this.theme();
@@ -281,24 +281,30 @@ export class AppComponent implements OnDestroy {
     if (this.currentPage() < this.totalPages()) this.currentPage.set(this.currentPage() + 1);
   }
 
-  private animateCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration = 1200): void {
-    const minOffset = 1.5;
-    const maxOffset = 4;
-    const offset = minOffset + Math.random() * (maxOffset - minOffset);
-    const start = Math.max(0, +(target - offset).toFixed(2));
+  private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
+    const offset = 2 + Math.floor(Math.random() * 3); // 2, 3, or 4
+    const start = Math.max(0, Math.floor(target) - offset);
     sig.set(start);
-    const startTime = performance.now();
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const current = start + (target - start) * eased;
-      sig.set(progress >= 1 ? target : +(current).toFixed(2));
-      if (progress < 1) {
-        this.countUpTimers.push(requestAnimationFrame(step));
-      }
-    };
-    this.countUpTimers.push(requestAnimationFrame(step));
+
+    setTimeout(() => {
+      const startTime = performance.now();
+      const animate = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutCubic — smooth and visible
+        const eased = 1 - Math.pow(1 - progress, 3);
+        if (progress >= 1) {
+          sig.set(target);
+        } else {
+          const current = start + (target - start) * eased;
+          sig.set(+(Math.round(current * 100) / 100));
+        }
+        if (progress < 1) {
+          this.countUpTimers.push(requestAnimationFrame(animate));
+        }
+      };
+      this.countUpTimers.push(requestAnimationFrame(animate));
+    }, 0);
   }
 
   readonly shareText = computed(() => {
