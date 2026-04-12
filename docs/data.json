@@ -1,6 +1,412 @@
 [
   {
     "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 02:00:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 02:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 02:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 02:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 03:00:03",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 03:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 03:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 03:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 04:00:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 04:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 04:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 04:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 05:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 05:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 05:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 05:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 06:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 06:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 06:30:07",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 06:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 07:00:04",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 07:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 07:30:04",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 07:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 08:00:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 08:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 08:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 08:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:00:05",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:00:21",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 09:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 10:00:03",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 10:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 10:30:09",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.29,
+    "purchase": 0,
+    "datetime": "2026-03-13 10:45:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 11:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.2774,
+    "purchase": 0,
+    "datetime": "2026-03-13 11:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 11:30:06",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 11:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 12:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 12:15:03",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.25,
+    "purchase": 0,
+    "datetime": "2026-03-13 12:30:07",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 12:45:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 13:00:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.25,
+    "purchase": 0,
+    "datetime": "2026-03-13 13:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 13:30:09",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 13:45:03",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 14:00:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.27,
+    "purchase": 0,
+    "datetime": "2026-03-13 14:15:02",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 14:30:07",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 14:45:03",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 15:00:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 15:15:01",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.26,
+    "purchase": 0,
+    "datetime": "2026-03-13 15:15:07",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.28,
+    "purchase": 0,
+    "datetime": "2026-03-13 15:30:08",
+    "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
     "cotizacion": 9.27,
     "purchase": 0,
     "datetime": "2026-03-13 15:45:02",
@@ -19960,756 +20366,56 @@
     "moneda": "USDT",
     "cotizacion": 9.31,
     "purchase": 9.33,
-    "datetime": "2026-04-11 13:15:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.31,
-    "purchase": 9.34,
-    "datetime": "2026-04-11 13:30:05",
+    "datetime": "2026-04-11 13:07:36",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.31,
     "purchase": 9.33,
-    "datetime": "2026-04-11 13:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.31,
-    "purchase": 9.334,
-    "datetime": "2026-04-11 14:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.31,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 14:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.328,
-    "datetime": "2026-04-11 14:30:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.31,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 14:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 15:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 15:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 15:30:05",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 15:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 16:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 16:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 16:30:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 16:45:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 17:00:08",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 17:15:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.3237,
-    "datetime": "2026-04-11 17:30:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 17:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 18:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.2987,
-    "purchase": 9.3157,
-    "datetime": "2026-04-11 18:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.31,
-    "datetime": "2026-04-11 18:30:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.318,
-    "datetime": "2026-04-11 18:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 19:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 19:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 19:30:05",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 19:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 20:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 20:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 20:30:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 20:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3277,
-    "datetime": "2026-04-11 21:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 21:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-11 21:30:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 21:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 22:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 22:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 22:30:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 22:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 23:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.3238,
-    "datetime": "2026-04-11 23:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 23:30:09",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-11 23:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "usd oficial",
-    "cotizacion": 6.96,
-    "purchase": 6.86,
-    "datetime": "2026-04-12",
-    "exchange": "bcb"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-12 00:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-12 00:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-12 00:30:08",
+    "datetime": "2026-04-11 13:24:08",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.328,
-    "datetime": "2026-04-12 00:45:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-12 01:00:04",
+    "datetime": "2026-04-12 01:40:21",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.328,
-    "datetime": "2026-04-12 01:15:01",
+    "datetime": "2026-04-12 01:47:12",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.328,
-    "datetime": "2026-04-12 01:30:06",
+    "datetime": "2026-04-12 01:50:06",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.328,
-    "datetime": "2026-04-12 01:45:01",
+    "datetime": "2026-04-12 01:52:02",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.328,
-    "datetime": "2026-04-12 02:00:09",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 02:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 02:30:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 02:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 03:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 03:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 03:30:05",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 03:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 04:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 04:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 04:30:07",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.328,
-    "datetime": "2026-04-12 04:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3261,
-    "datetime": "2026-04-12 05:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.3208,
-    "datetime": "2026-04-12 05:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.3228,
-    "datetime": "2026-04-12 05:30:07",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3241,
-    "datetime": "2026-04-12 05:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3241,
-    "datetime": "2026-04-12 06:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3241,
-    "datetime": "2026-04-12 06:15:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.3261,
-    "datetime": "2026-04-12 06:30:05",
+    "datetime": "2026-04-12 01:53:50",
     "exchange": "binancep2p"
   },
   {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.32,
-    "datetime": "2026-04-12 06:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 07:00:04",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 07:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 07:30:05",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.33,
-    "datetime": "2026-04-12 07:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 08:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 08:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 08:30:10",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 08:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 09:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 09:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 09:30:08",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 09:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 10:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 10:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 10:30:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 10:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 11:00:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 11:15:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.28,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 11:30:07",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.31,
-    "datetime": "2026-04-12 11:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.31,
-    "datetime": "2026-04-12 12:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.31,
-    "datetime": "2026-04-12 12:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.28,
-    "purchase": 9.31,
-    "datetime": "2026-04-12 12:30:05",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 12:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 13:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.318,
-    "datetime": "2026-04-12 13:15:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 13:30:07",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 13:45:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 14:00:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 14:15:03",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 14:30:06",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.3,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 14:45:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 15:00:02",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 15:15:01",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 15:30:07",
-    "exchange": "binancep2p"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.32,
-    "datetime": "2026-04-12 15:45:01",
+    "datetime": "2026-04-12 15:58:58",
     "exchange": "binancep2p"
   }
 ]
