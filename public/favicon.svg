@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="60" fill="#0b0e11"/>
+  <!-- Círculo estilo moneda crypto -->
+  <circle cx="128" cy="128" r="86" fill="#26a17b" />
+  <!-- Símbolo de dólar bold y limpio -->
+  <g stroke="#ffffff" stroke-width="20" stroke-linecap="round" fill="none">
+    <path d="M156 96 C156 66, 100 66, 100 102 C100 132, 156 132, 156 166 C156 196, 100 196, 100 166" />
+    <line x1="128" y1="52" x2="128" y2="204" />
+  </g>
+</svg>
