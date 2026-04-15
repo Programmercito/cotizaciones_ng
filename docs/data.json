@@ -698,5 +698,12 @@
     "purchase": 9.4,
     "datetime": "2026-04-15 15:15:03",
     "exchange": "binancep2p"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.37,
+    "purchase": 9.4,
+    "datetime": "2026-04-15 15:30:13",
+    "exchange": "binancep2p"
   }
 ]
