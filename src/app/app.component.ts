@@ -385,6 +385,14 @@ export class AppComponent implements OnDestroy {
     }, 0);
   }
 
+  /** true when USDT sell price < USD Referencial sell price */
+  readonly usdtCheaper = computed(() => {
+    const usdt = this.latestUsdt();
+    const ref = this.latestRef();
+    if (!usdt || !ref) return false;
+    return usdt.cotizacion < ref.cotizacion;
+  });
+
   readonly shareText = computed(() => {
     const ref = this.latestRef();
     const ofi = this.latestOficial();

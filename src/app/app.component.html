@@ -91,7 +91,9 @@
 
     <!-- Card 1: USD Referencial -->
     @if (latestRef(); as ref) {
-    <div class="currency-card currency-card--ref glass-panel animate-in" style="--delay: 0">
+    <div class="currency-card currency-card--ref glass-panel animate-in"
+      [class.currency-card--highlight]="!usdtCheaper()"
+      style="--delay: 0">
       <div class="currency-card__glow"></div>
       <div class="currency-card__header">
         <div class="currency-card__icon currency-card__icon--ref">
@@ -206,7 +208,9 @@
 
     <!-- Card 3: USDT -->
     @if (latestUsdt(); as usdt) {
-    <div class="currency-card currency-card--usdt glass-panel animate-in" style="--delay: 2">
+    <div class="currency-card currency-card--usdt glass-panel animate-in"
+      [class.currency-card--highlight]="usdtCheaper()"
+      style="--delay: 2">
       <div class="currency-card__glow"></div>
       <div class="currency-card__header">
         <div class="currency-card__icon currency-card__icon--usdt">
@@ -616,9 +620,9 @@
       <div class="currency-card__glow"></div>
       <div class="currency-card__header">
         <div class="currency-card__icon currency-card__icon--euro">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M7 10h8M7 14h6"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 10h9M6 14h7"/>
+            <path d="M17.5 5.5A7.5 7.5 0 0 0 10 4C6.134 4 3 7.582 3 12s3.134 8 7 8a7.5 7.5 0 0 0 7.5-1.5"/>
           </svg>
         </div>
         <div>
