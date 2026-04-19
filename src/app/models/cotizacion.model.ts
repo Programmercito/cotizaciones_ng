@@ -4,4 +4,5 @@ export interface Cotizacion {
   purchase: number;
   datetime: string;
   exchange: string;
+  moneda_dest?: string;
 }

@@ -80,6 +80,46 @@ export const CURRENCIES: CurrencyConfig[] = [
     buyRgb: '236, 72, 153',
     accentColor: '#818cf8',
   },
+  {
+    key: 'oro',
+    label: 'Oro',
+    exchange: 'BCB',
+    sellColor: '#f59e0b',
+    buyColor: '#d97706',
+    sellRgb: '245, 158, 11',
+    buyRgb: '217, 119, 6',
+    accentColor: '#fbbf24',
+  },
+  {
+    key: 'plata',
+    label: 'Plata',
+    exchange: 'BCB',
+    sellColor: '#94a3b8',
+    buyColor: '#64748b',
+    sellRgb: '148, 163, 184',
+    buyRgb: '100, 116, 139',
+    accentColor: '#cbd5e1',
+  },
+  {
+    key: 'eur',
+    label: 'Euro',
+    exchange: 'BCB',
+    sellColor: '#3b82f6',
+    buyColor: '#2563eb',
+    sellRgb: '59, 130, 246',
+    buyRgb: '37, 99, 235',
+    accentColor: '#60a5fa',
+  },
+  {
+    key: 'ufv',
+    label: 'UFV',
+    exchange: 'BCB',
+    sellColor: '#14b8a6',
+    buyColor: '#0d9488',
+    sellRgb: '20, 184, 166',
+    buyRgb: '13, 148, 136',
+    accentColor: '#2dd4bf',
+  },
 ];
 
 @Component({
@@ -95,11 +135,15 @@ export class AppComponent implements OnDestroy {
   @ViewChild('chartRef') chartRefCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartOficial') chartOficialCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartUsdt') chartUsdtCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartOro') chartOroCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartPlata') chartPlataCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartEuro') chartEuroCanvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartUfv') chartUfvCanvas?: ElementRef<HTMLCanvasElement>;
 
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
   private readonly cotizacionService = inject(CotizacionService);
-  private charts: Record<string, Chart | null> = { ref: null, oficial: null, usdt: null };
+  private charts: Record<string, Chart | null> = { ref: null, oficial: null, usdt: null, oro: null, plata: null, euro: null, ufv: null };
 
   private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial, dólar referencial y USDT en BOB';
   private readonly seoDescription =
@@ -130,14 +174,34 @@ export class AppComponent implements OnDestroy {
   readonly usdtData = computed(() =>
     this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'USDT'))
   );
+  readonly oroData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'oro'))
+  );
+  readonly plataData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'plata'))
+  );
+  readonly euroData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'eur'))
+  );
+  readonly ufvData = computed(() =>
+    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'ufv'))
+  );
 
   readonly latestRef = computed(() => { const d = this.refData(); return d.length ? d[d.length - 1] : null; });
   readonly latestOficial = computed(() => { const d = this.oficialData(); return d.length ? d[d.length - 1] : null; });
   readonly latestUsdt = computed(() => { const d = this.usdtData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestOro = computed(() => { const d = this.oroData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestPlata = computed(() => { const d = this.plataData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestEuro = computed(() => { const d = this.euroData(); return d.length ? d[d.length - 1] : null; });
+  readonly latestUfv = computed(() => { const d = this.ufvData(); return d.length ? d[d.length - 1] : null; });
 
   readonly statsRef = computed(() => this.buildStats(this.refData()));
   readonly statsOficial = computed(() => this.buildStats(this.oficialData()));
   readonly statsUsdt = computed(() => this.buildStats(this.usdtData()));
+  readonly statsOro = computed(() => this.buildStats(this.oroData()));
+  readonly statsPlata = computed(() => this.buildStats(this.plataData()));
+  readonly statsEuro = computed(() => this.buildStats(this.euroData()));
+  readonly statsUfv = computed(() => this.buildStats(this.ufvData()));
 
   // Animated price signals
   readonly animRefBuy = signal(0);
@@ -146,6 +210,14 @@ export class AppComponent implements OnDestroy {
   readonly animOfiSell = signal(0);
   readonly animUsdtBuy = signal(0);
   readonly animUsdtSell = signal(0);
+  readonly animOroBuy = signal(0);
+  readonly animOroSell = signal(0);
+  readonly animPlataBuy = signal(0);
+  readonly animPlataSell = signal(0);
+  readonly animEuroBuy = signal(0);
+  readonly animEuroSell = signal(0);
+  readonly animUfvBuy = signal(0);
+  readonly animUfvSell = signal(0);
   private countUpTimers: number[] = [];
 
   readonly cotizaciones = computed(() => this.filterLastMonth(this.allCotizaciones()));
@@ -198,6 +270,10 @@ export class AppComponent implements OnDestroy {
       const ref = this.refData();
       const ofi = this.oficialData();
       const usdt = this.usdtData();
+      const oro = this.oroData();
+      const plata = this.plataData();
+      const euro = this.euroData();
+      const ufv = this.ufvData();
       const isLoading = this.loading();
       const _ = this.theme(); // re-render on theme change
       if (!isLoading) {
@@ -205,6 +281,10 @@ export class AppComponent implements OnDestroy {
           this.buildCurrencyChart('ref', ref, CURRENCIES[0], this.chartRefCanvas);
           this.buildCurrencyChart('oficial', ofi, CURRENCIES[1], this.chartOficialCanvas);
           this.buildCurrencyChart('usdt', usdt, CURRENCIES[2], this.chartUsdtCanvas);
+          this.buildCurrencyChart('oro', oro, CURRENCIES[3], this.chartOroCanvas);
+          this.buildCurrencyChart('plata', plata, CURRENCIES[4], this.chartPlataCanvas);
+          this.buildCurrencyChart('euro', euro, CURRENCIES[5], this.chartEuroCanvas);
+          this.buildCurrencyChart('ufv', ufv, CURRENCIES[6], this.chartUfvCanvas);
         });
       }
     });
@@ -229,6 +309,34 @@ export class AppComponent implements OnDestroy {
       if (usdt) {
         this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 750);
         this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1000);
+      }
+    });
+    effect(() => {
+      const oro = this.latestOro();
+      if (oro) {
+        this.triggerCountUp(oro.purchase, this.animOroBuy, 800);
+        this.triggerCountUp(oro.cotizacion, this.animOroSell, 900);
+      }
+    });
+    effect(() => {
+      const plata = this.latestPlata();
+      if (plata) {
+        this.triggerCountUp(plata.purchase, this.animPlataBuy, 850);
+        this.triggerCountUp(plata.cotizacion, this.animPlataSell, 950);
+      }
+    });
+    effect(() => {
+      const euro = this.latestEuro();
+      if (euro) {
+        this.triggerCountUp(euro.purchase, this.animEuroBuy, 750);
+        this.triggerCountUp(euro.cotizacion, this.animEuroSell, 900);
+      }
+    });
+    effect(() => {
+      const ufv = this.latestUfv();
+      if (ufv) {
+        this.triggerCountUp(ufv.purchase, this.animUfvBuy, 800);
+        this.triggerCountUp(ufv.cotizacion, this.animUfvSell, 1000);
       }
     });
 
@@ -284,7 +392,7 @@ export class AppComponent implements OnDestroy {
     const sRef = this.statsRef();
     const sOfi = this.statsOficial();
     const sUsdt = this.statsUsdt();
-    let t = 'Cotizaciones USD/BOB\n';
+    let t = 'Cotizaciones Bolivia\n';
     t += '----------------------------\n';
     if (ref) {
       t += `USD Referencial (BCB)\n`;
@@ -303,6 +411,34 @@ export class AppComponent implements OnDestroy {
       t += `  Venta: ${usdt.cotizacion.toFixed(2)} BOB\n`;
       if (usdt.purchase > 0) t += `  Compra: ${usdt.purchase.toFixed(2)} BOB\n`;
       t += `  Variacion: ${sUsdt.variation >= 0 ? '+' : ''}${sUsdt.variation.toFixed(2)}%\n\n`;
+    }
+    const oro = this.latestOro();
+    const plata = this.latestPlata();
+    const euro = this.latestEuro();
+    const ufv = this.latestUfv();
+    const sOro = this.statsOro();
+    const sPlata = this.statsPlata();
+    const sEuro = this.statsEuro();
+    const sUfv = this.statsUfv();
+    if (oro) {
+      t += `Oro (BCB)\n`;
+      t += `  Compra/Venta: ${oro.cotizacion.toFixed(2)} ${oro.moneda_dest || 'BOB'}\n`;
+      t += `  Variacion: ${sOro.variation >= 0 ? '+' : ''}${sOro.variation.toFixed(2)}%\n\n`;
+    }
+    if (plata) {
+      t += `Plata (BCB)\n`;
+      t += `  Compra/Venta: ${plata.cotizacion.toFixed(2)} ${plata.moneda_dest || 'BOB'}\n`;
+      t += `  Variacion: ${sPlata.variation >= 0 ? '+' : ''}${sPlata.variation.toFixed(2)}%\n\n`;
+    }
+    if (euro) {
+      t += `Euro (BCB)\n`;
+      t += `  Compra/Venta: ${euro.cotizacion.toFixed(2)} ${euro.moneda_dest || 'BOB'}\n`;
+      t += `  Variacion: ${sEuro.variation >= 0 ? '+' : ''}${sEuro.variation.toFixed(2)}%\n\n`;
+    }
+    if (ufv) {
+      t += `UFV (BCB)\n`;
+      t += `  Compra/Venta: ${ufv.cotizacion.toFixed(2)} ${ufv.moneda_dest || 'BOB'}\n`;
+      t += `  Variacion: ${sUfv.variation >= 0 ? '+' : ''}${sUfv.variation.toFixed(2)}%\n\n`;
     }
     t += '----------------------------\n';
     t += 'Datos en tiempo real';

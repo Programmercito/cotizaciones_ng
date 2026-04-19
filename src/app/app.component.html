@@ -23,8 +23,8 @@
         </svg>
       </div>
       <div>
-        <h1 class="header__title">Cotizaciones <span>USD/BOB</span></h1>
-        <p class="header__subtitle">Referencial &middot; Oficial &middot; USDT &middot; Último mes</p>
+        <h1 class="header__title">Cotizaciones <span>Bolivia</span></h1>
+        <p class="header__subtitle">USD &middot; Oro &middot; Plata &middot; Euro &middot; UFV &middot; Último mes</p>
       </div>
     </div>
     <div class="header__right">
@@ -87,7 +87,7 @@
   @if (!loading() && !error()) {
 
   <!-- ═══════ CURRENCY CARDS ═══════ -->
-  <div class="currency-cards">
+  <div class="currency-cards currency-cards--3">
 
     <!-- Card 1: USD Referencial -->
     @if (latestRef(); as ref) {
@@ -505,8 +505,522 @@
     </div>
   </div>
 
+  <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
+  <div class="currency-cards currency-cards--4" style="margin-top: 2.5rem">
+
+    <!-- Card: Oro -->
+    @if (latestOro(); as oro) {
+    <div class="currency-card currency-card--oro glass-panel animate-in" style="--delay: 7">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--oro">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">Oro</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsOro().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsOro().variation < 0">
+          {{ statsOro().variation >= 0 ? '+' : '' }}{{ statsOro().variation | number:'1.2-2' }}%
+        </div>
+      </div>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block currency-card__price-block--full">
+          <span class="currency-card__price-label">Compra / Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animOroSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">{{ oro.moneda_dest || 'BOB' }}</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ oro.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsOro().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsOro().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsOro().count }}</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Card: Plata -->
+    @if (latestPlata(); as plata) {
+    <div class="currency-card currency-card--plata glass-panel animate-in" style="--delay: 8">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--plata">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9 12h6"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">Plata</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsPlata().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsPlata().variation < 0">
+          {{ statsPlata().variation >= 0 ? '+' : '' }}{{ statsPlata().variation | number:'1.2-2' }}%
+        </div>
+      </div>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block currency-card__price-block--full">
+          <span class="currency-card__price-label">Compra / Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animPlataSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">{{ plata.moneda_dest || 'BOB' }}</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ plata.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsPlata().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsPlata().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsPlata().count }}</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Card: Euro -->
+    @if (latestEuro(); as euro) {
+    <div class="currency-card currency-card--euro glass-panel animate-in" style="--delay: 9">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--euro">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M7 10h8M7 14h6"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">Euro</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsEuro().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsEuro().variation < 0">
+          {{ statsEuro().variation >= 0 ? '+' : '' }}{{ statsEuro().variation | number:'1.2-2' }}%
+        </div>
+      </div>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block currency-card__price-block--full">
+          <span class="currency-card__price-label">Compra / Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animEuroSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">{{ euro.moneda_dest || 'BOB' }}</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ euro.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsEuro().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsEuro().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsEuro().count }}</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Card: UFV -->
+    @if (latestUfv(); as ufv) {
+    <div class="currency-card currency-card--ufv glass-panel animate-in" style="--delay: 10">
+      <div class="currency-card__glow"></div>
+      <div class="currency-card__header">
+        <div class="currency-card__icon currency-card__icon--ufv">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <path d="M12 10v4M10 12h4"/>
+          </svg>
+        </div>
+        <div>
+          <span class="currency-card__name">UFV</span>
+        </div>
+        <div class="currency-card__variation-chip"
+          [class.currency-card__variation-chip--up]="statsUfv().variation >= 0"
+          [class.currency-card__variation-chip--down]="statsUfv().variation < 0">
+          {{ statsUfv().variation >= 0 ? '+' : '' }}{{ statsUfv().variation | number:'1.2-2' }}%
+        </div>
+      </div>
+      <div class="currency-card__prices">
+        <div class="currency-card__price-block currency-card__price-block--full">
+          <span class="currency-card__price-label">Compra / Venta</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animUfvSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-unit">{{ ufv.moneda_dest || 'BOB' }}</span>
+        </div>
+      </div>
+      <div class="currency-card__info">
+        <span class="currency-card__info-source">BCB</span>
+        <span class="currency-card__info-time">{{ ufv.datetime }}</span>
+      </div>
+      <div class="currency-card__footer">
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
+          <span class="currency-card__stat-label">Máx</span>
+          <span class="currency-card__stat-value">{{ statsUfv().maxSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
+          <span class="currency-card__stat-label">Mín</span>
+          <span class="currency-card__stat-value">{{ statsUfv().minSell | number:'1.2-2' }}</span>
+        </div>
+        <div class="currency-card__stat">
+          <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
+          <span class="currency-card__stat-label">Reg</span>
+          <span class="currency-card__stat-value">{{ statsUfv().count }}</span>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
+
+  <!-- Chart: Oro -->
+  @if (oroData().length > 0) {
+  <div class="chart-container chart-container--oro glass-panel animate-in" style="--delay: 11">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--oro"></span>
+          Oro
+        </h2>
+        <p class="chart-container__range">{{ oroData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--oro">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartOro></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- Chart: Plata -->
+  @if (plataData().length > 0) {
+  <div class="chart-container chart-container--plata glass-panel animate-in" style="--delay: 12">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--plata"></span>
+          Plata
+        </h2>
+        <p class="chart-container__range">{{ plataData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--plata">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartPlata></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- Chart: Euro -->
+  @if (euroData().length > 0) {
+  <div class="chart-container chart-container--euro glass-panel animate-in" style="--delay: 13">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--euro"></span>
+          Euro
+        </h2>
+        <p class="chart-container__range">{{ euroData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--euro">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartEuro></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- Chart: UFV -->
+  @if (ufvData().length > 0) {
+  <div class="chart-container chart-container--ufv glass-panel animate-in" style="--delay: 14">
+    <div class="chart-container__header">
+      <div>
+        <h2>
+          <span class="chart-container__dot chart-container__dot--ufv"></span>
+          UFV
+        </h2>
+        <p class="chart-container__range">{{ ufvData().length }} puntos</p>
+      </div>
+      <span class="chart-container__badge chart-container__badge--ufv">BCB</span>
+    </div>
+    <div class="chart-container__body">
+      <canvas #chartUfv></canvas>
+    </div>
+  </div>
+  }
+
+  <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
+  <div class="stats-section animate-in" style="--delay: 15">
+    <h2 class="stats-section__title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 20V10M12 20V4M6 20v-6"/>
+      </svg>
+      Estadísticas: Oro, Plata, Euro &amp; UFV
+    </h2>
+
+    <div class="stats-grid">
+      <div class="stats-row stats-row--spread">
+        <div class="stat-card glass-panel stat-card--spread">
+          <div class="stat-card__icon stat-card__icon--amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Spread Oro</span>
+            <span class="stat-card__value">{{ statsOro().spread | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--spread">
+          <div class="stat-card__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Spread Plata</span>
+            <span class="stat-card__value">{{ statsPlata().spread | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--spread">
+          <div class="stat-card__icon stat-card__icon--indigo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Spread Euro</span>
+            <span class="stat-card__value">{{ statsEuro().spread | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--spread">
+          <div class="stat-card__icon stat-card__icon--teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17l9.2-9.2M17 17V7H7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Spread UFV</span>
+            <span class="stat-card__value">{{ statsUfv().spread | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row stats-row--avg">
+        <div class="stat-card glass-panel stat-card--avg">
+          <div class="stat-card__icon stat-card__icon--amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Promedio Oro</span>
+            <span class="stat-card__value">{{ statsOro().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--avg">
+          <div class="stat-card__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Promedio Plata</span>
+            <span class="stat-card__value">{{ statsPlata().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--avg">
+          <div class="stat-card__icon stat-card__icon--indigo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Promedio Euro</span>
+            <span class="stat-card__value">{{ statsEuro().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--avg">
+          <div class="stat-card__icon stat-card__icon--teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Promedio UFV</span>
+            <span class="stat-card__value">{{ statsUfv().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row stats-row--range">
+        <div class="stat-card glass-panel stat-card--range">
+          <div class="stat-card__icon stat-card__icon--amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 7l-10 10M7 7h10v10"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Rango Oro</span>
+            <span class="stat-card__value stat-card__value--range">
+              {{ statsOro().minSell | number:'1.2-2' }}
+              <span class="stat-card__arrow">→</span>
+              {{ statsOro().maxSell | number:'1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--range">
+          <div class="stat-card__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 7l-10 10M7 7h10v10"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Rango Plata</span>
+            <span class="stat-card__value stat-card__value--range">
+              {{ statsPlata().minSell | number:'1.2-2' }}
+              <span class="stat-card__arrow">→</span>
+              {{ statsPlata().maxSell | number:'1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--range">
+          <div class="stat-card__icon stat-card__icon--indigo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 7l-10 10M7 7h10v10"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Rango Euro</span>
+            <span class="stat-card__value stat-card__value--range">
+              {{ statsEuro().minSell | number:'1.2-2' }}
+              <span class="stat-card__arrow">→</span>
+              {{ statsEuro().maxSell | number:'1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--range">
+          <div class="stat-card__icon stat-card__icon--teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 7l-10 10M7 7h10v10"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Rango UFV</span>
+            <span class="stat-card__value stat-card__value--range">
+              {{ statsUfv().minSell | number:'1.2-2' }}
+              <span class="stat-card__arrow">→</span>
+              {{ statsUfv().maxSell | number:'1.2-2' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row stats-row--count">
+        <div class="stat-card glass-panel stat-card--count">
+          <div class="stat-card__icon stat-card__icon--amber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Registros Oro</span>
+            <span class="stat-card__value">{{ statsOro().count }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--count">
+          <div class="stat-card__icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Registros Plata</span>
+            <span class="stat-card__value">{{ statsPlata().count }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--count">
+          <div class="stat-card__icon stat-card__icon--indigo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Registros Euro</span>
+            <span class="stat-card__value">{{ statsEuro().count }}</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel stat-card--count">
+          <div class="stat-card__icon stat-card__icon--teal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <div class="stat-card__content">
+            <span class="stat-card__label">Registros UFV</span>
+            <span class="stat-card__value">{{ statsUfv().count }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
-  <footer class="footer animate-in" style="--delay: 7">
+  <footer class="footer animate-in" style="--delay: 16">
     <div class="footer__divider">
       <div class="footer__divider-line"></div>
       <div class="footer__divider-icon">

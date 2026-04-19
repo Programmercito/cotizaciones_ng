@@ -723,9 +723,16 @@ app-root {
 // ── Currency Cards ─────────────────────────
 .currency-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
   margin-bottom: 1.75rem;
+
+  &--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .currency-card {
@@ -762,6 +769,18 @@ app-root {
   }
   &--usdt &__glow {
     background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 65%);
+  }
+  &--oro &__glow {
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 65%);
+  }
+  &--plata &__glow {
+    background: radial-gradient(circle, rgba(148, 163, 184, 0.12), transparent 65%);
+  }
+  &--euro &__glow {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.12), transparent 65%);
+  }
+  &--ufv &__glow {
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.12), transparent 65%);
   }
 
   &:hover &__glow {
@@ -801,6 +820,30 @@ app-root {
       color: #6366f1;
       border: 1px solid rgba(99, 102, 241, 0.25);
       box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+    &--oro {
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    &--plata {
+      background: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 0 20px rgba(148, 163, 184, 0.1);
+    }
+    &--euro {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    }
+    &--ufv {
+      background: rgba(20, 184, 166, 0.12);
+      color: #14b8a6;
+      border: 1px solid rgba(20, 184, 166, 0.25);
+      box-shadow: 0 0 20px rgba(20, 184, 166, 0.1);
     }
   }
 
@@ -1012,6 +1055,18 @@ app-root {
   &--usdt::after {
     background: linear-gradient(90deg, #6366f1, #818cf8);
   }
+  &--oro::after {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  }
+  &--plata::after {
+    background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+  }
+  &--euro::after {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  }
+  &--ufv::after {
+    background: linear-gradient(90deg, #14b8a6, #2dd4bf);
+  }
 }
 
 .stat-card {
@@ -1161,6 +1216,22 @@ app-root {
       background: #6366f1;
       box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
     }
+    &--oro {
+      background: #f59e0b;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+    }
+    &--plata {
+      background: #94a3b8;
+      box-shadow: 0 0 12px rgba(148, 163, 184, 0.4);
+    }
+    &--euro {
+      background: #3b82f6;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    }
+    &--ufv {
+      background: #14b8a6;
+      box-shadow: 0 0 12px rgba(20, 184, 166, 0.4);
+    }
   }
 
   &__badge {
@@ -1180,6 +1251,26 @@ app-root {
       color: #8b5cf6;
       background: rgba(139, 92, 246, 0.08);
       border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+    &--oro {
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    &--plata {
+      color: #94a3b8;
+      background: rgba(148, 163, 184, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    &--euro {
+      color: #3b82f6;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    &--ufv {
+      color: #14b8a6;
+      background: rgba(20, 184, 166, 0.08);
+      border: 1px solid rgba(20, 184, 166, 0.2);
     }
   }
 
@@ -1270,7 +1361,7 @@ app-root {
 
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.8rem;
 }
 
@@ -1341,6 +1432,7 @@ app-root {
     &--green { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.15); }
     &--amber { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: rgba(245, 158, 11, 0.15); }
     &--pink { background: rgba(236, 72, 153, 0.1); color: #f472b6; border-color: rgba(236, 72, 153, 0.15); }
+    &--teal { background: rgba(20, 184, 166, 0.1); color: #2dd4bf; border-color: rgba(20, 184, 166, 0.15); }
   }
 
   &:hover &__icon {
@@ -1512,8 +1604,9 @@ app-root {
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
-  .currency-cards {
-    grid-template-columns: 1fr;
+  .currency-cards--3,
+  .currency-cards--4 {
+    grid-template-columns: repeat(2, 1fr);
   }
   .stats-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1541,8 +1634,9 @@ app-root {
     }
   }
 
-  .currency-cards {
-    grid-template-columns: 1fr;
+  .currency-cards--3,
+  .currency-cards--4 {
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
@@ -1567,6 +1661,11 @@ app-root {
 
 @media (max-width: 480px) {
   .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .currency-cards--3,
+  .currency-cards--4 {
     grid-template-columns: 1fr;
   }
 
