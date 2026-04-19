@@ -20471,7 +20471,35 @@
     "moneda": "USDT",
     "cotizacion": 9.49,
     "purchase": 9.51,
-    "datetime": "2026-04-19 18:00:05",
+    "datetime": "2026-04-19 18:02:56",
     "exchange": "binancep2p"
+  },
+  {
+    "moneda": "eur",
+    "cotizacion": 8.09134,
+    "purchase": 8.09134,
+    "datetime": "2026-04-20",
+    "exchange": "bcb"
+  },
+  {
+    "moneda": "oro",
+    "cotizacion": 4866.45,
+    "purchase": 4866.45,
+    "datetime": "2026-04-20",
+    "exchange": "bcb"
+  },
+  {
+    "moneda": "plata",
+    "cotizacion": 82.1937,
+    "purchase": 82.1937,
+    "datetime": "2026-04-20",
+    "exchange": "bcb"
+  },
+  {
+    "moneda": "ufv",
+    "cotizacion": 3.21125,
+    "purchase": 3.21125,
+    "datetime": "2026-04-20",
+    "exchange": "bcb"
   }
 ]
