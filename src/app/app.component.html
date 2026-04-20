@@ -86,7 +86,33 @@
   <!-- Content -->
   @if (!loading() && !error()) {
 
+  <!-- ═══════ SECTION TABS ═══════ -->
+  <nav class="section-tabs glass-panel" aria-label="Navegación de secciones">
+    <button class="section-tab" [class.section-tab--active]="activeTab() === 'todo'" (click)="setTab('todo')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      Todos
+    </button>
+    <button class="section-tab" [class.section-tab--active]="activeTab() === 'usd'" (click)="setTab('usd')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+      USD
+    </button>
+    <button class="section-tab" [class.section-tab--active]="activeTab() === 'metales'" (click)="setTab('metales')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 12h8M12 8v8"/>
+      </svg>
+      Otros
+    </button>
+  </nav>
+
   <!-- ═══════ CURRENCY CARDS ═══════ -->
+  @if (activeTab() === 'todo' || activeTab() === 'usd') {
   <div class="currency-cards currency-cards--3">
 
     <!-- Card 1: USD Referencial -->
@@ -267,7 +293,10 @@
     }
   </div>
 
+  }
+
   <!-- ═══════ CHARTS ═══════ -->
+  @if (activeTab() === 'todo' || activeTab() === 'usd') {
 
   <!-- Chart: USD Referencial -->
   @if (refData().length > 0) {
@@ -329,7 +358,10 @@
   </div>
   }
 
+  }
+
   <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
+  @if (activeTab() === 'todo' || activeTab() === 'usd') {
   <div class="stats-section animate-in" style="--delay: 6">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -509,8 +541,11 @@
     </div>
   </div>
 
+  }
+
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
-  <div class="currency-cards currency-cards--4" style="margin-top: 2.5rem">
+  @if (activeTab() === 'todo' || activeTab() === 'metales') {
+  <div class="currency-cards currency-cards--4" [style.margin-top]="activeTab() === 'todo' ? '2.5rem' : '0'">
 
     <!-- Card: Oro -->
     @if (latestOro(); as oro) {
@@ -717,7 +752,10 @@
     }
   </div>
 
+  }
+
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
+  @if (activeTab() === 'todo' || activeTab() === 'metales') {
 
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
@@ -795,7 +833,10 @@
   </div>
   }
 
+  }
+
   <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
+  @if (activeTab() === 'todo' || activeTab() === 'metales') {
   <div class="stats-section animate-in" style="--delay: 15">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1022,6 +1063,8 @@
       </div>
     </div>
   </div>
+
+  }
 
   <!-- Footer -->
   <footer class="footer animate-in" style="--delay: 16">

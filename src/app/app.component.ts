@@ -156,8 +156,35 @@ export class AppComponent implements OnDestroy {
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly theme = signal<'light' | 'dark'>('dark');
+  readonly activeTab = signal<'todo' | 'usd' | 'metales'>('todo');
   readonly currentYear = new Date().getFullYear();
   readonly currencies = CURRENCIES;
+
+  setTab(tab: 'todo' | 'usd' | 'metales') {
+    this.activeTab.set(tab);
+    setTimeout(() => this.runAnimations(tab), 200);
+  }
+
+  private runAnimations(tab: 'todo' | 'usd' | 'metales'): void {
+    if (tab === 'usd' || tab === 'todo') {
+      const ref  = this.latestRef();
+      const ofi  = this.latestOficial();
+      const usdt = this.latestUsdt();
+      if (ref)  { this.triggerCountUp(ref.purchase,  this.animRefBuy,  1800); this.triggerCountUp(ref.cotizacion,  this.animRefSell,  1800); }
+      if (ofi)  { this.triggerCountUp(ofi.purchase,  this.animOfiBuy,  1800); this.triggerCountUp(ofi.cotizacion,  this.animOfiSell,  1800); }
+      if (usdt) { this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 1800); this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1800); }
+    }
+    if (tab === 'metales' || tab === 'todo') {
+      const oro   = this.latestOro();
+      const plata = this.latestPlata();
+      const euro  = this.latestEuro();
+      const ufv   = this.latestUfv();
+      if (oro)   { this.triggerCountUp(oro.cotizacion,   this.animOroSell,   1800); }
+      if (plata) { this.triggerCountUp(plata.cotizacion, this.animPlataSell, 1800); }
+      if (euro)  { this.triggerCountUp(euro.cotizacion,  this.animEuroSell,  1800); }
+      if (ufv)   { this.triggerCountUp(ufv.cotizacion,   this.animUfvSell,   1800); }
+    }
+  }
 
   private filterLastMonth(data: Cotizacion[]): Cotizacion[] {
     const now = new Date();
@@ -219,6 +246,7 @@ export class AppComponent implements OnDestroy {
   readonly animUfvBuy = signal(0);
   readonly animUfvSell = signal(0);
   private countUpTimers: number[] = [];
+  private countUpMap = new Map<object, number[]>();
 
   readonly cotizaciones = computed(() => this.filterLastMonth(this.allCotizaciones()));
 
@@ -258,6 +286,7 @@ export class AppComponent implements OnDestroy {
       next: (data: Cotizacion[]) => {
         this.allCotizaciones.set(data);
         this.loading.set(false);
+        setTimeout(() => this.runAnimations(this.activeTab()), 200);
       },
       error: (err: unknown) => {
         this.error.set('Error al cargar las cotizaciones');
@@ -276,6 +305,7 @@ export class AppComponent implements OnDestroy {
       const ufv = this.ufvData();
       const isLoading = this.loading();
       const _ = this.theme(); // re-render on theme change
+      const _tab = this.activeTab(); // rebuild charts when tab shows new canvases
       if (!isLoading) {
         setTimeout(() => {
           this.buildCurrencyChart('ref', ref, CURRENCIES[0], this.chartRefCanvas);
@@ -285,61 +315,11 @@ export class AppComponent implements OnDestroy {
           this.buildCurrencyChart('plata', plata, CURRENCIES[4], this.chartPlataCanvas);
           this.buildCurrencyChart('euro', euro, CURRENCIES[5], this.chartEuroCanvas);
           this.buildCurrencyChart('ufv', ufv, CURRENCIES[6], this.chartUfvCanvas);
-        });
+        }, 50);
       }
     });
 
-    // Count-up animations when latest values change
-    effect(() => {
-      const ref = this.latestRef();
-      if (ref) {
-        this.triggerCountUp(ref.purchase, this.animRefBuy, 800);
-        this.triggerCountUp(ref.cotizacion, this.animRefSell, 900);
-      }
-    });
-    effect(() => {
-      const ofi = this.latestOficial();
-      if (ofi) {
-        this.triggerCountUp(ofi.purchase, this.animOfiBuy, 850);
-        this.triggerCountUp(ofi.cotizacion, this.animOfiSell, 950);
-      }
-    });
-    effect(() => {
-      const usdt = this.latestUsdt();
-      if (usdt) {
-        this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 750);
-        this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1000);
-      }
-    });
-    effect(() => {
-      const oro = this.latestOro();
-      if (oro) {
-        this.triggerCountUp(oro.purchase, this.animOroBuy, 800);
-        this.triggerCountUp(oro.cotizacion, this.animOroSell, 900);
-      }
-    });
-    effect(() => {
-      const plata = this.latestPlata();
-      if (plata) {
-        this.triggerCountUp(plata.purchase, this.animPlataBuy, 850);
-        this.triggerCountUp(plata.cotizacion, this.animPlataSell, 950);
-      }
-    });
-    effect(() => {
-      const euro = this.latestEuro();
-      if (euro) {
-        this.triggerCountUp(euro.purchase, this.animEuroBuy, 750);
-        this.triggerCountUp(euro.cotizacion, this.animEuroSell, 900);
-      }
-    });
-    effect(() => {
-      const ufv = this.latestUfv();
-      if (ufv) {
-        this.triggerCountUp(ufv.purchase, this.animUfvBuy, 800);
-        this.triggerCountUp(ufv.cotizacion, this.animUfvSell, 1000);
-      }
-    });
-
+    // Count-up animations: driven by runAnimations() called from data load and tab changes
     effect(() => {
       const currentTheme = this.theme();
       localStorage.setItem('theme', currentTheme);
@@ -350,6 +330,7 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.pollSub?.unsubscribe();
     this.countUpTimers.forEach((t) => cancelAnimationFrame(t));
+    this.countUpMap.forEach((timers) => timers.forEach((t) => cancelAnimationFrame(t)));
     Object.values(this.charts).forEach((c) => c?.destroy());
   }
 
@@ -358,31 +339,34 @@ export class AppComponent implements OnDestroy {
   }
 
   private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
-    // Random start between 1.5 and 5 BOB below (with random decimals)
-    const offset = 1.5 + Math.random() * 3.5;
-    const startVal = Math.max(0, target - offset);
-    const start = +(Math.floor(startVal * 100) / 100); // clean 2 decimal float
+    if (target <= 0) { sig.set(0); return; }
+
+    // Cancelar animación previa sobre este mismo signal
+    const prev = this.countUpMap.get(sig);
+    if (prev) { prev.forEach((t) => cancelAnimationFrame(t)); }
+    const timers: number[] = [];
+    this.countUpMap.set(sig, timers);
+
+    // Offset relativo: 30–45% para que sea siempre visible en cualquier magnitud
+    const pct = 0.30 + Math.random() * 0.15;
+    const startVal = Math.max(0, target * (1 - pct));
+    const start = +(Math.floor(startVal * 100) / 100);
     sig.set(start);
 
-    setTimeout(() => {
-      const startTime = performance.now();
-      const animate = (now: number) => {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // easeOutCubic — smooth and visible
-        const eased = 1 - Math.pow(1 - progress, 3);
-        if (progress >= 1) {
-          sig.set(target);
-        } else {
-          const current = start + (target - start) * eased;
-          sig.set(+(Math.round(current * 100) / 100));
-        }
-        if (progress < 1) {
-          this.countUpTimers.push(requestAnimationFrame(animate));
-        }
-      };
-      this.countUpTimers.push(requestAnimationFrame(animate));
-    }, 0);
+    const startTime = performance.now();
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      if (progress >= 1) {
+        sig.set(target);
+      } else {
+        const current = start + (target - start) * eased;
+        sig.set(+(Math.round(current * 100) / 100));
+        timers.push(requestAnimationFrame(animate));
+      }
+    };
+    timers.push(requestAnimationFrame(animate));
   }
 
   /** true when USDT sell price < USD Referencial sell price */
