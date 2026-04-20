@@ -162,7 +162,22 @@ export class AppComponent implements OnDestroy {
 
   setTab(tab: 'todo' | 'usd' | 'metales') {
     this.activeTab.set(tab);
-    setTimeout(() => this.runAnimations(tab), 200);
+    this.rebuildVisibleCharts(tab);
+    setTimeout(() => this.runAnimations(tab), 100);
+  }
+
+  private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales'): void {
+    if (tab === 'usd' || tab === 'todo') {
+      this.buildCurrencyChart('ref', this.refData(), CURRENCIES[0], this.chartRefCanvas);
+      this.buildCurrencyChart('oficial', this.oficialData(), CURRENCIES[1], this.chartOficialCanvas);
+      this.buildCurrencyChart('usdt', this.usdtData(), CURRENCIES[2], this.chartUsdtCanvas);
+    }
+    if (tab === 'metales' || tab === 'todo') {
+      this.buildCurrencyChart('oro', this.oroData(), CURRENCIES[3], this.chartOroCanvas);
+      this.buildCurrencyChart('plata', this.plataData(), CURRENCIES[4], this.chartPlataCanvas);
+      this.buildCurrencyChart('euro', this.euroData(), CURRENCIES[5], this.chartEuroCanvas);
+      this.buildCurrencyChart('ufv', this.ufvData(), CURRENCIES[6], this.chartUfvCanvas);
+    }
   }
 
   private runAnimations(tab: 'todo' | 'usd' | 'metales'): void {
@@ -170,19 +185,19 @@ export class AppComponent implements OnDestroy {
       const ref  = this.latestRef();
       const ofi  = this.latestOficial();
       const usdt = this.latestUsdt();
-      if (ref)  { this.triggerCountUp(ref.purchase,  this.animRefBuy,  1800); this.triggerCountUp(ref.cotizacion,  this.animRefSell,  1800); }
-      if (ofi)  { this.triggerCountUp(ofi.purchase,  this.animOfiBuy,  1800); this.triggerCountUp(ofi.cotizacion,  this.animOfiSell,  1800); }
-      if (usdt) { this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 1800); this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1800); }
+      if (ref)  { this.triggerCountUp(ref.purchase,  this.animRefBuy,  1000); this.triggerCountUp(ref.cotizacion,  this.animRefSell,  1000); }
+      if (ofi)  { this.triggerCountUp(ofi.purchase,  this.animOfiBuy,  1000); this.triggerCountUp(ofi.cotizacion,  this.animOfiSell,  1000); }
+      if (usdt) { this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 1000); this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1000); }
     }
     if (tab === 'metales' || tab === 'todo') {
       const oro   = this.latestOro();
       const plata = this.latestPlata();
       const euro  = this.latestEuro();
       const ufv   = this.latestUfv();
-      if (oro)   { this.triggerCountUp(oro.cotizacion,   this.animOroSell,   1800); }
-      if (plata) { this.triggerCountUp(plata.cotizacion, this.animPlataSell, 1800); }
-      if (euro)  { this.triggerCountUp(euro.cotizacion,  this.animEuroSell,  1800); }
-      if (ufv)   { this.triggerCountUp(ufv.cotizacion,   this.animUfvSell,   1800); }
+      if (oro)   { this.triggerCountUp(oro.cotizacion,   this.animOroSell,   1000); }
+      if (plata) { this.triggerCountUp(plata.cotizacion, this.animPlataSell, 1000); }
+      if (euro)  { this.triggerCountUp(euro.cotizacion,  this.animEuroSell,  1000); }
+      if (ufv)   { this.triggerCountUp(ufv.cotizacion,   this.animUfvSell,   1000); }
     }
   }
 
@@ -286,7 +301,7 @@ export class AppComponent implements OnDestroy {
       next: (data: Cotizacion[]) => {
         this.allCotizaciones.set(data);
         this.loading.set(false);
-        setTimeout(() => this.runAnimations(this.activeTab()), 200);
+        setTimeout(() => this.runAnimations(this.activeTab()), 100);
       },
       error: (err: unknown) => {
         this.error.set('Error al cargar las cotizaciones');
@@ -304,8 +319,7 @@ export class AppComponent implements OnDestroy {
       const euro = this.euroData();
       const ufv = this.ufvData();
       const isLoading = this.loading();
-      const _ = this.theme(); // re-render on theme change
-      const _tab = this.activeTab(); // rebuild charts when tab shows new canvases
+      const _ = this.theme();
       if (!isLoading) {
         setTimeout(() => {
           this.buildCurrencyChart('ref', ref, CURRENCIES[0], this.chartRefCanvas);
@@ -341,16 +355,12 @@ export class AppComponent implements OnDestroy {
   private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
     if (target <= 0) { sig.set(0); return; }
 
-    // Cancelar animación previa sobre este mismo signal
     const prev = this.countUpMap.get(sig);
     if (prev) { prev.forEach((t) => cancelAnimationFrame(t)); }
     const timers: number[] = [];
     this.countUpMap.set(sig, timers);
 
-    // Offset relativo: 30–45% para que sea siempre visible en cualquier magnitud
-    const pct = 0.30 + Math.random() * 0.15;
-    const startVal = Math.max(0, target * (1 - pct));
-    const start = +(Math.floor(startVal * 100) / 100);
+    const start = 0;
     sig.set(start);
 
     const startTime = performance.now();
@@ -358,12 +368,11 @@ export class AppComponent implements OnDestroy {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      if (progress >= 1) {
-        sig.set(target);
-      } else {
-        const current = start + (target - start) * eased;
-        sig.set(+(Math.round(current * 100) / 100));
+      sig.set(start + (target - start) * eased);
+      if (progress < 1) {
         timers.push(requestAnimationFrame(animate));
+      } else {
+        sig.set(target);
       }
     };
     timers.push(requestAnimationFrame(animate));

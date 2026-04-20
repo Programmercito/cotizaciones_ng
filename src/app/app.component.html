@@ -112,7 +112,7 @@
   </nav>
 
   <!-- ═══════ CURRENCY CARDS ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'usd') {
+  <div [class.section-hidden]="activeTab() === 'metales'">
   <div class="currency-cards currency-cards--3">
 
     <!-- Card 1: USD Referencial -->
@@ -292,11 +292,10 @@
     </div>
     }
   </div>
-
-  }
+  </div>
 
   <!-- ═══════ CHARTS ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'usd') {
+  <div [class.section-hidden]="activeTab() === 'metales'">
 
   <!-- Chart: USD Referencial -->
   @if (refData().length > 0) {
@@ -358,10 +357,10 @@
   </div>
   }
 
-  }
+  </div>
 
   <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'usd') {
+  <div [class.section-hidden]="activeTab() === 'metales'">
   <div class="stats-section animate-in" style="--delay: 6">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -540,11 +539,10 @@
       </div>
     </div>
   </div>
-
-  }
+  </div>
 
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'metales') {
+  <div [class.section-hidden]="activeTab() === 'usd'">
   <div class="currency-cards currency-cards--4" [style.margin-top]="activeTab() === 'todo' ? '2.5rem' : '0'">
 
     <!-- Card: Oro -->
@@ -751,11 +749,10 @@
     </div>
     }
   </div>
-
-  }
+  </div>
 
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'metales') {
+  <div [class.section-hidden]="activeTab() === 'usd'">
 
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
@@ -833,10 +830,10 @@
   </div>
   }
 
-  }
+  </div>
 
   <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
-  @if (activeTab() === 'todo' || activeTab() === 'metales') {
+  <div [class.section-hidden]="activeTab() === 'usd'">
   <div class="stats-section animate-in" style="--delay: 15">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1064,7 +1061,7 @@
     </div>
   </div>
 
-  }
+  </div>
 
   <!-- Footer -->
   <footer class="footer animate-in" style="--delay: 16">
