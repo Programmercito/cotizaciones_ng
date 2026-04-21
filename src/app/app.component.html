@@ -613,13 +613,13 @@
         <div class="currency-card__variation-chip"
           [class.currency-card__variation-chip--up]="statsPlata().variation >= 0"
           [class.currency-card__variation-chip--down]="statsPlata().variation < 0">
-          {{ statsPlata().variation >= 0 ? '+' : '' }}{{ statsPlata().variation | number:'1.2-2' }}%
+          {{ statsPlata().variation >= 0 ? '+' : '' }}{{ statsPlata().variation | number:'1.4-4' }}%
         </div>
       </div>
       <div class="currency-card__prices">
         <div class="currency-card__price-block currency-card__price-block--full">
           <span class="currency-card__price-label">Compra / Venta</span>
-          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animPlataSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animPlataSell() | number:'1.4-4' }}</span>
           <span class="currency-card__price-unit">{{ plata.moneda_dest || 'BOB' }}</span>
         </div>
       </div>
@@ -631,12 +631,12 @@
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
           <span class="currency-card__stat-label">Máx</span>
-          <span class="currency-card__stat-value">{{ statsPlata().maxSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsPlata().maxSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
           <span class="currency-card__stat-label">Mín</span>
-          <span class="currency-card__stat-value">{{ statsPlata().minSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsPlata().minSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
@@ -664,13 +664,13 @@
         <div class="currency-card__variation-chip"
           [class.currency-card__variation-chip--up]="statsEuro().variation >= 0"
           [class.currency-card__variation-chip--down]="statsEuro().variation < 0">
-          {{ statsEuro().variation >= 0 ? '+' : '' }}{{ statsEuro().variation | number:'1.2-2' }}%
+          {{ statsEuro().variation >= 0 ? '+' : '' }}{{ statsEuro().variation | number:'1.4-4' }}%
         </div>
       </div>
       <div class="currency-card__prices">
         <div class="currency-card__price-block currency-card__price-block--full">
           <span class="currency-card__price-label">Compra / Venta</span>
-          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animEuroSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animEuroSell() | number:'1.4-4' }}</span>
           <span class="currency-card__price-unit">{{ euro.moneda_dest || 'BOB' }}</span>
         </div>
       </div>
@@ -682,12 +682,12 @@
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
           <span class="currency-card__stat-label">Máx</span>
-          <span class="currency-card__stat-value">{{ statsEuro().maxSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsEuro().maxSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
           <span class="currency-card__stat-label">Mín</span>
-          <span class="currency-card__stat-value">{{ statsEuro().minSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsEuro().minSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
@@ -715,13 +715,13 @@
         <div class="currency-card__variation-chip"
           [class.currency-card__variation-chip--up]="statsUfv().variation >= 0"
           [class.currency-card__variation-chip--down]="statsUfv().variation < 0">
-          {{ statsUfv().variation >= 0 ? '+' : '' }}{{ statsUfv().variation | number:'1.2-2' }}%
+          {{ statsUfv().variation >= 0 ? '+' : '' }}{{ statsUfv().variation | number:'1.4-4' }}%
         </div>
       </div>
       <div class="currency-card__prices">
         <div class="currency-card__price-block currency-card__price-block--full">
           <span class="currency-card__price-label">Compra / Venta</span>
-          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animUfvSell() | number:'1.2-2' }}</span>
+          <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ animUfvSell() | number:'1.4-4' }}</span>
           <span class="currency-card__price-unit">{{ ufv.moneda_dest || 'BOB' }}</span>
         </div>
       </div>
@@ -733,12 +733,12 @@
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span>
           <span class="currency-card__stat-label">Máx</span>
-          <span class="currency-card__stat-value">{{ statsUfv().maxSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsUfv().maxSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span>
           <span class="currency-card__stat-label">Mín</span>
-          <span class="currency-card__stat-value">{{ statsUfv().minSell | number:'1.2-2' }}</span>
+          <span class="currency-card__stat-value">{{ statsUfv().minSell | number:'1.4-4' }}</span>
         </div>
         <div class="currency-card__stat">
           <span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span>
