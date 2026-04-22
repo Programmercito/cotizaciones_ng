@@ -187,7 +187,7 @@ app-root {
   opacity: 0;
   transform: translateY(28px);
   animation: slideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(var(--delay, 0) * 0.12s);
+  animation-delay: 0s !important;
 }
 
 @keyframes slideUp {

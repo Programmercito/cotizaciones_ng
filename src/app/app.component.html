@@ -295,7 +295,7 @@
   </div>
 
   <!-- ═══════ CHARTS ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'metales'">
+  <div [class.section-hidden]="activeTab() !== 'usd'">
 
   <!-- Chart: USD Referencial -->
   @if (refData().length > 0) {
@@ -360,7 +360,7 @@
   </div>
 
   <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'metales'">
+  <div [class.section-hidden]="activeTab() !== 'usd'">
   <div class="stats-section animate-in" style="--delay: 6">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -543,7 +543,7 @@
 
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
   <div [class.section-hidden]="activeTab() === 'usd'">
-  <div class="currency-cards currency-cards--4" [style.margin-top]="activeTab() === 'todo' ? '2.5rem' : '0'">
+  <div class="currency-cards currency-cards--4">
 
     <!-- Card: Oro -->
     @if (latestOro(); as oro) {
@@ -752,7 +752,7 @@
   </div>
 
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'usd'">
+  <div [class.section-hidden]="activeTab() !== 'metales'">
 
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
@@ -833,7 +833,7 @@
   </div>
 
   <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'usd'">
+  <div [class.section-hidden]="activeTab() !== 'metales'">
   <div class="stats-section animate-in" style="--delay: 15">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
