@@ -1,29 +1,211 @@
 .recomendaciones-card {
   margin: 1.75rem auto 1.75rem;
   max-width: 980px;
-  padding: 1.5rem 1.5rem;
-  border-radius: 24px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+  padding: 1.75rem;
+  border-radius: 28px;
+  background: rgba(10, 14, 26, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 24px 68px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px);
 }
 
 .recomendaciones-card__content {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.recomendaciones-card__head {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #a78bfa;
 }
 
 .recomendaciones-card h2 {
   margin: 0;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-accent);
+  font-size: clamp(1.4rem, 1.6vw, 1.8rem);
+  line-height: 1.15;
+  color: #f8fafc;
 }
 
-.recomendaciones-card p {
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.recomendaciones-card__intro {
   margin: 0;
-  color: var(--text-secondary);
+  color: #cbd5e1;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.85;
+}
+
+.recomendaciones-card__summary {
+  display: grid;
+  gap: 1rem;
+}
+
+.price-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.price-summary div {
+  padding: 1rem 1.1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.price-summary span {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.83rem;
+  margin-bottom: 0.35rem;
+}
+
+.price-summary strong {
+  display: block;
+  color: #eef2ff;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.summary-card {
+  padding: 1rem 1.1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.summary-card h3 {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  color: #f8fafc;
+}
+
+.summary-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.summary-card li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: #dbeafe;
+  line-height: 1.7;
+}
+
+.summary-card li::before {
+  content: '';
+  position: absolute;
+  top: 0.7rem;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #38bdf8);
+}
+
+.scenario {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.scenario__marker {
+  min-width: 3rem;
+  min-height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.18), rgba(37, 99, 235, 0.18));
+  color: #eef2ff;
+}
+
+.scenario__marker svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: #eef2ff;
+}
+
+.scenario__body h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  color: #f8fafc;
+}
+
+.scenario__body p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+
+.recomendacion-final {
+  padding: 1.45rem 1.35rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.recomendacion-final strong {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: #bfdbfe;
+  font-size: 0.95rem;
+}
+
+.recomendacion-final p {
+  margin: 0;
+  color: #e2e8f0;
+  line-height: 1.75;
+}
+
+.recomendacion-final__note {
+  margin-top: 1rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .recomendaciones-card {
+    padding: 1.3rem;
+  }
+
+  .scenario {
+    grid-template-columns: 1fr;
+  }
+
+  .recomendaciones-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

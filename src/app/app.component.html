@@ -752,7 +752,10 @@
   </div>
 
   <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'usd'">
-    <app-recomendaciones></app-recomendaciones>
+    <app-recomendaciones
+      [ref]="latestRef()"
+      [usdt]="latestUsdt()"
+    ></app-recomendaciones>
   </div>
 
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->

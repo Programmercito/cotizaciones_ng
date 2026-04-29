@@ -1,6 +1,84 @@
-<section class="recomendaciones-card glass-panel" aria-label="Recomendaciones">
+<section class="recomendaciones-card glass-panel" aria-label="Recomendaciones de cambio">
   <div class="recomendaciones-card__content">
-    <h2>Recomendaciones</h2>
-    <p>Hola</p>
+    <div class="recomendaciones-card__head">
+      <div>
+        <p class="eyebrow">Guía práctica</p>
+        <h2>3 casos para decidir entre USD Referencial y USDT</h2>
+      </div>
+      <span class="status-badge">Dinámico</span>
+    </div>
+
+    <p class="recomendaciones-card__intro">
+      Si quieres comprar algo por debajo de tu límite bancario, estas tres preguntas te ayudan a elegir con más claridad y aprovechar mejor cada opción.
+    </p>
+
+    <div class="recomendaciones-card__summary">
+      <div class="price-summary">
+        <div>
+          <span>USD Referencial</span>
+          <strong>{{ ref?.cotizacion != null ? (ref?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
+        </div>
+        <div>
+          <span>USDT venta</span>
+          <strong>{{ usdt?.cotizacion != null ? (usdt?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <h3>Resumen rápido</h3>
+        <ul>
+          <li>Usa el banco cuando el USD Referencial esté más barato que la venta de USDT.</li>
+          <li>Usa USDT cuando la venta de USDT sea más barata que el USD Referencial.</li>
+          <li>Si ya tienes saldo en wallet, valora si tu USDT se vende mejor que el referencial.</li>
+        </ul>
+      </div>
+    </div>
+
+    <article class="scenario">
+      <div class="scenario__marker">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7v6a7 7 0 0 1-7 7A7 7 0 0 1 5 15V9a7 7 0 0 1 7-7Z" fill="currentColor"/></svg>
+      </div>
+      <div class="scenario__body">
+        <h3>1. ¿Tienes el dinero en tu banco?</h3>
+        <p>
+          Si tu dinero está en tu banco, la pregunta es si conviene usar tu saldo bancario o ir por USDT.
+          Cuando el <strong>USD Referencial</strong> está más barato que la venta de USDT, lo más inteligente es pagar con el banco.
+        </p>
+      </div>
+    </article>
+
+    <article class="scenario">
+      <div class="scenario__marker">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="scenario__body">
+        <h3>2. ¿El referencial es más caro que USDT?</h3>
+        <p>
+          Si el <strong>USD Referencial</strong> supera al precio de venta de USDT, entonces usar USDT es la mejor opción.
+          Ten en cuenta que 1 USDT equivale aproximadamente a 1 USD real, por lo que si USDT está más barato en BOB, esa ruta suele ser más conveniente.
+        </p>
+      </div>
+    </article>
+
+    <article class="scenario">
+      <div class="scenario__marker">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="scenario__body">
+        <h3>3. ¿Ya tienes dinero en la wallet?</h3>
+        <p>
+          Si ya tienes saldo en USDT en tu wallet, compara la venta de USDT con la venta del USD Referencial.
+          Si USDT se vende más barato que el referencial, usar la wallet es la mejor ruta; si no, conviene preferir el referencial.
+        </p>
+      </div>
+    </article>
+
+    <div class="recomendacion-final">
+      <strong>Recomendación actual:</strong>
+      <p>{{ recommendationText }}</p>
+      <p class="recomendacion-final__note">
+        Nota: esta guía te orienta con los valores actuales, pero la decisión final es tuya según tu situación y tu propio criterio.
+      </p>
+    </div>
   </div>
 </section>
