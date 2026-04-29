@@ -26,6 +26,7 @@ import {
 } from 'chart.js';
 import { CotizacionService } from './services/cotizacion.service';
 import { Cotizacion } from './models/cotizacion.model';
+import { RecomendacionesComponent } from './components/recomendaciones.component';
 
 Chart.register(
   LineController,
@@ -125,7 +126,7 @@ export const CURRENCIES: CurrencyConfig[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RecomendacionesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

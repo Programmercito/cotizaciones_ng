@@ -293,10 +293,9 @@
     }
   </div>
   </div>
-
   <!-- ═══════ CHARTS ═══════ -->
   <div [class.section-hidden]="activeTab() !== 'usd'">
-
+  <app-recomendaciones></app-recomendaciones>
   <!-- Chart: USD Referencial -->
   @if (refData().length > 0) {
   <div class="chart-container chart-container--ref glass-panel animate-in" style="--delay: 3">
@@ -543,6 +542,7 @@
 
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
   <div [class.section-hidden]="activeTab() === 'usd'">
+
   <div class="currency-cards currency-cards--4">
 
     <!-- Card: Oro -->
@@ -751,9 +751,13 @@
   </div>
   </div>
 
+  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'usd'">
+    <app-recomendaciones></app-recomendaciones>
+  </div>
+
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
   <div [class.section-hidden]="activeTab() !== 'metales'">
-
+    <app-recomendaciones></app-recomendaciones>
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
   <div class="chart-container chart-container--oro glass-panel animate-in" style="--delay: 11">
