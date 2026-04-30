@@ -1,0 +1,132 @@
+<section class="recomendaciones-card glass-panel animate-in" style="--delay: 3" aria-label="Recomendaciones de cambio">
+  <div class="recomendaciones-card__content">
+    <div class="recomendaciones-card__head">
+      <div>
+        <p class="eyebrow">Guía práctica</p>
+        <h2>3 casos para decidir entre USD Referencial y <span>USDT</span></h2>
+      </div>
+      <span class="status-badge">Dinámico</span>
+    </div>
+
+    <p class="recomendaciones-card__intro">
+      ¿Conviene pagar por internet con USDT o con precio venta USD referencial? Cuando realizas compras online desde Bolivia, puedes calcular tu costo en bolivianos de dos formas.
+    </p>
+
+    <div class="recomendaciones-card__summary">
+      <div class="price-summary">
+        <div>
+          <span>Venta USD referencial</span>
+          <strong>{{ ref?.cotizacion != null ? (ref?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
+        </div>
+        <div>
+          <span>USDT compra</span>
+          <strong>{{ usdt?.purchase ? (usdt?.purchase | number:'1.2-2') + ' BOB' : (usdt?.cotizacion != null ? (usdt?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…') }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison-card section-card">
+      <h3>⚖️ Comparación práctica</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Escenario</th>
+              <th>Precio compra USDT (BOB)</th>
+              <th>Precio venta USD referencial (BOB)</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>USDT más barato</td>
+              <td>6.80</td>
+              <td>6.90</td>
+              <td>✅ Conviene pagar con USDT</td>
+            </tr>
+            <tr>
+              <td>USD referencial más barato</td>
+              <td>6.95</td>
+              <td>6.90</td>
+              <td>✅ Conviene pagar con Precio venta USD referencial</td>
+            </tr>
+            <tr>
+              <td>Iguales</td>
+              <td>6.90</td>
+              <td>6.90</td>
+              <td>⚖️ Empate → mejor usar Precio venta USD referencial por seguridad</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <h3>🔍 Explicación detallada</h3>
+      <article>
+        <h4>Caso 1: Precio venta USD referencial > Precio compra USDT</h4>
+        <p>
+          Aquí el USDT está más barato que el dólar referencial. Conviene comprar USDT y usarlo para pagar, porque cada USDT te cuesta menos bolivianos que el dólar oficial. Este es el escenario ideal para ahorrar en compras internacionales.
+        </p>
+      </article>
+      <article>
+        <h4>Caso 2: Precio venta USD referencial < Precio compra USDT</h4>
+        <p>
+          Aquí el dólar referencial está más barato que el USDT. Conviene pagar directamente con precio venta USD referencial, porque comprar USDT te saldría más caro. En este caso, el USDT no aporta ventaja.
+        </p>
+      </article>
+      <article>
+        <h4>Caso 3: Precio venta USD referencial = Precio compra USDT</h4>
+        <p>
+          Aquí el costo es equivalente. Sin embargo, en la práctica el USDT puede fluctuar mínimamente (ejemplo: 1 USDT = 0.99999 USD o 1.00001 USD). Esa microvariación puede hacer que pagues unos centavos más o menos. Por eso, en igualdad de condiciones, el precio venta USD referencial es más estable y seguro.
+        </p>
+      </article>
+    </div>
+
+    <div class="rule-card section-card">
+      <h3>🎯 Regla resumida estilo “versus”</h3>
+      <div class="rule-code">
+        <span>Si precio venta USD referencial > precio compra USDT → Conviene USDT 🥷</span>
+        <span>Si precio venta USD referencial < precio compra USDT → Conviene USD referencial 🛡️</span>
+        <span>Si precio venta USD referencial = precio compra USDT → Empate ⚖️ (mejor USD referencial por microvariaciones)</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <h3>🧠 En resumen</h3>
+      <ul>
+        <li>USDT es útil cuando su precio de compra en BOB está por debajo del precio venta USD referencial.</li>
+        <li>Precio venta USD referencial es mejor cuando el dólar está más barato o igual.</li>
+        <li>Las diferencias pequeñas (0.01–0.05 BOB) pueden parecer insignificantes, pero en compras grandes o frecuentes, definen tu ahorro real.</li>
+      </ul>
+    </div>
+
+    <div class="recomendacion-final recomendacion-final--success">
+      <strong>Recomendación actual:</strong>
+      <p>
+        Hoy conviene usar <strong class="recomendacion-final__label">{{ currentRecommendationLabel }}</strong>.
+      </p>
+      <ul class="recomendacion-final__motivos">
+        <li *ngFor="let motivo of recommendationReasons">{{ motivo }}</li>
+      </ul>
+    </div>
+
+    <div class="recomendacion-final recomendacion-final--note">
+      <strong>Nota final:</strong>
+      <p>Esta recomendación es orientativa; la decisión final siempre es tuya.</p>
+      <p class="recomendacion-final__note-intro">Toma en cuenta:</p>
+      <ul class="recomendacion-final__note-list">
+        <li>Comisiones del exchange o la pasarela de pago.</li>
+        <li>Costos de conversión adicionales.</li>
+        <li>Límites de pago con tarjeta.</li>
+        <li>Disponibilidad real de comercios que acepten USDT.</li>
+        <li>Microvariaciones en la paridad USDT/USD.</li>
+        <li>Compra previa de USDT en otros precios.</li>
+        <li>Subidas o bajadas intempestivas del precio.</li>
+        <li>Otros motivos externos.</li>
+      </ul>
+      <p class="recomendacion-final__note-conclusion">Compara ambos precios justo antes de pagar y elige lo que te convenga más hoy.</p>
+    </div>
+  </div>
+</section>
+
