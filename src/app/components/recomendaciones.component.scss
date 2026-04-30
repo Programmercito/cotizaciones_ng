@@ -52,6 +52,19 @@
   }
 }
 
+.recomendaciones-card {
+  position: relative;
+  margin: 1.75rem auto 1.75rem;
+  max-width: 980px;
+  padding: 1.75rem;
+  border-radius: 24px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
 .recomendaciones-card__content {
   display: grid;
   gap: 1.25rem;
@@ -64,6 +77,34 @@
   gap: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-primary);
+}
+
+.recomendaciones-card__head h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.recomendaciones-card__head h2 span {
+  background: var(--gradient-shimmer);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .eyebrow {
@@ -99,8 +140,8 @@
 .recomendaciones-card__intro {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.85;
+  font-size: 0.95rem;
+  line-height: 1.6;
   overflow-wrap: break-word;
 }
 
@@ -123,6 +164,8 @@
 .summary-card li,
 .recomendacion-final p {
   overflow-wrap: anywhere;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 
@@ -199,13 +242,14 @@
   padding: 0.9rem 0.95rem;
   text-align: left;
   color: var(--text-secondary);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
 }
 
 .comparison-card th {
   background: rgba(99, 102, 241, 0.08);
   color: var(--text-primary);
   font-weight: 700;
+  font-size: 1rem;
 }
 
 .comparison-card tbody tr:hover {
@@ -271,8 +315,8 @@
   align-items: flex-start;
   gap: 0.75rem;
   color: var(--text-secondary);
-  line-height: 1.5;
-  font-size: 0.88rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 .list-emoji {
@@ -448,7 +492,7 @@
   list-style: disc;
   color: rgb(120, 23, 23);
   line-height: 1.7;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
 }
 
 .recomendacion-final__note-list li {
@@ -466,23 +510,11 @@
   padding-left: 1.1rem;
   list-style: disc inside;
   line-height: 1.7;
+  font-size: 0.95rem;
 }
 
 .recomendacion-final__motivos li {
   margin-bottom: 0.6rem;
-}
-
-.recomendacion-final__note-list {
-  margin: 1rem 0 0;
-  padding-left: 1.2rem;
-  list-style: disc;
-  color: rgb(120, 23, 23);
-  line-height: 1.75;
-  font-size: 0.92rem;
-}
-
-.recomendacion-final__note-list li {
-  margin-bottom: 0.8rem;
 }
 
 @media (max-width: 720px) {
