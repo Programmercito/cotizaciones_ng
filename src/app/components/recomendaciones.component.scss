@@ -433,6 +433,32 @@
 
 .recomendacion-final--note p {
   color: rgb(120, 23, 23);
+  margin-bottom: 0.65rem;
+}
+
+.recomendacion-final__note-intro {
+  margin: 0.65rem 0 0.35rem;
+  color: rgb(120, 23, 23);
+  font-weight: 700;
+}
+
+.recomendacion-final__note-list {
+  margin: 0 0 0.75rem 1.2rem;
+  padding: 0;
+  list-style: disc;
+  color: rgb(120, 23, 23);
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
+.recomendacion-final__note-list li {
+  margin-bottom: 0.7rem;
+}
+
+.recomendacion-final__note-conclusion {
+  margin: 0;
+  color: rgb(120, 23, 23);
+  font-weight: 700;
 }
 
 .recomendacion-final__motivos {
@@ -444,6 +470,19 @@
 
 .recomendacion-final__motivos li {
   margin-bottom: 0.6rem;
+}
+
+.recomendacion-final__note-list {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  list-style: disc;
+  color: rgb(120, 23, 23);
+  line-height: 1.75;
+  font-size: 0.92rem;
+}
+
+.recomendacion-final__note-list li {
+  margin-bottom: 0.8rem;
 }
 
 @media (max-width: 720px) {
