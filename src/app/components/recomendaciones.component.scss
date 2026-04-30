@@ -1,7 +1,8 @@
 .recomendaciones-card {
   position: relative;
-  margin: 1.75rem auto 1.75rem;
-  max-width: 980px;
+  margin: 1.75rem 0;
+  width: 100%;
+  max-width: none;
   padding: 1.75rem;
   border-radius: 24px;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, box-shadow 0.3s;
@@ -54,8 +55,9 @@
 
 .recomendaciones-card {
   position: relative;
-  margin: 1.75rem auto 1.75rem;
-  max-width: 980px;
+  margin: 1.75rem 0;
+  width: 100%;
+  max-width: none;
   padding: 1.75rem;
   border-radius: 24px;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, box-shadow 0.3s;
