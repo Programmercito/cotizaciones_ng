@@ -295,7 +295,10 @@
   </div>
   <!-- ═══════ CHARTS ═══════ -->
   <div [class.section-hidden]="activeTab() !== 'usd'">
-  <app-recomendaciones></app-recomendaciones>
+  <app-recomendaciones
+    [ref]="latestRef()"
+    [usdt]="latestUsdt()"
+  ></app-recomendaciones>
   <!-- Chart: USD Referencial -->
   @if (refData().length > 0) {
   <div class="chart-container chart-container--ref glass-panel animate-in" style="--delay: 3">
