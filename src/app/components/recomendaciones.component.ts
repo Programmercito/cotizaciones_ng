@@ -32,4 +32,37 @@ export class RecomendacionesComponent {
 
     return `El precio compra de USDT y el precio venta USD referencial están igualados en ${refSell.toFixed(2)} BOB. En este caso es mejor usar el precio venta USD referencial por seguridad, porque el USDT puede tener microvariaciones en su paridad con el dólar.`;
   }
+
+  get currentRecommendationLabel(): string {
+    if (!this.ref || !this.usdt) {
+      return 'USD referencial';
+    }
+
+    const refSell = this.ref.cotizacion;
+    const usdtBuy = this.usdt.purchase > 0 ? this.usdt.purchase : this.usdt.cotizacion;
+    return usdtBuy < refSell ? 'USDT' : 'Precio venta USD referencial';
+  }
+
+  get recommendationReasons(): string[] {
+    if (!this.ref || !this.usdt) {
+      return ['Espera a que se carguen los precios USD referencial y USDT para recibir una recomendación precisa.'];
+    }
+
+    const refSell = this.ref.cotizacion;
+    const usdtBuy = this.usdt.purchase > 0 ? this.usdt.purchase : this.usdt.cotizacion;
+    const reasons = [
+      `Precio compra de USDT: ${usdtBuy.toFixed(2)} BOB.`,
+      `Precio venta USD referencial: ${refSell.toFixed(2)} BOB.`,
+    ];
+
+    if (usdtBuy < refSell) {
+      reasons.push('USDT está más barato, por eso conviene pagar con USDT.');
+    } else if (usdtBuy > refSell) {
+      reasons.push('El dólar referencial está más barato, por eso conviene pagar con precio venta USD referencial.');
+    } else {
+      reasons.push('Los precios están igualados; por seguridad se recomienda precio venta USD referencial.');
+    }
+
+    return reasons;
+  }
 }

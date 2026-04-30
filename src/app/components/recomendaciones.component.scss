@@ -138,6 +138,7 @@
   background: var(--bg-tertiary);
   border: 1px solid var(--border-primary);
   transition: background 0.2s, border-color 0.2s;
+  text-align: center;
 
   &:hover {
     background: rgba(99, 102, 241, 0.08);
@@ -339,11 +340,14 @@
 .recomendacion-final {
   padding: 1.25rem 1.35rem;
   border-radius: 20px;
-  background: rgba(16, 185, 129, 0.04);
-  border: 1px solid rgba(16, 185, 129, 0.12);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+}
+
+.recomendacion-final--success {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 
   &::before {
     content: '';
@@ -352,41 +356,94 @@
     left: 0;
     width: 4px;
     height: 100%;
-    background: var(--color-success);
-    opacity: 0.6;
+    background: rgba(16, 185, 129, 0.9);
+    opacity: 0.85;
   }
 
   &:hover {
-    background: rgba(16, 185, 129, 0.08);
-    border-color: rgba(16, 185, 129, 0.3);
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12);
   }
 }
 
-.recomendacion-final strong {
+.recomendacion-final--note {
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(220, 38, 38, 0.9);
+    opacity: 0.85;
+  }
+
+  &:hover {
+    background: rgba(248, 113, 113, 0.12);
+    border-color: rgba(220, 38, 38, 0.4);
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.12);
+  }
+}
+
+.recomendacion-final > strong {
   display: block;
   margin-bottom: 0.65rem;
-  color: var(--color-success);
-  font-size: 0.8rem;
-  font-weight: 700;
+  color: rgb(30, 64, 175);
+  font-size: 0.85rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
+.recomendacion-final--success > strong {
+  color: rgb(5, 150, 105);
+}
+
+.recomendacion-final--note > strong {
+  color: rgb(185, 28, 28);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
 .recomendacion-final p {
   margin: 0;
-  color: var(--text-primary);
   line-height: 1.75;
   font-size: 0.95rem;
 }
 
-.recomendacion-final__note {
-  margin-top: 1rem;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+.recomendacion-final--success p,
+.recomendacion-final--success .recomendacion-final__motivos {
+  color: rgb(21, 128, 61);
+}
+
+.recomendacion-final--success p {
+  font-size: 0.95rem;
+}
+
+.recomendacion-final__label {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.recomendacion-final--note p {
+  color: rgb(120, 23, 23);
+}
+
+.recomendacion-final__motivos {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  list-style: disc inside;
   line-height: 1.7;
-  font-style: italic;
-  opacity: 0.8;
+}
+
+.recomendacion-final__motivos li {
+  margin-bottom: 0.6rem;
 }
 
 @media (max-width: 720px) {

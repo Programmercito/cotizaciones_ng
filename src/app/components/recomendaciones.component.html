@@ -15,7 +15,7 @@
     <div class="recomendaciones-card__summary">
       <div class="price-summary">
         <div>
-          <span>USD Referencial</span>
+          <span>Venta USD referencial</span>
           <strong>{{ ref?.cotizacion != null ? (ref?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
         </div>
         <div>
@@ -99,14 +99,27 @@
         <li>Precio venta USD referencial es mejor cuando el dólar está más barato o igual.</li>
         <li>Las diferencias pequeñas (0.01–0.05 BOB) pueden parecer insignificantes, pero en compras grandes o frecuentes, definen tu ahorro real.</li>
       </ul>
-      <p class="recomendacion-final__note">
-        📌 Nota final: aunque esta regla es clara y práctica, la decisión final siempre es tuya. En la vida real pueden intervenir otras variables: comisiones de la plataforma o del exchange, costos de conversión adicionales, límites de pago con tarjeta, disponibilidad de comercios que acepten USDT directamente y microvariaciones en la paridad USDT/USD. Por eso, lo más seguro es comparar ambos precios en el momento exacto de tu compra y decidir cuál te conviene más.
-      </p>
     </div>
 
-    <div class="recomendacion-final">
-      <strong>Recomendación final con datos actuales:</strong>
-      <p>{{ recommendationText }}</p>
+    <div class="recomendacion-final recomendacion-final--success">
+      <strong>Recomendación actual:</strong>
+      <p>
+        Hoy conviene usar <strong class="recomendacion-final__label">{{ currentRecommendationLabel }}</strong>.
+      </p>
+      <ul class="recomendacion-final__motivos">
+        <li *ngFor="let motivo of recommendationReasons">{{ motivo }}</li>
+      </ul>
+    </div>
+
+    <div class="recomendacion-final recomendacion-final--note">
+      <strong>Nota final:</strong>
+      <p>
+        Aunque esta regla es clara y práctica, la decisión final siempre es tuya. En la vida real pueden intervenir otras variables: 
+        * Comisiones de la plataforma o del exchange
+        * Costos de conversión adicionales, 
+        límites de pago con tarjeta, 
+        disponibilidad de comercios que acepten USDT directamente y microvariaciones en la paridad USDT/USD. Por eso, lo más seguro es comparar ambos precios en el momento exacto de tu compra y decidir cuál te conviene más.
+      </p>
     </div>
   </div>
 </section>
