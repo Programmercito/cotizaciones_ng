@@ -20,17 +20,16 @@ export class RecomendacionesComponent {
     }
 
     const refSell = this.ref.cotizacion;
-    const usdtSell = this.usdt.cotizacion;
-    const usdtIsCheaper = usdtSell < refSell;
+    const usdtBuy = this.usdt.purchase > 0 ? this.usdt.purchase : this.usdt.cotizacion;
 
-    const firstPart = usdtIsCheaper
-      ? `El USD Referencial está a ${refSell.toFixed(2)} BOB y USDT se vende a ${usdtSell.toFixed(2)} BOB. Como 1 USDT equivale aproximadamente a 1 USD, la opción más eficiente es usar USDT si buscas el mejor precio en bolivianos.`
-      : `El USD Referencial está a ${refSell.toFixed(2)} BOB y USDT se vende a ${usdtSell.toFixed(2)} BOB. Hoy el referencial es más barato, por lo que conviene pagar desde tu banco.`;
+    if (usdtBuy < refSell) {
+      return `El precio compra de USDT es ${usdtBuy.toFixed(2)} BOB y el precio venta USD referencial es ${refSell.toFixed(2)} BOB. Hoy USDT está más barato, por lo que conviene pagar con USDT. Si ya tienes saldo en wallet, aprovecha esa posición; si no, considera comprar USDT para tu compra internacional.`;
+    }
 
-    const walletPart = usdtIsCheaper
-      ? 'Si ya tienes saldo en tu wallet por una compra anterior o por otro medio, es recomendable aprovechar esa posición: tu USDT se vende más barato que el referencial.'
-      : 'Si ya tienes USDT en la wallet, al venderlo a un precio mayor que el referencial conviene analizar bien si es mejor conservarlo o usar el referencial para la compra.';
+    if (usdtBuy > refSell) {
+      return `El precio venta USD referencial es ${refSell.toFixed(2)} BOB y el precio compra de USDT es ${usdtBuy.toFixed(2)} BOB. Hoy el dólar referencial está más barato, por lo que conviene pagar con precio venta USD referencial. Esta opción es más estable y puede ser la mejor alternativa cuando el USDT está más caro.`;
+    }
 
-    return `${firstPart} ${walletPart} En resumen: 1) Si tienes el dinero en el banco, usa el USD Referencial cuando sea más barato que USDT. 2) Si el referencial es más caro, usa USDT. 3) Si ya tienes wallet, decide según cuál precio de venta resulte más conveniente hoy.`;
+    return `El precio compra de USDT y el precio venta USD referencial están igualados en ${refSell.toFixed(2)} BOB. En este caso es mejor usar el precio venta USD referencial por seguridad, porque el USDT puede tener microvariaciones en su paridad con el dólar.`;
   }
 }
