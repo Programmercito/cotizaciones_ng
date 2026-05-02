@@ -102,30 +102,87 @@
     </div>
 
     <div class="recomendacion-final recomendacion-final--success">
-      <strong>Recomendación actual:</strong>
-      <p>
-        Hoy conviene usar <strong class="recomendacion-final__label">{{ currentRecommendationLabel }}</strong>.
-      </p>
+      <div class="rec-header">
+        <div class="rec-header__icon-wrap">
+          <span class="rec-header__icon">⚡</span>
+          <span class="rec-header__pulse"></span>
+        </div>
+        <div class="rec-header__meta">
+          <strong class="rec-header__title">Recomendación actual</strong>
+          <span class="rec-header__live">
+            <span class="rec-header__live-dot"></span>En vivo
+          </span>
+        </div>
+      </div>
+
+      <div class="rec-pills-row">
+        <!-- Pill: conviene usar hoy -->
+        <div class="rec-verdict">
+          <span class="rec-verdict__label">Conviene usar hoy</span>
+          <strong class="recomendacion-final__label">{{ currentRecommendationLabel }}</strong>
+        </div>
+
+        <!-- Pill: diferencia -->
+        <div class="diff-card" *ngIf="priceDiff as d"
+             [class.diff-card--usdt]="d.winner === 'usdt'"
+             [class.diff-card--ref]="d.winner === 'ref'"
+             [class.diff-card--tie]="d.winner === 'tie'">
+          <p class="diff-card__eyebrow">Diferencia</p>
+          <div class="diff-card__amount">
+            <span class="diff-card__number">{{ d.diff | number:'1.2-2' }}</span>
+            <span class="diff-card__currency">BOB</span>
+          </div>
+          <div class="diff-card__versus">
+            <div class="diff-card__side" [class.diff-card__side--winner]="d.winner === 'ref'">
+              <span class="diff-card__side-label">USD ref.</span>
+              <span class="diff-card__side-val">{{ d.refSell | number:'1.2-2' }}</span>
+            </div>
+            <span class="diff-card__vs">vs</span>
+            <div class="diff-card__side" [class.diff-card__side--winner]="d.winner === 'usdt'">
+              <span class="diff-card__side-label">USDT</span>
+              <span class="diff-card__side-val">{{ d.usdtBuy | number:'1.2-2' }}</span>
+            </div>
+          </div>
+          <p class="diff-card__caption">
+            <ng-container [ngSwitch]="d.winner">
+              <ng-container *ngSwitchCase="'usdt'">USDT más barato por {{ d.diff | number:'1.2-2' }} BOB/USD</ng-container>
+              <ng-container *ngSwitchCase="'ref'">USD ref. más barato por {{ d.diff | number:'1.2-2' }} BOB/USD</ng-container>
+              <ng-container *ngSwitchCase="'tie'">Precios empatados hoy</ng-container>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+
       <ul class="recomendacion-final__motivos">
-        <li *ngFor="let motivo of recommendationReasons">{{ motivo }}</li>
+        <li *ngFor="let motivo of recommendationReasons">
+          <span class="motivo-check">✓</span>{{ motivo }}
+        </li>
       </ul>
     </div>
 
     <div class="recomendacion-final recomendacion-final--note">
-      <strong>Nota final:</strong>
-      <p>Esta recomendación es orientativa; la decisión final siempre es tuya.</p>
+      <div class="rec-header rec-header--warning">
+        <div class="rec-header__icon-wrap rec-header__icon-wrap--warning">
+          <span class="rec-header__icon">⚠️</span>
+        </div>
+        <strong class="rec-header__title">Nota final</strong>
+      </div>
+      <p class="note-disclaimer">Esta recomendación es orientativa; la decisión final siempre es tuya.</p>
       <p class="recomendacion-final__note-intro">Toma en cuenta:</p>
       <ul class="recomendacion-final__note-list">
-        <li>Comisiones del exchange o la pasarela de pago.</li>
-        <li>Costos de conversión adicionales.</li>
-        <li>Límites de pago con tarjeta.</li>
-        <li>Disponibilidad real de comercios que acepten USDT.</li>
-        <li>Microvariaciones en la paridad USDT/USD.</li>
-        <li>Compra previa de USDT en otros precios.</li>
-        <li>Subidas o bajadas intempestivas del precio.</li>
-        <li>Otros motivos externos.</li>
+        <li><span class="note-bullet">›</span>Comisiones del exchange o la pasarela de pago.</li>
+        <li><span class="note-bullet">›</span>Costos de conversión adicionales.</li>
+        <li><span class="note-bullet">›</span>Límites de pago con tarjeta.</li>
+        <li><span class="note-bullet">›</span>Disponibilidad real de comercios que acepten USDT.</li>
+        <li><span class="note-bullet">›</span>Microvariaciones en la paridad USDT/USD.</li>
+        <li><span class="note-bullet">›</span>Compra previa de USDT en otros precios.</li>
+        <li><span class="note-bullet">›</span>Subidas o bajadas intempestivas del precio.</li>
+        <li><span class="note-bullet">›</span>Otros motivos externos.</li>
       </ul>
-      <p class="recomendacion-final__note-conclusion">Compara ambos precios justo antes de pagar y elige lo que te convenga más hoy.</p>
+      <div class="note-conclusion">
+        <span class="note-conclusion__icon">💡</span>
+        <p>Compara ambos precios justo antes de pagar y elige lo que te convenga más hoy.</p>
+      </div>
     </div>
   </div>
 </section>

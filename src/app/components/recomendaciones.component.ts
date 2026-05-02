@@ -43,6 +43,15 @@ export class RecomendacionesComponent {
     return usdtBuy < refSell ? 'USDT' : 'Precio venta USD referencial';
   }
 
+  get priceDiff(): { diff: number; winner: 'usdt' | 'ref' | 'tie'; refSell: number; usdtBuy: number } | null {
+    if (!this.ref || !this.usdt) return null;
+    const refSell = this.ref.cotizacion;
+    const usdtBuy = this.usdt.purchase > 0 ? this.usdt.purchase : this.usdt.cotizacion;
+    const diff = Math.abs(refSell - usdtBuy);
+    const winner: 'usdt' | 'ref' | 'tie' = usdtBuy < refSell ? 'usdt' : usdtBuy > refSell ? 'ref' : 'tie';
+    return { diff, winner, refSell, usdtBuy };
+  }
+
   get recommendationReasons(): string[] {
     if (!this.ref || !this.usdt) {
       return ['Espera a que se carguen los precios USD referencial y USDT para recibir una recomendación precisa.'];
