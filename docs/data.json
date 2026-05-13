@@ -1,21 +1,5 @@
 [
   {
-    "moneda": "usd referencial",
-    "cotizacion": 9.45,
-    "purchase": 9.26,
-    "datetime": "2026-04-13",
-    "exchange": "bcb",
-    "moneda_dest": "BOB"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 9.29,
-    "purchase": 9.33,
-    "datetime": "2026-04-13 00:00:02",
-    "exchange": "binancep2p",
-    "moneda_dest": "BOB"
-  },
-  {
     "moneda": "USDT",
     "cotizacion": 9.29,
     "purchase": 9.3232,
@@ -23900,6 +23884,14 @@
     "cotizacion": 9.99,
     "purchase": 10.02,
     "datetime": "2026-05-13 00:00:11",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 9.99,
+    "purchase": 10.01,
+    "datetime": "2026-05-13 00:15:04",
     "exchange": "binancep2p",
     "moneda_dest": "BOB"
   }
