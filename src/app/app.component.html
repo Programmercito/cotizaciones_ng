@@ -761,6 +761,11 @@
     ></app-recomendaciones>
   </div>
 
+  <!-- ═══════ RECOMENDACIONES: Otros (Oro, Plata, Euro) ═══════ -->
+  <div [class.section-hidden]="activeTab() !== 'metales'">
+    <app-recomendaciones-otros></app-recomendaciones-otros>
+  </div>
+
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
   <div [class.section-hidden]="activeTab() !== 'metales'">
     
