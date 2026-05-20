@@ -149,7 +149,7 @@ export class AppComponent implements OnDestroy {
 
   private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial, dólar referencial y USDT en BOB';
   private readonly seoDescription =
-    'Consulta cotizaciones en Bolivia del dólar oficial, dólar referencial y USDT en bolivianos (BOB). Precios en tiempo real, gráfico del último mes, máximos, mínimos y variación del mercado.';
+    'Consulta cotizaciones en Bolivia del dólar oficial, dólar referencial y USDT en bolivianos (BOB). Precios en tiempo real, gráficos históricos, máximos, mínimos y variación del mercado.';
   private readonly seoKeywords =
     'cotizaciones dolar oficial bolivia, dolar referencial bolivia, usdt bolivia, precio usdt bolivianos, tipo de cambio usd bolivia, cotizacion usdt bob, cotizaciones cripto bolivia, dolar boliviano';
   private pollSub?: Subscription;
@@ -203,32 +203,27 @@ export class AppComponent implements OnDestroy {
     }
   }
 
-  private filterLastMonth(data: Cotizacion[]): Cotizacion[] {
-    const now = new Date();
-    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-    return data.filter((c) => new Date(c.datetime) >= oneMonthAgo);
-  }
 
   readonly refData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'usd referencial'))
+    this.allCotizaciones().filter((c) => c.moneda === 'usd referencial')
   );
   readonly oficialData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'usd oficial'))
+    this.allCotizaciones().filter((c) => c.moneda === 'usd oficial')
   );
   readonly usdtData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'USDT'))
+    this.allCotizaciones().filter((c) => c.moneda === 'USDT')
   );
   readonly oroData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'oro'))
+    this.allCotizaciones().filter((c) => c.moneda === 'oro')
   );
   readonly plataData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'plata'))
+    this.allCotizaciones().filter((c) => c.moneda === 'plata')
   );
   readonly euroData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'eur'))
+    this.allCotizaciones().filter((c) => c.moneda === 'eur')
   );
   readonly ufvData = computed(() =>
-    this.filterLastMonth(this.allCotizaciones().filter((c) => c.moneda === 'ufv'))
+    this.allCotizaciones().filter((c) => c.moneda === 'ufv')
   );
 
   readonly latestRef = computed(() => { const d = this.refData(); return d.length ? d[d.length - 1] : null; });
@@ -265,7 +260,7 @@ export class AppComponent implements OnDestroy {
   private countUpTimers: number[] = [];
   private countUpMap = new Map<object, number[]>();
 
-  readonly cotizaciones = computed(() => this.filterLastMonth(this.allCotizaciones()));
+  readonly cotizaciones = computed(() => this.allCotizaciones());
 
   private buildStats(data: Cotizacion[]) {
     if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, variation: 0, avgSell: 0, avgBuy: 0, spread: 0, lastUpdate: '' };
