@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 2rem;
+      color: #222;
+      background: #f9f9f9;
+    }
+    .container {
+      max-width: 760px;
+      margin: auto;
+      padding: 1.5rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    h1 {
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+    h2 {
+      margin-top: 1.4rem;
+      color: #333;
+    }
+    p {
+      margin: 0.85rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Política de Privacidad</h1>
+    <p>Esta política explica cómo recopilamos, usamos y protegemos los datos personales cuando visitas este sitio web.</p>
+    <h2>1. Información que recopilamos</h2>
+    <p>Podemos recopilar información básica como tu nombre, correo electrónico u otros datos que proporciones al contactar o registrarte en el sitio.</p>
+    <h2>2. Uso de la información</h2>
+    <p>La información se utiliza para responder tus consultas, mejorar el sitio y ofrecer un mejor servicio. No compartimos tus datos con terceros sin tu consentimiento.</p>
+    <h2>3. Cookies y tecnologías similares</h2>
+    <p>El sitio puede utilizar cookies para mejorar tu experiencia, recordar preferencias y analizar el uso. Puedes desactivar las cookies desde tu navegador si lo deseas.</p>
+    <h2>4. Seguridad</h2>
+    <p>Adoptamos medidas razonables para proteger tus datos frente a accesos no autorizados o uso indebido. Sin embargo, ningún método es completamente seguro.</p>
+    <h2>5. Cambios en la política</h2>
+    <p>Esta política puede actualizarse de vez en cuando. Te recomendamos revisarla periódicamente para conocer cualquier cambio.</p>
+    <p>Si tienes preguntas sobre esta política de privacidad, contáctanos desde el sitio web.</p>
+  </div>
+</body>
+</html>
