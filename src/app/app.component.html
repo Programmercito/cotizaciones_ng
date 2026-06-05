@@ -109,10 +109,107 @@
       </svg>
       Otros
     </button>
+    <button class="section-tab" [class.section-tab--active]="activeTab() === 'calculadora'" (click)="setTab('calculadora')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="4" width="16" height="16" rx="3"/>
+        <path d="M8 9h8M8 13h5M8 17h6"/>
+      </svg>
+      Calculadora
+    </button>
   </nav>
 
+  <div [class.section-hidden]="activeTab() !== 'calculadora'">
+    <section class="calculator-shell glass-panel animate-in" style="--delay: 0">
+      <div class="calculator-shell__header">
+        <div>
+          <p class="eyebrow">Herramienta rápida</p>
+          <h2>Calculadora de dólares en BOB</h2>
+          <p class="calculator-shell__lede">Elige el tipo de dólar, si quieres usar compra o venta y transforma cualquier monto en segundos.</p>
+        </div>
+        <div class="mini-badges">
+          <span class="mini-badge">USD Referencial</span>
+          <span class="mini-badge">USD Oficial</span>
+          <span class="mini-badge">USDT</span>
+        </div>
+      </div>
+
+      <div class="calculator-grid">
+        <!-- LEFT: selectors + input at the bottom -->
+        <article class="calc-card calc-card--controls glass-panel">
+          <div class="calc-card__header">
+            <h3>1. Tipo de dólar</h3>
+            <span class="pill pill--soft">{{ calculatorLabel() }}</span>
+          </div>
+          <div class="chip-grid">
+            <button class="chip" [class.chip--active]="calculatorCurrency() === 'ref'" (click)="calculatorCurrency.set('ref')">USD Ref.</button>
+            <button class="chip" [class.chip--active]="calculatorCurrency() === 'oficial'" (click)="calculatorCurrency.set('oficial')">USD Oficial</button>
+            <button class="chip" [class.chip--active]="calculatorCurrency() === 'usdt'" (click)="calculatorCurrency.set('usdt')">USDT</button>
+          </div>
+
+          <div class="calc-card__header calc-card__header--spaced">
+            <h3>2. Dirección</h3>
+          </div>
+          <div class="chip-grid chip-grid--two">
+            <button class="chip chip--accent" [class.chip--active]="calculatorMode() === 'usdToBob'" (click)="calculatorMode.set('usdToBob')">USD → BOB</button>
+            <button class="chip chip--accent" [class.chip--active]="calculatorMode() === 'bobToUsd'" (click)="calculatorMode.set('bobToUsd')">BOB → USD</button>
+          </div>
+
+          <div class="calc-card__header calc-card__header--spaced">
+            <h3>3. Compra o venta</h3>
+          </div>
+          <div class="chip-grid chip-grid--two">
+            <button class="chip chip--success" [class.chip--active]="calculatorSide() === 'compra'" (click)="calculatorSide.set('compra')">Compra</button>
+            <button class="chip chip--success" [class.chip--active]="calculatorSide() === 'venta'" (click)="calculatorSide.set('venta')">Venta</button>
+          </div>
+
+          <!-- INPUT at the bottom of the left card -->
+          <label class="input-field calc-input-bottom">
+            <span>Monto a convertir</span>
+            <input type="text" inputmode="decimal" pattern="[0-9.,]*" [value]="calculatorAmount()" (input)="calculatorAmount.set(normalizeCalculatorAmount($any($event.target).value))" />
+          </label>
+        </article>
+
+        <!-- RIGHT: tasa → referencia (ingresado) → resultado -->
+        <div class="calc-right">
+          <div class="tasa-row">
+            <span class="result-pill">Tasa {{ calculatorSide() }}</span>
+            <strong>{{ calculatorRate() | number:'1.2-2' }} <small>BOB / 1 USD</small></strong>
+          </div>
+
+          <article class="calc-card calc-card--result glass-panel">
+            <p class="result-copy">{{ calculatorHint() }}</p>
+            <div class="result-grid">
+              <div class="result-box">
+                <span>Ingresado</span>
+                <strong>{{ calculatorAmount() | number:'1.2-2' }} {{ calculatorMode() === 'usdToBob' ? 'USD' : 'BOB' }}</strong>
+              </div>
+              <div class="result-box result-box--main">
+                <span>Resultado</span>
+                <strong>{{ calculatorResult() | number:'1.2-2' }} {{ calculatorMode() === 'usdToBob' ? 'BOB' : 'USD' }}</strong>
+              </div>
+            </div>
+            <p class="mini-note">Tip: para convertir USD a BOB usá la tasa de venta; para comprar USD con BOB usá la tasa de compra.</p>
+          </article>
+        </div>
+      </div>
+
+      <article class="guide-box glass-panel">
+        <h3>Cómo usar esta calculadora y por qué importan compra y venta</h3>
+        <p>
+          Esta herramienta te sirve para estimar cuánto valen tus dólares o bolivianos en el mercado actual. Si vas a convertir USD a BOB, la tasa de venta es la más útil porque te indica cuánto recibes al vender dólares. Si vas a convertir BOB a USD, la tasa de compra te muestra cuánto cuesta comprar dólares con bolivianos.
+        </p>
+        <p>
+          USD Referencial y USD Oficial suelen mover el precio de referencia del mercado boliviano, mientras que USDT se usa como alternativa estable y rápida para pagos digitales o cripto. Con esta calculadora puedes comparar los tres tipos de dólar en una sola pantalla, revisar si conviene comprar o vender según el momento y decidir con más claridad cuándo te saldrá mejor usar una moneda u otra.
+        </p>
+        <p>
+          En resumen: compra = lo que pagas por cada dólar cuando cambias bolivianos a dólares; venta = lo que recibes por cada dólar cuando los cambias a bolivianos. Usar la tasa correcta te ayuda a estimar mejor tu gasto real, evitar sorpresas y comparar USD Referencial, USD Oficial y USDT con una sola mirada.
+        </p>
+      </article>
+    </section>
+  </div>
+
   <!-- ═══════ CURRENCY CARDS ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'metales'">
+  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'calculadora'">
   <div class="currency-cards currency-cards--3">
 
     <!-- Card 1: USD Referencial -->
@@ -294,7 +391,7 @@
   </div>
   </div>
   <!-- ═══════ CHARTS ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'usd'">
+  <div [class.section-hidden]="activeTab() !== 'usd' || activeTab() === 'calculadora'">
   <app-recomendaciones
     [ref]="latestRef()"
     [usdt]="latestUsdt()"
@@ -362,7 +459,7 @@
   </div>
 
   <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'usd'">
+  <div [class.section-hidden]="activeTab() !== 'usd' || activeTab() === 'calculadora'">
   <div class="stats-section animate-in" style="--delay: 6">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -544,7 +641,7 @@
   </div>
 
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'usd'">
+  <div [class.section-hidden]="activeTab() === 'usd' || activeTab() === 'calculadora'">
 
   <div class="currency-cards currency-cards--4">
 
@@ -754,7 +851,7 @@
   </div>
   </div>
 
-  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'usd'">
+  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'usd' || activeTab() === 'calculadora'">
     <app-recomendaciones
       [ref]="latestRef()"
       [usdt]="latestUsdt()"
@@ -762,12 +859,12 @@
   </div>
 
   <!-- ═══════ RECOMENDACIONES: Otros (Oro, Plata, Euro) ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales'">
+  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
     <app-recomendaciones-otros></app-recomendaciones-otros>
   </div>
 
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales'">
+  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
     
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
@@ -848,7 +945,7 @@
   </div>
 
   <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales'">
+  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
   <div class="stats-section animate-in" style="--delay: 15">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

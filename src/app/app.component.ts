@@ -158,17 +158,21 @@ export class AppComponent implements OnDestroy {
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
   readonly theme = signal<'light' | 'dark'>('dark');
-  readonly activeTab = signal<'todo' | 'usd' | 'metales'>('todo');
+  readonly activeTab = signal<'todo' | 'usd' | 'metales' | 'calculadora'>('todo');
+  readonly calculatorCurrency = signal<'ref' | 'oficial' | 'usdt'>('ref');
+  readonly calculatorMode = signal<'usdToBob' | 'bobToUsd'>('usdToBob');
+  readonly calculatorSide = signal<'compra' | 'venta'>('venta');
+  readonly calculatorAmount = signal(100);
   readonly currentYear = new Date().getFullYear();
   readonly currencies = CURRENCIES;
 
-  setTab(tab: 'todo' | 'usd' | 'metales') {
+  setTab(tab: 'todo' | 'usd' | 'metales' | 'calculadora') {
     this.activeTab.set(tab);
     this.rebuildVisibleCharts(tab);
     setTimeout(() => this.runAnimations(tab), 100);
   }
 
-  private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales'): void {
+  private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
     if (tab === 'usd' || tab === 'todo') {
       this.buildCurrencyChart('ref', this.refData(), CURRENCIES[0], this.chartRefCanvas);
       this.buildCurrencyChart('oficial', this.oficialData(), CURRENCIES[1], this.chartOficialCanvas);
@@ -182,7 +186,7 @@ export class AppComponent implements OnDestroy {
     }
   }
 
-  private runAnimations(tab: 'todo' | 'usd' | 'metales'): void {
+  private runAnimations(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
     if (tab === 'usd' || tab === 'todo') {
       const ref  = this.latestRef();
       const ofi  = this.latestOficial();
@@ -382,6 +386,52 @@ export class AppComponent implements OnDestroy {
     if (!usdt || !ref) return false;
     return usdt.cotizacion < ref.cotizacion;
   });
+
+  readonly calculatorQuote = computed(() => {
+    const kind = this.calculatorCurrency();
+    if (kind === 'ref') return this.latestRef();
+    if (kind === 'oficial') return this.latestOficial();
+    return this.latestUsdt();
+  });
+
+  readonly calculatorRate = computed(() => {
+    const quote = this.calculatorQuote();
+    if (!quote) return 0;
+    return this.calculatorSide() === 'compra'
+      ? (quote.purchase > 0 ? quote.purchase : quote.cotizacion)
+      : quote.cotizacion;
+  });
+
+  readonly calculatorResult = computed(() => {
+    const amount = this.calculatorAmount();
+    const rate = this.calculatorRate();
+    if (!amount || !rate) return 0;
+    return this.calculatorMode() === 'usdToBob'
+      ? amount * rate
+      : amount / rate;
+  });
+
+  readonly calculatorLabel = computed(() => {
+    const kind = this.calculatorCurrency();
+    const side = this.calculatorSide();
+    const base = kind === 'ref' ? 'USD Referencial' : kind === 'oficial' ? 'USD Oficial' : 'USDT';
+    return `${base} · ${side === 'compra' ? 'compra' : 'venta'}`;
+  });
+
+  readonly calculatorHint = computed(() => {
+    const rate = this.calculatorRate();
+    const mode = this.calculatorMode();
+    const quote = this.calculatorQuote();
+    if (!quote || !rate) return 'Selecciona una cotización disponible para ver el cálculo.';
+    const from = mode === 'usdToBob' ? 'USD → BOB' : 'BOB → USD';
+    return `${from} usando tasa ${this.calculatorSide()} de ${quote.moneda} (${rate.toFixed(2)} BOB por USD).`;
+  });
+
+  normalizeCalculatorAmount(value: string): number {
+    const normalized = (value || '').replace(/,/g, '.').trim();
+    const parsed = Number.parseFloat(normalized);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
 
   readonly shareText = computed(() => {
     const ref = this.latestRef();
