@@ -24,7 +24,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { CotizacionService } from './services/cotizacion.service';
+import { CotizacionService, CotizacionResult } from './services/cotizacion.service';
 import { Cotizacion } from './models/cotizacion.model';
 import { RecomendacionesComponent } from './components/recomendaciones.component';
 import { RecomendacionesOtrosComponent } from './components/recomendaciones-otros/recomendaciones-otros.component';
@@ -299,15 +299,16 @@ export class AppComponent implements OnDestroy {
     this.setSeoMetadata();
 
     this.pollSub = this.cotizacionService.cotizaciones$.subscribe({
-      next: (data: Cotizacion[]) => {
-        this.allCotizaciones.set(data);
-        this.loading.set(false);
-        setTimeout(() => this.runAnimations(this.activeTab()), 100);
-      },
-      error: (err: unknown) => {
-        this.error.set('Error al cargar las cotizaciones');
-        this.loading.set(false);
-        console.error(err);
+      next: (result: CotizacionResult) => {
+        if (result.error || result.data === null) {
+          this.error.set('Error al cargar las cotizaciones. Reintentando...');
+          this.loading.set(false);
+        } else {
+          this.allCotizaciones.set(result.data);
+          this.error.set(null);
+          this.loading.set(false);
+          setTimeout(() => this.runAnimations(this.activeTab()), 100);
+        }
       },
     });
 
