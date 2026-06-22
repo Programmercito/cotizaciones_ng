@@ -118,8 +118,8 @@
     </button>
   </nav>
 
-  <div [class.section-hidden]="activeTab() !== 'calculadora'">
-    <section class="calculator-shell glass-panel animate-in" style="--delay: 0">
+  @if (activeTab() === 'calculadora') {
+  <section class="calculator-shell glass-panel animate-in" style="--delay: 0">
       <div class="calculator-shell__header">
         <div>
           <p class="eyebrow">Herramienta rápida</p>
@@ -206,10 +206,10 @@
         </p>
       </article>
     </section>
-  </div>
+  }
 
-  <!-- ═══════ CURRENCY CARDS ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'calculadora'">
+  <!-- ═══════ CURRENCY CARDS: USD ═══════ -->
+  @if (activeTab() === 'usd' || activeTab() === 'todo') {
   <div class="currency-cards currency-cards--3">
 
     <!-- Card 1: USD Referencial -->
@@ -389,9 +389,9 @@
     </div>
     }
   </div>
-  </div>
-  <!-- ═══════ CHARTS ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'usd' || activeTab() === 'calculadora'">
+  }
+  <!-- ═══════ CHARTS: USD ═══════ -->
+  @if (activeTab() === 'usd') {
   <app-recomendaciones
     [ref]="latestRef()"
     [usdt]="latestUsdt()"
@@ -456,10 +456,10 @@
   </div>
   }
 
-  </div>
+  }
 
-  <!-- ═══════ STATISTICS DASHBOARD ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'usd' || activeTab() === 'calculadora'">
+  <!-- ═══════ STATISTICS DASHBOARD: USD ═══════ -->
+  @if (activeTab() === 'usd') {
   <div class="stats-section animate-in" style="--delay: 6">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -638,11 +638,10 @@
       </div>
     </div>
   </div>
-  </div>
+  }
 
   <!-- ═══════ OTHER CURRENCY CARDS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() === 'usd' || activeTab() === 'calculadora'">
-
+  @if (activeTab() === 'metales' || activeTab() === 'todo') {
   <div class="currency-cards currency-cards--4">
 
     <!-- Card: Oro -->
@@ -849,22 +848,15 @@
     </div>
     }
   </div>
-  </div>
-
-  <div [class.section-hidden]="activeTab() === 'metales' || activeTab() === 'usd' || activeTab() === 'calculadora'">
-    <app-recomendaciones
-      [ref]="latestRef()"
-      [usdt]="latestUsdt()"
-    ></app-recomendaciones>
-  </div>
+  }
 
   <!-- ═══════ RECOMENDACIONES: Otros (Oro, Plata, Euro) ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
+  @if (activeTab() === 'metales') {
     <app-recomendaciones-otros></app-recomendaciones-otros>
-  </div>
+  }
 
   <!-- ═══════ CHARTS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
+  @if (activeTab() === 'metales') {
     
   <!-- Chart: Oro -->
   @if (oroData().length > 0) {
@@ -942,10 +934,10 @@
   </div>
   }
 
-  </div>
+  }
 
   <!-- ═══════ STATISTICS: Oro, Plata, Euro, UFV ═══════ -->
-  <div [class.section-hidden]="activeTab() !== 'metales' || activeTab() === 'calculadora'">
+  @if (activeTab() === 'metales') {
   <div class="stats-section animate-in" style="--delay: 15">
     <h2 class="stats-section__title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1172,8 +1164,11 @@
       </div>
     </div>
   </div>
+  }
 
-  </div>
+  @if (activeTab() === 'todo') {
+    <app-todos-intro></app-todos-intro>
+  }
 
   <!-- Footer -->
   <footer class="footer animate-in" style="--delay: 16">

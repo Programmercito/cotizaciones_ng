@@ -28,6 +28,7 @@ import { CotizacionService, CotizacionResult } from './services/cotizacion.servi
 import { Cotizacion } from './models/cotizacion.model';
 import { RecomendacionesComponent } from './components/recomendaciones.component';
 import { RecomendacionesOtrosComponent } from './components/recomendaciones-otros/recomendaciones-otros.component';
+import { TodosIntroComponent } from './components/todos-intro/todos-intro.component';
 
 Chart.register(
   LineController,
@@ -127,7 +128,7 @@ export const CURRENCIES: CurrencyConfig[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent],
+  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -168,17 +169,19 @@ export class AppComponent implements OnDestroy {
 
   setTab(tab: 'todo' | 'usd' | 'metales' | 'calculadora') {
     this.activeTab.set(tab);
-    this.rebuildVisibleCharts(tab);
-    setTimeout(() => this.runAnimations(tab), 100);
+    setTimeout(() => {
+      this.rebuildVisibleCharts(tab);
+      this.runAnimations(tab);
+    }, 0);
   }
 
   private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
-    if (tab === 'usd' || tab === 'todo') {
+    if (tab === 'usd') {
       this.buildCurrencyChart('ref', this.refData(), CURRENCIES[0], this.chartRefCanvas);
       this.buildCurrencyChart('oficial', this.oficialData(), CURRENCIES[1], this.chartOficialCanvas);
       this.buildCurrencyChart('usdt', this.usdtData(), CURRENCIES[2], this.chartUsdtCanvas);
     }
-    if (tab === 'metales' || tab === 'todo') {
+    if (tab === 'metales') {
       this.buildCurrencyChart('oro', this.oroData(), CURRENCIES[3], this.chartOroCanvas);
       this.buildCurrencyChart('plata', this.plataData(), CURRENCIES[4], this.chartPlataCanvas);
       this.buildCurrencyChart('euro', this.euroData(), CURRENCIES[5], this.chartEuroCanvas);
