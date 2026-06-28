@@ -802,7 +802,7 @@
     &:hover { box-shadow: 0 12px 36px rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.5); }
   }
 
-  &.diff-card--ref {
+  &.diff-card--oficial {
     border-color: rgba(99, 102, 241, 0.3);
     background: linear-gradient(145deg, rgba(99, 102, 241, 0.07) 0%, rgba(79, 70, 229, 0.04) 100%);
     &::before { background: linear-gradient(90deg, rgb(99, 102, 241), rgb(79, 70, 229)); }
@@ -843,9 +843,9 @@
   color: var(--text-primary);
 }
 
-.diff-card--usdt   .diff-card__number { color: rgb(5, 150, 105); }
-.diff-card--ref    .diff-card__number { color: rgb(79, 70, 229); }
-.diff-card--tie    .diff-card__number { color: rgb(180, 130, 0); }
+.diff-card--usdt     .diff-card__number { color: rgb(5, 150, 105); }
+.diff-card--oficial  .diff-card__number { color: rgb(79, 70, 229); }
+.diff-card--tie      .diff-card__number { color: rgb(180, 130, 0); }
 
 .diff-card__currency {
   font-size: 0.85rem;
@@ -878,7 +878,7 @@
   background: rgba(16, 185, 129, 0.12);
   border-color: rgba(16, 185, 129, 0.3);
 
-  .diff-card--ref & {
+  .diff-card--oficial & {
     background: rgba(99, 102, 241, 0.12);
     border-color: rgba(99, 102, 241, 0.3);
   }

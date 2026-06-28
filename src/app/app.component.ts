@@ -52,17 +52,23 @@ export interface CurrencyConfig {
   accentColor: string;
 }
 
+function parseLocalDate(dateStr: string): Date | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
+  if (!match) return null;
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+function isToday(date: Date): boolean {
+  const today = new Date();
+  return (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  );
+}
+
 export const CURRENCIES: CurrencyConfig[] = [
-  {
-    key: 'usd referencial',
-    label: 'USD Referencial',
-    exchange: 'BCB',
-    sellColor: '#06b6d4',
-    buyColor: '#10b981',
-    sellRgb: '6, 182, 212',
-    buyRgb: '16, 185, 129',
-    accentColor: '#22d3ee',
-  },
   {
     key: 'usd oficial',
     label: 'USD Oficial',
@@ -135,7 +141,6 @@ export const CURRENCIES: CurrencyConfig[] = [
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnDestroy {
-  @ViewChild('chartRef') chartRefCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartOficial') chartOficialCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartUsdt') chartUsdtCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartOro') chartOroCanvas?: ElementRef<HTMLCanvasElement>;
@@ -146,13 +151,13 @@ export class AppComponent implements OnDestroy {
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
   private readonly cotizacionService = inject(CotizacionService);
-  private charts: Record<string, Chart | null> = { ref: null, oficial: null, usdt: null, oro: null, plata: null, euro: null, ufv: null };
+  private charts: Record<string, Chart | null> = { oficial: null, usdt: null, oro: null, plata: null, euro: null, ufv: null };
 
-  private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial, dólar referencial y USDT en BOB';
+  private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial y USDT en BOB';
   private readonly seoDescription =
-    'Consulta cotizaciones en Bolivia del dólar oficial, dólar referencial y USDT en bolivianos (BOB). Precios en tiempo real, gráficos históricos, máximos, mínimos y variación del mercado.';
+    'Consulta cotizaciones en Bolivia del dólar oficial y USDT en bolivianos (BOB). Precios en tiempo real, gráficos históricos, máximos, mínimos y variación del mercado.';
   private readonly seoKeywords =
-    'cotizaciones dolar oficial bolivia, dolar referencial bolivia, usdt bolivia, precio usdt bolivianos, tipo de cambio usd bolivia, cotizacion usdt bob, cotizaciones cripto bolivia, dolar boliviano';
+    'cotizaciones dolar oficial bolivia, usdt bolivia, precio usdt bolivianos, tipo de cambio usd bolivia, cotizacion usdt bob, cotizaciones cripto bolivia, dolar boliviano';
   private pollSub?: Subscription;
 
   readonly allCotizaciones = signal<Cotizacion[]>([]);
@@ -160,7 +165,7 @@ export class AppComponent implements OnDestroy {
   readonly error = signal<string | null>(null);
   readonly theme = signal<'light' | 'dark'>('dark');
   readonly activeTab = signal<'todo' | 'usd' | 'metales' | 'calculadora'>('todo');
-  readonly calculatorCurrency = signal<'ref' | 'oficial' | 'usdt'>('ref');
+  readonly calculatorCurrency = signal<'oficial' | 'usdt'>('oficial');
   readonly calculatorMode = signal<'usdToBob' | 'bobToUsd'>('usdToBob');
   readonly calculatorSide = signal<'compra' | 'venta'>('venta');
   readonly calculatorAmount = signal(100);
@@ -177,24 +182,21 @@ export class AppComponent implements OnDestroy {
 
   private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
     if (tab === 'usd') {
-      this.buildCurrencyChart('ref', this.refData(), CURRENCIES[0], this.chartRefCanvas);
-      this.buildCurrencyChart('oficial', this.oficialData(), CURRENCIES[1], this.chartOficialCanvas);
-      this.buildCurrencyChart('usdt', this.usdtData(), CURRENCIES[2], this.chartUsdtCanvas);
+      this.buildCurrencyChart('oficial', this.oficialData(), CURRENCIES[0], this.chartOficialCanvas);
+      this.buildCurrencyChart('usdt', this.usdtData(), CURRENCIES[1], this.chartUsdtCanvas);
     }
     if (tab === 'metales') {
-      this.buildCurrencyChart('oro', this.oroData(), CURRENCIES[3], this.chartOroCanvas);
-      this.buildCurrencyChart('plata', this.plataData(), CURRENCIES[4], this.chartPlataCanvas);
-      this.buildCurrencyChart('euro', this.euroData(), CURRENCIES[5], this.chartEuroCanvas);
-      this.buildCurrencyChart('ufv', this.ufvData(), CURRENCIES[6], this.chartUfvCanvas);
+      this.buildCurrencyChart('oro', this.oroData(), CURRENCIES[2], this.chartOroCanvas);
+      this.buildCurrencyChart('plata', this.plataData(), CURRENCIES[3], this.chartPlataCanvas);
+      this.buildCurrencyChart('euro', this.euroData(), CURRENCIES[4], this.chartEuroCanvas);
+      this.buildCurrencyChart('ufv', this.ufvData(), CURRENCIES[5], this.chartUfvCanvas);
     }
   }
 
   private runAnimations(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
     if (tab === 'usd' || tab === 'todo') {
-      const ref  = this.latestRef();
       const ofi  = this.latestOficial();
       const usdt = this.latestUsdt();
-      if (ref)  { this.triggerCountUp(ref.purchase,  this.animRefBuy,  1000); this.triggerCountUp(ref.cotizacion,  this.animRefSell,  1000); }
       if (ofi)  { this.triggerCountUp(ofi.purchase,  this.animOfiBuy,  1000); this.triggerCountUp(ofi.cotizacion,  this.animOfiSell,  1000); }
       if (usdt) { this.triggerCountUp(usdt.purchase, this.animUsdtBuy, 1000); this.triggerCountUp(usdt.cotizacion, this.animUsdtSell, 1000); }
     }
@@ -210,10 +212,6 @@ export class AppComponent implements OnDestroy {
     }
   }
 
-
-  readonly refData = computed(() =>
-    this.allCotizaciones().filter((c) => c.moneda === 'usd referencial')
-  );
   readonly oficialData = computed(() =>
     this.allCotizaciones().filter((c) => c.moneda === 'usd oficial')
   );
@@ -233,7 +231,6 @@ export class AppComponent implements OnDestroy {
     this.allCotizaciones().filter((c) => c.moneda === 'ufv')
   );
 
-  readonly latestRef = computed(() => { const d = this.refData(); return d.length ? d[d.length - 1] : null; });
   readonly latestOficial = computed(() => { const d = this.oficialData(); return d.length ? d[d.length - 1] : null; });
   readonly latestUsdt = computed(() => { const d = this.usdtData(); return d.length ? d[d.length - 1] : null; });
   readonly latestOro = computed(() => { const d = this.oroData(); return d.length ? d[d.length - 1] : null; });
@@ -241,7 +238,6 @@ export class AppComponent implements OnDestroy {
   readonly latestEuro = computed(() => { const d = this.euroData(); return d.length ? d[d.length - 1] : null; });
   readonly latestUfv = computed(() => { const d = this.ufvData(); return d.length ? d[d.length - 1] : null; });
 
-  readonly statsRef = computed(() => this.buildStats(this.refData()));
   readonly statsOficial = computed(() => this.buildStats(this.oficialData()));
   readonly statsUsdt = computed(() => this.buildStats(this.usdtData()));
   readonly statsOro = computed(() => this.buildStats(this.oroData()));
@@ -250,8 +246,6 @@ export class AppComponent implements OnDestroy {
   readonly statsUfv = computed(() => this.buildStats(this.ufvData()));
 
   // Animated price signals
-  readonly animRefBuy = signal(0);
-  readonly animRefSell = signal(0);
   readonly animOfiBuy = signal(0);
   readonly animOfiSell = signal(0);
   readonly animUsdtBuy = signal(0);
@@ -316,7 +310,6 @@ export class AppComponent implements OnDestroy {
     });
 
     effect(() => {
-      const ref = this.refData();
       const ofi = this.oficialData();
       const usdt = this.usdtData();
       const oro = this.oroData();
@@ -327,13 +320,12 @@ export class AppComponent implements OnDestroy {
       const _ = this.theme();
       if (!isLoading) {
         setTimeout(() => {
-          this.buildCurrencyChart('ref', ref, CURRENCIES[0], this.chartRefCanvas);
-          this.buildCurrencyChart('oficial', ofi, CURRENCIES[1], this.chartOficialCanvas);
-          this.buildCurrencyChart('usdt', usdt, CURRENCIES[2], this.chartUsdtCanvas);
-          this.buildCurrencyChart('oro', oro, CURRENCIES[3], this.chartOroCanvas);
-          this.buildCurrencyChart('plata', plata, CURRENCIES[4], this.chartPlataCanvas);
-          this.buildCurrencyChart('euro', euro, CURRENCIES[5], this.chartEuroCanvas);
-          this.buildCurrencyChart('ufv', ufv, CURRENCIES[6], this.chartUfvCanvas);
+          this.buildCurrencyChart('oficial', ofi, CURRENCIES[0], this.chartOficialCanvas);
+          this.buildCurrencyChart('usdt', usdt, CURRENCIES[1], this.chartUsdtCanvas);
+          this.buildCurrencyChart('oro', oro, CURRENCIES[2], this.chartOroCanvas);
+          this.buildCurrencyChart('plata', plata, CURRENCIES[3], this.chartPlataCanvas);
+          this.buildCurrencyChart('euro', euro, CURRENCIES[4], this.chartEuroCanvas);
+          this.buildCurrencyChart('ufv', ufv, CURRENCIES[5], this.chartUfvCanvas);
         }, 50);
       }
     });
@@ -383,17 +375,16 @@ export class AppComponent implements OnDestroy {
     timers.push(requestAnimationFrame(animate));
   }
 
-  /** true when USDT sell price < USD Referencial sell price */
+  /** true when USDT sell price < USD Oficial sell price */
   readonly usdtCheaper = computed(() => {
     const usdt = this.latestUsdt();
-    const ref = this.latestRef();
-    if (!usdt || !ref) return false;
-    return usdt.cotizacion < ref.cotizacion;
+    const oficial = this.latestOficial();
+    if (!usdt || !oficial) return false;
+    return usdt.cotizacion < oficial.cotizacion;
   });
 
   readonly calculatorQuote = computed(() => {
     const kind = this.calculatorCurrency();
-    if (kind === 'ref') return this.latestRef();
     if (kind === 'oficial') return this.latestOficial();
     return this.latestUsdt();
   });
@@ -418,7 +409,7 @@ export class AppComponent implements OnDestroy {
   readonly calculatorLabel = computed(() => {
     const kind = this.calculatorCurrency();
     const side = this.calculatorSide();
-    const base = kind === 'ref' ? 'USD Referencial' : kind === 'oficial' ? 'USD Oficial' : 'USDT';
+    const base = kind === 'oficial' ? 'USD Oficial' : 'USDT';
     return `${base} · ${side === 'compra' ? 'compra' : 'venta'}`;
   });
 
@@ -426,7 +417,7 @@ export class AppComponent implements OnDestroy {
     const rate = this.calculatorRate();
     const mode = this.calculatorMode();
     const quote = this.calculatorQuote();
-    if (!quote || !rate) return 'Selecciona una cotización disponible para ver el cálculo.';
+    if (!quote || !rate) return 'Seleccioná una cotización disponible para ver el cálculo.';
     const from = mode === 'usdToBob' ? 'USD → BOB' : 'BOB → USD';
     return `${from} usando tasa ${this.calculatorSide()} de ${quote.moneda} (${rate.toFixed(2)} BOB por USD).`;
   });
@@ -438,20 +429,12 @@ export class AppComponent implements OnDestroy {
   }
 
   readonly shareText = computed(() => {
-    const ref = this.latestRef();
     const ofi = this.latestOficial();
     const usdt = this.latestUsdt();
-    const sRef = this.statsRef();
     const sOfi = this.statsOficial();
     const sUsdt = this.statsUsdt();
     let t = 'Cotizaciones Bolivia\n';
     t += '----------------------------\n';
-    if (ref) {
-      t += `USD Referencial (BCB)\n`;
-      t += `  Compra: ${ref.purchase.toFixed(2)} BOB\n`;
-      t += `  Venta: ${ref.cotizacion.toFixed(2)} BOB\n`;
-      t += `  Variacion: ${sRef.variation >= 0 ? '+' : ''}${sRef.variation.toFixed(2)}%\n\n`;
-    }
     if (ofi) {
       t += `USD Oficial (BCB)\n`;
       t += `  Compra: ${ofi.purchase.toFixed(2)} BOB\n`;

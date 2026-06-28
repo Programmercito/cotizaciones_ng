@@ -633,6 +633,59 @@ app-root {
   }
 }
 
+@media (max-width: 560px) {
+  .section-tabs {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .section-tab {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-width: calc(50% - 0.4rem);
+    padding: 0.5rem 0.4rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+
+    svg {
+      width: 13px;
+      height: 13px;
+    }
+  }
+
+  .calculator-shell {
+    padding: 0.85rem;
+    overflow-x: hidden;
+  }
+
+  .calculator-grid {
+    gap: 0.75rem;
+  }
+
+  .calc-card {
+    padding: 0.85rem;
+  }
+
+  .chip-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.4rem;
+  }
+
+  .chip,
+  .pill {
+    min-height: 34px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .result-box--main strong {
+    font-size: 1.35rem;
+  }
+
+  .input-field input {
+    padding: 0.65rem 0.75rem;
+  }
+}
+
 // ── Dashboard ───────────────────────────────
 .dashboard {
   max-width: 1160px;
@@ -1061,7 +1114,7 @@ app-root {
   margin-bottom: 1.75rem;
 
   &--3 {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   &--4 {
@@ -1109,9 +1162,6 @@ app-root {
     transition: opacity 0.3s;
   }
 
-  &--ref &__glow {
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.12), transparent 65%);
-  }
   &--oficial &__glow {
     background: radial-gradient(circle, rgba(139, 92, 246, 0.12), transparent 65%);
   }
@@ -1151,12 +1201,6 @@ app-root {
     place-items: center;
     flex-shrink: 0;
 
-    &--ref {
-      background: rgba(6, 182, 212, 0.12);
-      color: #06b6d4;
-      border: 1px solid rgba(6, 182, 212, 0.25);
-      box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
-    }
     &--oficial {
       background: rgba(139, 92, 246, 0.12);
       color: #8b5cf6;
@@ -1394,9 +1438,6 @@ app-root {
     opacity: 0.8;
     height: 3px;
   }
-  &--ref::after {
-    background: linear-gradient(90deg, #06b6d4, #22d3ee);
-  }
   &--oficial::after {
     background: linear-gradient(90deg, #8b5cf6, #a78bfa);
   }
@@ -1552,10 +1593,6 @@ app-root {
     display: inline-block;
     flex-shrink: 0;
 
-    &--ref {
-      background: #06b6d4;
-      box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
-    }
     &--oficial {
       background: #8b5cf6;
       box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
@@ -1590,11 +1627,6 @@ app-root {
     padding: 0.4rem 1rem;
     border-radius: 99px;
 
-    &--ref {
-      color: #06b6d4;
-      background: rgba(6, 182, 212, 0.08);
-      border: 1px solid rgba(6, 182, 212, 0.2);
-    }
     &--oficial {
       color: #8b5cf6;
       background: rgba(139, 92, 246, 0.08);

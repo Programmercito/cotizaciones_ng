@@ -3,20 +3,20 @@
     <div class="recomendaciones-card__head">
       <div>
         <p class="eyebrow">Guía práctica</p>
-        <h2>3 casos para decidir entre USD Referencial y <span>USDT</span></h2>
+        <h2>3 casos para decidir entre USD Oficial y <span>USDT</span></h2>
       </div>
       <span class="status-badge">Dinámico</span>
     </div>
 
     <p class="recomendaciones-card__intro">
-      ¿Conviene pagar por internet con USDT o con precio venta USD referencial? Cuando realizas compras online desde Bolivia, puedes calcular tu costo en bolivianos de dos formas.
+      ¿Conviene pagar por internet con USDT o con precio venta USD oficial? Cuando realizás compras online desde Bolivia, podés calcular tu costo en bolivianos de dos formas.
     </p>
 
     <div class="recomendaciones-card__summary">
       <div class="price-summary">
         <div>
-          <span>Venta USD referencial</span>
-          <strong>{{ ref?.cotizacion != null ? (ref?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
+          <span>Venta USD oficial</span>
+          <strong>{{ oficial?.cotizacion != null ? (oficial?.cotizacion | number:'1.2-2') + ' BOB' : 'Cargando…' }}</strong>
         </div>
         <div>
           <span>USDT compra</span>
@@ -33,7 +33,7 @@
             <tr>
               <th>Escenario</th>
               <th>Precio compra USDT (BOB)</th>
-              <th>Precio venta USD referencial (BOB)</th>
+              <th>Precio venta USD oficial (BOB)</th>
               <th>Resultado</th>
             </tr>
           </thead>
@@ -45,16 +45,16 @@
               <td>✅ Conviene pagar con USDT</td>
             </tr>
             <tr>
-              <td>USD referencial más barato</td>
+              <td>USD oficial más barato</td>
               <td>6.95</td>
               <td>6.90</td>
-              <td>✅ Conviene pagar con Precio venta USD referencial</td>
+              <td>✅ Conviene pagar con Precio venta USD oficial</td>
             </tr>
             <tr>
               <td>Iguales</td>
               <td>6.90</td>
               <td>6.90</td>
-              <td>⚖️ Empate → mejor usar Precio venta USD referencial por seguridad</td>
+              <td>⚖️ Empate → mejor usar Precio venta USD oficial por seguridad</td>
             </tr>
           </tbody>
         </table>
@@ -64,21 +64,21 @@
     <div class="details-card">
       <h3>🔍 Explicación detallada</h3>
       <article>
-        <h4>Caso 1: Precio venta USD referencial > Precio compra USDT</h4>
+        <h4>Caso 1: Precio venta USD oficial > Precio compra USDT</h4>
         <p>
-          Aquí el USDT está más barato que el dólar referencial. Conviene comprar USDT y usarlo para pagar, porque cada USDT te cuesta menos bolivianos que el dólar oficial. Este es el escenario ideal para ahorrar en compras internacionales.
+          Aquí el USDT está más barato que el dólar oficial. Conviene comprar USDT y usarlo para pagar, porque cada USDT te cuesta menos bolivianos que el dólar oficial. Este es el escenario ideal para ahorrar en compras internacionales.
         </p>
       </article>
       <article>
-        <h4>Caso 2: Precio venta USD referencial < Precio compra USDT</h4>
+        <h4>Caso 2: Precio venta USD oficial < Precio compra USDT</h4>
         <p>
-          Aquí el dólar referencial está más barato que el USDT. Conviene pagar directamente con precio venta USD referencial, porque comprar USDT te saldría más caro. En este caso, el USDT no aporta ventaja.
+          Aquí el dólar oficial está más barato que el USDT. Conviene pagar directamente con precio venta USD oficial, porque comprar USDT te saldría más caro. En este caso, el USDT no aporta ventaja.
         </p>
       </article>
       <article>
-        <h4>Caso 3: Precio venta USD referencial = Precio compra USDT</h4>
+        <h4>Caso 3: Precio venta USD oficial = Precio compra USDT</h4>
         <p>
-          Aquí el costo es equivalente. Sin embargo, en la práctica el USDT puede fluctuar mínimamente (ejemplo: 1 USDT = 0.99999 USD o 1.00001 USD). Esa microvariación puede hacer que pagues unos centavos más o menos. Por eso, en igualdad de condiciones, el precio venta USD referencial es más estable y seguro.
+          Aquí el costo es equivalente. Sin embargo, en la práctica el USDT puede fluctuar mínimamente (ejemplo: 1 USDT = 0.99999 USD o 1.00001 USD). Esa microvariación puede hacer que pagues unos centavos más o menos. Por eso, en igualdad de condiciones, el precio venta USD oficial es más estable y seguro.
         </p>
       </article>
     </div>
@@ -86,17 +86,17 @@
     <div class="rule-card section-card">
       <h3>🎯 Regla resumida estilo “versus”</h3>
       <div class="rule-code">
-        <span>Si precio venta USD referencial > precio compra USDT → Conviene USDT 🥷</span>
-        <span>Si precio venta USD referencial < precio compra USDT → Conviene USD referencial 🛡️</span>
-        <span>Si precio venta USD referencial = precio compra USDT → Empate ⚖️ (mejor USD referencial por microvariaciones)</span>
+        <span>Si precio venta USD oficial > precio compra USDT → Conviene USDT 🥷</span>
+        <span>Si precio venta USD oficial < precio compra USDT → Conviene USD oficial 🛡️</span>
+        <span>Si precio venta USD oficial = precio compra USDT → Empate ⚖️ (mejor USD oficial por microvariaciones)</span>
       </div>
     </div>
 
     <div class="summary-card">
       <h3>🧠 En resumen</h3>
       <ul>
-        <li>USDT es útil cuando su precio de compra en BOB está por debajo del precio venta USD referencial.</li>
-        <li>Precio venta USD referencial es mejor cuando el dólar está más barato o igual.</li>
+        <li>USDT es útil cuando su precio de compra en BOB está por debajo del precio venta USD oficial.</li>
+        <li>Precio venta USD oficial es mejor cuando el dólar está más barato o igual.</li>
         <li>Las diferencias pequeñas (0.01–0.05 BOB) pueden parecer insignificantes, pero en compras grandes o frecuentes, definen tu ahorro real.</li>
       </ul>
     </div>
@@ -125,7 +125,7 @@
         <!-- Pill: diferencia -->
         <div class="diff-card" *ngIf="priceDiff as d"
              [class.diff-card--usdt]="d.winner === 'usdt'"
-             [class.diff-card--ref]="d.winner === 'ref'"
+             [class.diff-card--oficial]="d.winner === 'oficial'"
              [class.diff-card--tie]="d.winner === 'tie'">
           <p class="diff-card__eyebrow">Diferencia</p>
           <div class="diff-card__amount">
@@ -133,9 +133,9 @@
             <span class="diff-card__currency">BOB</span>
           </div>
           <div class="diff-card__versus">
-            <div class="diff-card__side" [class.diff-card__side--winner]="d.winner === 'ref'">
-              <span class="diff-card__side-label">USD ref.</span>
-              <span class="diff-card__side-val">{{ d.refSell | number:'1.2-2' }}</span>
+            <div class="diff-card__side" [class.diff-card__side--winner]="d.winner === 'oficial'">
+              <span class="diff-card__side-label">USD oficial</span>
+              <span class="diff-card__side-val">{{ d.oficialSell | number:'1.2-2' }}</span>
             </div>
             <span class="diff-card__vs">vs</span>
             <div class="diff-card__side" [class.diff-card__side--winner]="d.winner === 'usdt'">
@@ -146,7 +146,7 @@
           <p class="diff-card__caption">
             <ng-container [ngSwitch]="d.winner">
               <ng-container *ngSwitchCase="'usdt'">USDT más barato por {{ d.diff | number:'1.2-2' }} BOB/USD</ng-container>
-              <ng-container *ngSwitchCase="'ref'">USD ref. más barato por {{ d.diff | number:'1.2-2' }} BOB/USD</ng-container>
+              <ng-container *ngSwitchCase="'oficial'">USD oficial más barato por {{ d.diff | number:'1.2-2' }} BOB/USD</ng-container>
               <ng-container *ngSwitchCase="'tie'">Precios empatados hoy</ng-container>
             </ng-container>
           </p>
