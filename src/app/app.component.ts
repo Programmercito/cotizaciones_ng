@@ -1,6 +1,7 @@
 import {
   Component,
   OnDestroy,
+  AfterViewInit,
   ElementRef,
   ViewChild,
   ViewEncapsulation,
@@ -140,7 +141,7 @@ export const CURRENCIES: CurrencyConfig[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, AfterViewInit {
   @ViewChild('chartOficial') chartOficialCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartUsdt') chartUsdtCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartOro') chartOroCanvas?: ElementRef<HTMLCanvasElement>;
@@ -177,7 +178,7 @@ export class AppComponent implements OnDestroy {
     setTimeout(() => {
       this.rebuildVisibleCharts(tab);
       this.runAnimations(tab);
-    }, 0);
+    }, 50);
   }
 
   private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
@@ -191,6 +192,10 @@ export class AppComponent implements OnDestroy {
       this.buildCurrencyChart('euro', this.euroData(), CURRENCIES[4], this.chartEuroCanvas);
       this.buildCurrencyChart('ufv', this.ufvData(), CURRENCIES[5], this.chartUfvCanvas);
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.rebuildVisibleCharts(this.activeTab()), 0);
   }
 
   private runAnimations(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
@@ -317,15 +322,20 @@ export class AppComponent implements OnDestroy {
       const euro = this.euroData();
       const ufv = this.ufvData();
       const isLoading = this.loading();
+      const tab = this.activeTab();
       const _ = this.theme();
       if (!isLoading) {
         setTimeout(() => {
-          this.buildCurrencyChart('oficial', ofi, CURRENCIES[0], this.chartOficialCanvas);
-          this.buildCurrencyChart('usdt', usdt, CURRENCIES[1], this.chartUsdtCanvas);
-          this.buildCurrencyChart('oro', oro, CURRENCIES[2], this.chartOroCanvas);
-          this.buildCurrencyChart('plata', plata, CURRENCIES[3], this.chartPlataCanvas);
-          this.buildCurrencyChart('euro', euro, CURRENCIES[4], this.chartEuroCanvas);
-          this.buildCurrencyChart('ufv', ufv, CURRENCIES[5], this.chartUfvCanvas);
+          if (tab === 'usd' || tab === 'todo') {
+            this.buildCurrencyChart('oficial', ofi, CURRENCIES[0], this.chartOficialCanvas);
+            this.buildCurrencyChart('usdt', usdt, CURRENCIES[1], this.chartUsdtCanvas);
+          }
+          if (tab === 'metales' || tab === 'todo') {
+            this.buildCurrencyChart('oro', oro, CURRENCIES[2], this.chartOroCanvas);
+            this.buildCurrencyChart('plata', plata, CURRENCIES[3], this.chartPlataCanvas);
+            this.buildCurrencyChart('euro', euro, CURRENCIES[4], this.chartEuroCanvas);
+            this.buildCurrencyChart('ufv', ufv, CURRENCIES[5], this.chartUfvCanvas);
+          }
         }, 50);
       }
     });
@@ -531,8 +541,18 @@ export class AppComponent implements OnDestroy {
     if (!data.length) { this.charts[key] = null; return; }
 
     const isDark = this.theme() === 'dark';
-    const ctx = canvasRef.nativeElement.getContext('2d')!;
-    const h = canvasRef.nativeElement.offsetHeight || 300;
+    const canvas = canvasRef.nativeElement;
+    const parent = canvas.parentElement;
+    const rect = canvas.getBoundingClientRect();
+    const cssWidth = Math.max(rect.width, canvas.offsetWidth, parent?.offsetWidth ?? 0);
+    const cssHeight = Math.max(rect.height, canvas.offsetHeight, parent?.offsetHeight ?? 0);
+    const width = Math.floor(cssWidth > 0 ? cssWidth : 800);
+    const height = Math.floor(cssHeight > 0 ? cssHeight : 300);
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d')!;
+    const h = height;
 
     const labels = data.map((c) => {
       const d = new Date(c.datetime);
