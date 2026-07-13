@@ -1042,6 +1042,17 @@
     <app-todos-intro></app-todos-intro>
   }
 
+  <!-- Scroll to top -->
+  <button
+    class="scroll-top-btn"
+    [class.scroll-top-btn--visible]="showScrollTop()"
+    (click)="scrollToTop()"
+    aria-label="Volver arriba">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
   <!-- Footer -->
   <footer class="footer animate-in" style="--delay: 16">
     <div class="footer__divider">

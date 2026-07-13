@@ -2,6 +2,7 @@ import {
   Component,
   OnDestroy,
   AfterViewInit,
+  HostListener,
   ElementRef,
   ViewChild,
   ViewEncapsulation,
@@ -172,13 +173,23 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   readonly calculatorAmount = signal(100);
   readonly currentYear = new Date().getFullYear();
   readonly currencies = CURRENCIES;
+  readonly showScrollTop = signal(false);
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.showScrollTop.set(window.scrollY > 200);
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   setTab(tab: 'todo' | 'usd' | 'metales' | 'calculadora') {
     this.activeTab.set(tab);
     setTimeout(() => {
       this.rebuildVisibleCharts(tab);
       this.runAnimations(tab);
-    }, 50);
+    }, 150);
   }
 
   private rebuildVisibleCharts(tab: 'todo' | 'usd' | 'metales' | 'calculadora'): void {
@@ -336,7 +347,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
             this.buildCurrencyChart('euro', euro, CURRENCIES[4], this.chartEuroCanvas);
             this.buildCurrencyChart('ufv', ufv, CURRENCIES[5], this.chartUfvCanvas);
           }
-        }, 50);
+        }, 150);
       }
     });
 
