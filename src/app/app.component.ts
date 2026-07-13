@@ -383,6 +383,14 @@ export class AppComponent implements OnDestroy {
     return usdt.cotizacion < oficial.cotizacion;
   });
 
+  /** true when USD Oficial sell price < USDT sell price */
+  readonly oficialCheaper = computed(() => {
+    const usdt = this.latestUsdt();
+    const oficial = this.latestOficial();
+    if (!usdt || !oficial) return false;
+    return oficial.cotizacion < usdt.cotizacion;
+  });
+
   readonly calculatorQuote = computed(() => {
     const kind = this.calculatorCurrency();
     if (kind === 'oficial') return this.latestOficial();

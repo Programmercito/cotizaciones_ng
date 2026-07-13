@@ -212,7 +212,9 @@
 
     <!-- Card 1: USD Oficial -->
     @if (latestOficial(); as ofi) {
-    <div class="currency-card currency-card--oficial glass-panel animate-in" style="--delay: 0">
+    <div class="currency-card currency-card--oficial glass-panel animate-in"
+      [class.currency-card--highlight]="oficialCheaper()"
+      style="--delay: 0">
       <div class="currency-card__glow"></div>
       <div class="currency-card__header">
         <div class="currency-card__icon currency-card__icon--oficial">
