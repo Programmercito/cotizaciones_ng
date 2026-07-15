@@ -484,15 +484,12 @@
     gap: 0.55rem;
 
     li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
+      display: block;
       font-size: 0.92rem;
       color: var(--text-secondary);
       line-height: 1.55;
       padding-left: 1.2rem;
       position: relative;
-      min-width: 0;
       overflow-wrap: break-word;
 
       &::before {
