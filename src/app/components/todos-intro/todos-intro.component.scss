@@ -347,8 +347,15 @@
   }
 }
 
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 16px;
+}
+
 .comparison-table {
   width: 100%;
+  min-width: 580px;
   border-collapse: collapse;
   font-size: 0.88rem;
 
