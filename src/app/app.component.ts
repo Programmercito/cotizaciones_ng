@@ -396,20 +396,22 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     timers.push(requestAnimationFrame(animate));
   }
 
-  /** true when USDT sell price < USD Oficial sell price */
+  /** true when USDT buy price < USD Oficial sell price */
   readonly usdtCheaper = computed(() => {
     const usdt = this.latestUsdt();
     const oficial = this.latestOficial();
     if (!usdt || !oficial) return false;
-    return usdt.cotizacion < oficial.cotizacion;
+    const usdtBuy = usdt.purchase > 0 ? usdt.purchase : usdt.cotizacion;
+    return usdtBuy < oficial.cotizacion;
   });
 
-  /** true when USD Oficial sell price < USDT sell price */
+  /** true when USD Oficial sell price < USDT buy price */
   readonly oficialCheaper = computed(() => {
     const usdt = this.latestUsdt();
     const oficial = this.latestOficial();
     if (!usdt || !oficial) return false;
-    return oficial.cotizacion < usdt.cotizacion;
+    const usdtBuy = usdt.purchase > 0 ? usdt.purchase : usdt.cotizacion;
+    return oficial.cotizacion < usdtBuy;
   });
 
   readonly calculatorQuote = computed(() => {
