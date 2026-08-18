@@ -1390,7 +1390,7 @@ app-root {
   }
 
   &__stat-icon {
-    font-size: 0.55rem;
+    font-size: 0.7rem;
     line-height: 1;
 
     &--up {
@@ -1406,7 +1406,7 @@ app-root {
   }
 
   &__stat-label {
-    font-size: 0.55rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -1415,7 +1415,7 @@ app-root {
   }
 
   &__stat-value {
-    font-size: 0.72rem;
+    font-size: 1rem;
     font-weight: 800;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
@@ -1965,12 +1965,39 @@ app-root {
   &__data-info {
     font-size: 0.77rem;
     color: var(--text-muted);
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
     font-weight: 500;
 
     strong {
       color: var(--text-secondary);
       font-weight: 600;
+    }
+  }
+
+  &__legal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.77rem;
+    color: var(--text-muted);
+
+    a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--text-accent);
+        text-decoration: underline;
+      }
+    }
+
+    span {
+      opacity: 0.5;
     }
   }
 

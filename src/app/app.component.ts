@@ -378,7 +378,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     const timers: number[] = [];
     this.countUpMap.set(sig, timers);
 
-    const start = 0;
+    // Start from a random positive value below the target so the count-up is
+    // visually pleasing and never shows negative numbers.
+    const start = Math.max(0, target * (0.35 + Math.random() * 0.45));
     sig.set(start);
 
     const startTime = performance.now();
@@ -462,49 +464,38 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   readonly shareText = computed(() => {
     const ofi = this.latestOficial();
     const usdt = this.latestUsdt();
-    const sOfi = this.statsOficial();
-    const sUsdt = this.statsUsdt();
     let t = 'Cotizaciones Bolivia\n';
     t += '----------------------------\n';
     if (ofi) {
       t += `USD Oficial (BCB)\n`;
       t += `  Compra: ${ofi.purchase.toFixed(2)} BOB\n`;
-      t += `  Venta: ${ofi.cotizacion.toFixed(2)} BOB\n`;
-      t += `  Variacion: ${sOfi.variation >= 0 ? '+' : ''}${sOfi.variation.toFixed(2)}%\n\n`;
+      t += `  Venta: ${ofi.cotizacion.toFixed(2)} BOB\n\n`;
     }
     if (usdt) {
       t += `USDT (Binance P2P)\n`;
       t += `  Venta: ${usdt.cotizacion.toFixed(2)} BOB\n`;
       if (usdt.purchase > 0) t += `  Compra: ${usdt.purchase.toFixed(2)} BOB\n`;
-      t += `  Variacion: ${sUsdt.variation >= 0 ? '+' : ''}${sUsdt.variation.toFixed(2)}%\n\n`;
+      t += `\n`;
     }
     const oro = this.latestOro();
     const plata = this.latestPlata();
     const euro = this.latestEuro();
     const ufv = this.latestUfv();
-    const sOro = this.statsOro();
-    const sPlata = this.statsPlata();
-    const sEuro = this.statsEuro();
-    const sUfv = this.statsUfv();
     if (oro) {
       t += `Oro (BCB)\n`;
-      t += `  Compra/Venta: ${oro.cotizacion.toFixed(2)} ${oro.moneda_dest || 'BOB'}\n`;
-      t += `  Variacion: ${sOro.variation >= 0 ? '+' : ''}${sOro.variation.toFixed(2)}%\n\n`;
+      t += `  Compra/Venta: ${oro.cotizacion.toFixed(2)} ${oro.moneda_dest || 'BOB'}\n\n`;
     }
     if (plata) {
       t += `Plata (BCB)\n`;
-      t += `  Compra/Venta: ${plata.cotizacion.toFixed(2)} ${plata.moneda_dest || 'BOB'}\n`;
-      t += `  Variacion: ${sPlata.variation >= 0 ? '+' : ''}${sPlata.variation.toFixed(2)}%\n\n`;
+      t += `  Compra/Venta: ${plata.cotizacion.toFixed(2)} ${plata.moneda_dest || 'BOB'}\n\n`;
     }
     if (euro) {
       t += `Euro (BCB)\n`;
-      t += `  Compra/Venta: ${euro.cotizacion.toFixed(2)} ${euro.moneda_dest || 'BOB'}\n`;
-      t += `  Variacion: ${sEuro.variation >= 0 ? '+' : ''}${sEuro.variation.toFixed(2)}%\n\n`;
+      t += `  Compra/Venta: ${euro.cotizacion.toFixed(2)} ${euro.moneda_dest || 'BOB'}\n\n`;
     }
     if (ufv) {
       t += `UFV (BCB)\n`;
-      t += `  Compra/Venta: ${ufv.cotizacion.toFixed(2)} ${ufv.moneda_dest || 'BOB'}\n`;
-      t += `  Variacion: ${sUfv.variation >= 0 ? '+' : ''}${sUfv.variation.toFixed(2)}%\n\n`;
+      t += `  Compra/Venta: ${ufv.cotizacion.toFixed(2)} ${ufv.moneda_dest || 'BOB'}\n\n`;
     }
     t += '----------------------------\n';
     t += 'Datos en tiempo real';
@@ -536,11 +527,11 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     this.metaService.updateTag({ name: 'keywords', content: this.seoKeywords });
     this.metaService.updateTag({ property: 'og:title', content: this.seoTitle });
     this.metaService.updateTag({ property: 'og:description', content: this.seoDescription });
-    this.metaService.updateTag({ property: 'og:image', content: 'https://cotizaciones.devcito.org/og-image.png' });
+    this.metaService.updateTag({ property: 'og:image', content: 'https://dolarbolivia.org/og-image.png' });
     this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
     this.metaService.updateTag({ name: 'twitter:title', content: this.seoTitle });
     this.metaService.updateTag({ name: 'twitter:description', content: this.seoDescription });
-    this.metaService.updateTag({ name: 'twitter:image', content: 'https://cotizaciones.devcito.org/og-image.png' });
+    this.metaService.updateTag({ name: 'twitter:image', content: 'https://dolarbolivia.org/og-image.png' });
   }
 
   private buildCurrencyChart(
