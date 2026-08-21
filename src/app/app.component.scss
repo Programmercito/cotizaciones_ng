@@ -1353,6 +1353,12 @@ app-root {
     }
   }
 
+  // Highlight USD and USDT prices with a larger font size.
+  &--oficial &__price-value,
+  &--usdt &__price-value {
+    font-size: 4.1rem;
+  }
+
   &__price-unit {
     display: block;
     font-size: 0.62rem;
@@ -2107,6 +2113,11 @@ app-root {
     &__price-value {
       font-size: 2.4rem;
     }
+
+    &--oficial &__price-value,
+    &--usdt &__price-value {
+      font-size: 3.6rem;
+    }
   }
 
   .stats-row {
@@ -2146,6 +2157,11 @@ app-root {
 
   .currency-card__price-value {
     font-size: 2.8rem;
+  }
+
+  .currency-card--oficial .currency-card__price-value,
+  .currency-card--usdt .currency-card__price-value {
+    font-size: 3.8rem;
   }
 
   .stat-card {

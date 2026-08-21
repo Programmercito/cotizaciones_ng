@@ -58,7 +58,27 @@ function parseLocalDate(dateStr: string): Date | null {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(dateStr);
   if (!match) return null;
   const [, year, month, day] = match;
-  return new Date(Number(year), Number(month) - 1, Number(day));
+  return new Date(+year, +month - 1, +day);
+}
+
+/**
+ * Computes a strictly positive starting value for the count-up animation.
+ * Returns 0 for non-finite, zero or negative targets so the caller can bail out.
+ * The returned start is always less than `target` and greater than 0.
+ */
+export function computeCountUpStart(target: number, randomFactor = Math.random()): number {
+  if (!Number.isFinite(target) || target <= 0) return 0;
+  // Between 10 % and 80 % of the target so the animation clearly counts up.
+  const factor = 0.1 + randomFactor * 0.7;
+  // Add a small positive floor, but never exceed half the target.
+  const minStart = Math.min(0.01, target * 0.25);
+  const start = target * factor;
+  return Math.max(minStart, start);
+}
+
+/** Keeps an animated value from ever dipping below 0. */
+export function clampPositive(value: number): number {
+  return Math.max(0, value);
 }
 
 function isToday(date: Date): boolean {
@@ -371,16 +391,16 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   }
 
   private triggerCountUp(target: number, sig: ReturnType<typeof signal<number>>, duration: number): void {
-    if (target <= 0) { sig.set(0); return; }
+    if (!Number.isFinite(target) || target <= 0) { sig.set(0); return; }
 
     const prev = this.countUpMap.get(sig);
     if (prev) { prev.forEach((t) => cancelAnimationFrame(t)); }
     const timers: number[] = [];
     this.countUpMap.set(sig, timers);
 
-    // Start from a random positive value below the target so the count-up is
-    // visually pleasing and never shows negative numbers.
-    const start = Math.max(0, target * (0.35 + Math.random() * 0.45));
+    // Start from a guaranteed positive value below the target so the count-up
+    // is visually pleasing and never shows negative numbers.
+    const start = computeCountUpStart(target);
     sig.set(start);
 
     const startTime = performance.now();
@@ -388,7 +408,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      sig.set(start + (target - start) * eased);
+      sig.set(clampPositive(start + (target - start) * eased));
       if (progress < 1) {
         timers.push(requestAnimationFrame(animate));
       } else {
