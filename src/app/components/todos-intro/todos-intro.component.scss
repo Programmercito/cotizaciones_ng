@@ -553,3 +553,220 @@
     font-size: 1.6rem;
   }
 }
+
+@media (max-width: 480px) {
+  .landing-hero {
+    padding: 1.25rem 1rem;
+
+    &__badge {
+      font-size: 0.65rem;
+      padding: 0.3rem 0.7rem;
+    }
+
+    &__title {
+      font-size: 1.1rem;
+    }
+
+    &__lede {
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+  }
+
+  .info-card {
+    padding: 1rem;
+    gap: 0.65rem;
+
+    &__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &__title {
+      font-size: 1rem;
+      gap: 0.35rem;
+    }
+
+    &__tag {
+      font-size: 0.58rem;
+      padding: 0.15rem 0.45rem;
+    }
+
+    &__text {
+      font-size: 0.86rem;
+    }
+
+    &__list {
+      gap: 0.3rem;
+
+      li {
+        font-size: 0.82rem;
+        gap: 0.35rem;
+      }
+    }
+
+    &__rule {
+      padding-top: 0.6rem;
+      font-size: 0.78rem;
+    }
+  }
+
+  .diversification-section {
+    padding: 1.25rem 1rem;
+
+    &__head {
+      margin-bottom: 1.1rem;
+
+      h3 {
+        font-size: 1.05rem;
+      }
+    }
+
+    &__sub {
+      font-size: 0.85rem;
+    }
+  }
+
+  .pie-visual {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .pie-slice {
+    padding: 1rem;
+
+    strong {
+      font-size: 1.5rem;
+    }
+
+    span {
+      font-size: 0.85rem;
+    }
+
+    small {
+      font-size: 0.7rem;
+    }
+  }
+
+  .diversification-why {
+    gap: 0.75rem;
+  }
+
+  .why-item {
+    padding: 0.85rem;
+    gap: 0.5rem;
+
+    .why-icon {
+      font-size: 1.1rem;
+    }
+
+    strong {
+      font-size: 0.85rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
+  .comparison-table-wrap {
+    padding: 1rem;
+
+    &__head {
+      margin-bottom: 1rem;
+
+      h3 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .comparison-table {
+    min-width: 420px;
+    font-size: 0.78rem;
+
+    th, td {
+      padding: 0.5rem 0.45rem;
+    }
+  }
+
+  .tips-section {
+    padding: 1rem;
+
+    &__head {
+      margin-bottom: 1rem;
+
+      h3 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .tips-grid {
+    gap: 0.75rem;
+  }
+
+  .tip-card {
+    padding: 0.85rem;
+    gap: 0.35rem;
+
+    &__num {
+      width: 24px;
+      height: 24px;
+      font-size: 0.7rem;
+    }
+
+    strong {
+      font-size: 0.85rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
+  .summary-final {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    &__list li {
+      font-size: 0.85rem;
+      padding-left: 1rem;
+
+      &::before {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .comparison-table {
+    min-width: 340px;
+    font-size: 0.72rem;
+
+    th, td {
+      padding: 0.45rem 0.35rem;
+    }
+  }
+
+  .landing-hero__title {
+    font-size: 1rem;
+  }
+
+  .info-card__title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
