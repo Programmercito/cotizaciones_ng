@@ -599,7 +599,7 @@ app-root {
 
 @media (max-width: 980px) {
   .calculator-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .calc-right {
@@ -1114,11 +1114,11 @@ app-root {
   margin-bottom: 1.75rem;
 
   &--3 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   &--4 {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -2071,11 +2071,11 @@ app-root {
 // ── Responsive ──────────────────────────────
 @media (max-width: 900px) {
   .stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .currency-cards--3,
   .currency-cards--4 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .stats-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2105,7 +2105,7 @@ app-root {
 
   .currency-cards--3,
   .currency-cards--4 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
@@ -2205,7 +2205,7 @@ app-root {
 
   .currency-cards--3,
   .currency-cards--4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.85rem;
   }
 
@@ -2262,7 +2262,7 @@ app-root {
   }
 
   .stats-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.65rem;
   }
 

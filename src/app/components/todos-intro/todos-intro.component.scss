@@ -67,6 +67,8 @@
     color: var(--text-muted);
     line-height: 1.65;
     font-size: 0.98rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
@@ -78,7 +80,7 @@
 // ── Infographic Grid ────────────────────────
 .infographic-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -165,6 +167,8 @@
     line-height: 1.6;
     font-size: 0.92rem;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
 
     strong {
       color: var(--text-secondary);
@@ -205,6 +209,8 @@
 
     span {
       display: block;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
   }
 }
@@ -231,13 +237,15 @@
     color: var(--text-muted);
     font-size: 0.92rem;
     line-height: 1.55;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
 // ── Pie Visual ──────────────────────────────
 .pie-visual {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin-bottom: 1.75rem;
 }
@@ -297,7 +305,7 @@
 // ── Why Items ───────────────────────────────
 .diversification-why {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -328,6 +336,8 @@
     font-size: 0.85rem;
     color: var(--text-muted);
     line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
@@ -348,8 +358,12 @@
 }
 
 .table-responsive {
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
   border-radius: 16px;
 }
 
@@ -418,7 +432,7 @@
 
 .tips-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -461,6 +475,8 @@
     font-size: 0.85rem;
     color: var(--text-muted);
     line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
@@ -512,19 +528,19 @@
 // ── Responsive ──────────────────────────────
 @media (max-width: 980px) {
   .infographic-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .pie-visual {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .diversification-why {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .tips-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -538,7 +554,7 @@
   }
 
   .tips-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .comparison-table {

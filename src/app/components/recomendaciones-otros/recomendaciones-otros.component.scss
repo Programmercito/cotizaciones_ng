@@ -22,6 +22,7 @@
 
 .otros-card__content {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
 }
 
@@ -63,6 +64,8 @@
   color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.65;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 // ── Status badge variant ───────────────────────────────────────────────
@@ -86,18 +89,23 @@
 .asset-card {
   padding: 1.25rem 1.5rem;
   border-radius: 16px;
+  min-width: 0;
 
   p {
     margin: 0.5rem 0 0;
     color: var(--text-secondary);
     line-height: 1.65;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 
 .asset-card__title-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  width: 100%;
   margin-bottom: 0.65rem;
 
   h3 {
@@ -148,11 +156,14 @@
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
+  min-width: 0;
 
   p {
     margin: 0.2rem 0 0;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   strong {
@@ -191,7 +202,11 @@
   font-size: 0.85rem;
   color: var(--text-secondary);
 
-  span { display: block; }
+  span {
+    display: block;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 }
 
 // ── Comparativa table ─────────────────────────────────────────────────
@@ -208,8 +223,12 @@
 }
 
 .table-responsive {
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
 }
 
 table {
