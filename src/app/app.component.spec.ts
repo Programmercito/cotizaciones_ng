@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { AppComponent, computeCountUpStart, clampPositive } from './app.component';
+import { AppComponent, calculateDailyChange, computeCountUpStart, clampPositive } from './app.component';
 import { CotizacionService } from './services/cotizacion.service';
 
 const cotizacionServiceMock = {
@@ -77,5 +77,36 @@ describe('clampPositive', () => {
     expect(clampPositive(-1)).toBe(0);
     expect(clampPositive(-0.001)).toBe(0);
     expect(clampPositive(0)).toBe(0);
+  });
+});
+
+describe('calculateDailyChange', () => {
+  const quote = (datetime: string, cotizacion: number) => ({
+    moneda: 'USDT', cotizacion, purchase: 0, datetime, exchange: 'test',
+  });
+
+  it('compares the latest value with the previous day close for regular currencies', () => {
+    const change = calculateDailyChange([
+      quote('2026-04-22 09:00:00', 6.90),
+      quote('2026-04-22 18:00:00', 7.00),
+      quote('2026-04-23 10:00:00', 7.15),
+    ]);
+
+    expect(change).toEqual({ amount: 0.15, direction: 'up' });
+  });
+
+  it('compares USDT with the previous day average', () => {
+    const change = calculateDailyChange([
+      quote('2026-04-22 09:00:00', 9.40),
+      quote('2026-04-22 18:00:00', 9.60),
+      quote('2026-04-23 10:00:00', 9.70),
+    ], true);
+
+    expect(change.amount).toBeCloseTo(0.20);
+    expect(change.direction).toBe('up');
+  });
+
+  it('returns a neutral change when there is no previous day', () => {
+    expect(calculateDailyChange([quote('2026-04-23 10:00:00', 9.70)])).toEqual({ amount: 0, direction: 'flat' });
   });
 });

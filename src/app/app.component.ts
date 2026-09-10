@@ -31,6 +31,7 @@ import { Cotizacion } from './models/cotizacion.model';
 import { RecomendacionesComponent } from './components/recomendaciones.component';
 import { RecomendacionesOtrosComponent } from './components/recomendaciones-otros/recomendaciones-otros.component';
 import { TodosIntroComponent } from './components/todos-intro/todos-intro.component';
+import { CurrencyCardComponent } from './components/currency-card/currency-card.component';
 
 Chart.register(
   LineController,
@@ -79,6 +80,38 @@ export function computeCountUpStart(target: number, randomFactor = Math.random()
 /** Keeps an animated value from ever dipping below 0. */
 export function clampPositive(value: number): number {
   return Math.max(0, value);
+}
+
+export type DailyChangeDirection = 'up' | 'down' | 'flat';
+
+export interface DailyChange {
+  amount: number;
+  direction: DailyChangeDirection;
+}
+
+export function calculateDailyChange(data: Cotizacion[], compareWithPreviousDayAverage = false): DailyChange {
+  const quotes = data
+    .filter((quote) => quote.cotizacion > 0 && /^\d{4}-\d{2}-\d{2}/.test(quote.datetime))
+    .sort((first, second) => first.datetime.localeCompare(second.datetime));
+
+  if (!quotes.length) return { amount: 0, direction: 'flat' };
+
+  const currentDay = quotes[quotes.length - 1].datetime.slice(0, 10);
+  const previousQuotes = quotes.filter((quote) => quote.datetime.slice(0, 10) < currentDay);
+  if (!previousQuotes.length) return { amount: 0, direction: 'flat' };
+
+  const previousDay = previousQuotes[previousQuotes.length - 1].datetime.slice(0, 10);
+  const previousDayQuotes = previousQuotes.filter((quote) => quote.datetime.slice(0, 10) === previousDay);
+  const currentValue = quotes[quotes.length - 1].cotizacion;
+  const referenceValue = compareWithPreviousDayAverage
+    ? previousDayQuotes.reduce((total, quote) => total + quote.cotizacion, 0) / previousDayQuotes.length
+    : previousDayQuotes[previousDayQuotes.length - 1].cotizacion;
+  const amount = Number((currentValue - referenceValue).toFixed(6));
+
+  return {
+    amount,
+    direction: amount > 0 ? 'up' : amount < 0 ? 'down' : 'flat',
+  };
 }
 
 function isToday(date: Date): boolean {
@@ -156,7 +189,7 @@ export const CURRENCIES: CurrencyConfig[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent],
+  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent, CurrencyCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -275,7 +308,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   readonly latestUfv = computed(() => { const d = this.ufvData(); return d.length ? d[d.length - 1] : null; });
 
   readonly statsOficial = computed(() => this.buildStats(this.oficialData()));
-  readonly statsUsdt = computed(() => this.buildStats(this.usdtData()));
+  readonly statsUsdt = computed(() => this.buildStats(this.usdtData(), true));
   readonly statsOro = computed(() => this.buildStats(this.oroData()));
   readonly statsPlata = computed(() => this.buildStats(this.plataData()));
   readonly statsEuro = computed(() => this.buildStats(this.euroData()));
@@ -299,14 +332,12 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   readonly cotizaciones = computed(() => this.allCotizaciones());
 
-  private buildStats(data: Cotizacion[]) {
-    if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, variation: 0, avgSell: 0, avgBuy: 0, spread: 0, lastUpdate: '' };
+  private buildStats(data: Cotizacion[], usePreviousDayAverage = false) {
+    if (!data.length) return { maxSell: 0, minSell: 0, maxBuy: 0, minBuy: 0, count: 0, dailyChange: { amount: 0, direction: 'flat' as const }, avgSell: 0, avgBuy: 0, spread: 0, lastUpdate: '' };
     const sells = data.map((c) => c.cotizacion).filter((v) => v > 0);
     const buys = data.map((c) => c.purchase).filter((v) => v > 0);
-    const first = data[0];
     const last = data[data.length - 1];
-    const variation = first.cotizacion > 0
-      ? ((last.cotizacion - first.cotizacion) / first.cotizacion) * 100 : 0;
+    const dailyChange = calculateDailyChange(data, usePreviousDayAverage);
     const avgSell = sells.length ? sells.reduce((a, b) => a + b, 0) / sells.length : 0;
     const avgBuy = buys.length ? buys.reduce((a, b) => a + b, 0) / buys.length : 0;
     const spread = (last.cotizacion > 0 && last.purchase > 0) ? last.cotizacion - last.purchase : 0;
@@ -316,7 +347,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       maxBuy: buys.length ? Math.max(...buys) : 0,
       minBuy: buys.length ? Math.min(...buys) : 0,
       count: data.length,
-      variation,
+      dailyChange,
       avgSell,
       avgBuy,
       spread,
