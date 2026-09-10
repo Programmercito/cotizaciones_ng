@@ -22,9 +22,6 @@
       </svg>
       {{ stats.dailyChange.amount > 0 ? '+' : '' }}{{ stats.dailyChange.amount | number:'1.2-2' }} BOB
     </div>
-    <button class="currency-card__details-btn" type="button" (click)="detailsRequested.emit()" [attr.aria-label]="'Ver detalles de ' + label">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01" stroke-linecap="round"/></svg>
-    </button>
   </div>
   <div class="currency-card__prices">
     <div class="currency-card__price-block">
