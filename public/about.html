@@ -4,43 +4,93 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sobre Nosotros - Cotizaciones Bolivia</title>
-  <meta name="description" content="Conocé más sobre Cotizaciones Bolivia: un dashboard gratuito con cotizaciones del dólar oficial, USDT, oro, plata, euro y UFV en bolivianos.">
+  <meta name="description" content="Conocé Cotizaciones Bolivia: quién lo desarrolla, por qué existe, de dónde provienen los datos del dólar oficial, USDT, oro, plata, euro y UFV, y cómo se mantiene el proyecto.">
   <link rel="canonical" href="https://dolarbolivia.org/about.html">
-  <style>
-    :root { --bg: #05050a; --text: #f8fafc; --muted: #94a3b8; --accent: #a78bfa; }
-    .theme-light { --bg: #f8fafc; --text: #1e293b; --muted: #64748b; --accent: #6366f1; }
-    * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 2rem 1rem; background: var(--bg); color: var(--text); line-height: 1.7; }
-    .container { max-width: 760px; margin: 0 auto; }
-    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.25rem; margin-top: 2rem; color: var(--accent); }
-    p, li { color: var(--muted); }
-    a { color: var(--accent); }
-    .back { display: inline-flex; margin-top: 2rem; text-decoration: none; font-weight: 600; }
-  </style>
+  <meta property="og:title" content="Sobre Nosotros - Cotizaciones Bolivia">
+  <meta property="og:description" content="Quién desarrolla Cotizaciones Bolivia, por qué existe y de dónde provienen los datos.">
+  <meta property="og:url" content="https://dolarbolivia.org/about.html">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="/assets/page.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Sobre Cotizaciones Bolivia</h1>
+<div class="container">
+  <nav class="breadcrumbs"><a href="/">Inicio</a></nav>
+  <h1>Sobre Cotizaciones Bolivia</h1>
 
-    <p><strong>Cotizaciones Bolivia</strong> es un dashboard gratuito que centraliza las principales cotizaciones del mercado cambiario boliviano en un solo lugar.</p>
+  <p class="lede">
+    <strong>Cotizaciones Bolivia</strong> es un dashboard gratuito que centraliza las principales cotizaciones del
+    mercado cambiario boliviano en un solo lugar: el dólar oficial del BCB, el USDT del mercado P2P de Binance, y
+    los valores del oro, la plata, el euro y la UFV, todos en bolivianos y con datos históricos.
+  </p>
 
-    <h2>¿Qué ofrecemos?</h2>
-    <ul>
-      <li>Cotización del <strong>dólar oficial</strong> según el Banco Central de Bolivia (BCB).</li>
-      <li>Precio de <strong>USDT</strong> en Binance P2P.</li>
-      <li>Valores de <strong>oro, plata, euro y UFV</strong>.</li>
-      <li>Gráficos históricos, máximos, mínimos, promedios y variaciones.</li>
-      <li>Calculadora rápida de USD a BOB y viceversa.</li>
-    </ul>
+  <h2>Por qué existe este proyecto</h2>
+  <p>
+    Desde 2023, seguir el valor del dinero en Bolivia se volvió más complejo: al tipo de cambio oficial fijo se sumó
+    un mercado paralelo donde el USDT marca otro precio. La información estaba repartida entre el sitio del BCB, las
+    plataformas P2P y grupos de redes sociales, sin una forma rápida de comparar ambas referencias lado a lado.
+    Este proyecto nació para resolver ese problema: una sola pantalla donde ver el oficial y el paralelo, su brecha,
+    el spread de compra y venta, los gráficos históricos y una calculadora para convertir montos con la tasa
+    correcta.
+  </p>
 
-    <h2>¿Quiénes somos?</h2>
-    <p>El proyecto fue desarrollado por <a href="https://devcito.org" target="_blank" rel="noopener noreferrer">devcito</a>, con el objetivo de ofrecer información clara, actualizada y de fácil acceso para residentes en Bolivia.</p>
+  <h2>¿Quiénes somos?</h2>
+  <p>
+    El proyecto fue creado y es mantenido por
+    <a href="https://devcito.org" target="_blank" rel="noopener noreferrer">devcito</a>, un desarrollador de
+    software boliviano. Cotizaciones Bolivia es un proyecto independiente: no pertenece al Banco Central de
+    Bolivia, no tiene relación con Binance ni con ninguna casa de cambio, y no recibe instrucciones de ninguna
+    entidad financiera o política. Se sostiene con el trabajo de su creador y, eventualmente, con publicidad
+    no invasiva que permita cubrir los costos de operación.
+  </p>
 
-    <h2>Fuentes de datos</h2>
-    <p>Los datos se obtienen de fuentes públicas y mercados P2P. Siempre verificá los valores con tu banco o casa de cambio antes de realizar operaciones.</p>
+  <h2>Qué ofrecemos</h2>
+  <ul>
+    <li>Cotización del <strong>dólar oficial</strong> según el Banco Central de Bolivia (BCB), con compra y venta.</li>
+    <li>Precio del <strong>USDT</strong> en el mercado P2P de Binance, actualizado con la actividad del mercado.</li>
+    <li>Valores de <strong>oro, plata, euro y UFV</strong> publicados por el BCB.</li>
+    <li><strong>Gráficos históricos</strong>, máximos, mínimos, promedios, spread y variación diaria de cada activo.</li>
+    <li><strong>Calculadora</strong> de USD a BOB y de BOB a USD con la tasa oficial o USDT, lado compra o venta.</li>
+    <li><strong>Guías escritas</strong> sobre el mercado cambiario boliviano: <a href="/guias.html">ver todas las guías</a>.</li>
+  </ul>
 
-    <a class="back" href="/">← Volver al inicio</a>
+  <h2>Fuentes de datos y actualización</h2>
+  <p>
+    Los datos provienen exclusivamente de fuentes públicas: el <strong>Banco Central de Bolivia</strong> para el
+    dólar oficial, oro, plata, euro y UFV, y el <strong>mercado P2P de Binance</strong> para el USDT. El sitio
+    consulta estas fuentes de forma periódica y muestra en cada tarjeta, y en el pie de página, la fecha y hora de
+    la última actualización recibida. No modificamos los valores: se publican tal como llegan de la fuente.
+  </p>
+
+  <h2>Nuestros principios</h2>
+  <ul>
+    <li><strong>Transparencia:</strong> las fuentes de cada dato están identificadas y son verificables por cualquiera.</li>
+    <li><strong>Neutralidad:</strong> publicamos información, no opiniones sobre política ni recomendaciones de inversión.</li>
+    <li><strong>Acceso libre:</strong> el dashboard es gratuito, sin registro y funciona en cualquier dispositivo.</li>
+    <li><strong>Privacidad primero:</strong> no pedimos datos personales; solo usamos analíticas agregadas para mejorar el sitio.</li>
+  </ul>
+
+  <h2>Contacto</h2>
+  <p>
+    Para reportar errores en los datos, sugerir mejoras o hacernos cualquier consulta, escribinos a
+    <a href="mailto:contact@dolarbolivia.org">contact&#64;dolarbolivia.org</a> o visitá la
+    <a href="/contact.html">página de contacto</a>. Las dudas más comunes están respondidas en las
+    <a href="/preguntas-frecuentes.html">preguntas frecuentes</a>.
+  </p>
+
+  <div class="disclaimer">
+    La información publicada en este sitio tiene fines exclusivamente informativos y no constituye asesoramiento
+    financiero, legal ni de inversión. Verificá siempre los valores con tu banco o casa de cambio antes de realizar
+    operaciones.
   </div>
+
+  <p>
+    <a href="/guias.html">Guías</a> ·
+    <a href="/preguntas-frecuentes.html">Preguntas frecuentes</a> ·
+    <a href="/privacy-policy.html">Política de Privacidad</a> ·
+    <a href="/terms-of-service.html">Términos y Condiciones</a>
+  </p>
+
+  <a class="back" href="/">← Volver al inicio</a>
+</div>
 </body>
 </html>

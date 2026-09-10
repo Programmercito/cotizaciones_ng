@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── Theme tokens (mirror of app.component.scss) ─────────────── */
+:root {
+  --bg-primary: #05050a;
+  --bg-secondary: rgba(10, 10, 18, 0.45);
+  --bg-tertiary: rgba(99, 102, 241, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-accent: #a78bfa;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.03);
+  --border-accent: rgba(168, 85, 247, 0.4);
+  --shadow-primary: rgba(0, 0, 0, 0.5);
+  --glass-backdrop: blur(40px) saturate(200%);
+  --gradient-shimmer: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
+  --gradient-hero: linear-gradient(135deg, #ffffff, #c7d2fe, #a78bfa);
+  --global-bg: #030308;
+  --global-text: #f8fafc;
+  --grid-line: rgba(255, 255, 255, 0.02);
+  --bg-aurora-1: rgba(99, 102, 241, 0.16);
+  --bg-aurora-2: rgba(168, 85, 247, 0.13);
+  --bg-aurora-3: rgba(56, 189, 248, 0.09);
+  --bg-vignette: rgba(0, 0, 0, 0.5);
+  --selection-bg: rgba(168, 85, 247, 0.4);
+  --selection-color: #fff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: rgba(255, 255, 255, 0.88);
+    --bg-tertiary: rgba(99, 102, 241, 0.04);
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-accent: #6366f1;
+    --border-primary: rgba(0, 0, 0, 0.08);
+    --border-secondary: rgba(0, 0, 0, 0.05);
+    --border-accent: rgba(99, 102, 241, 0.25);
+    --shadow-primary: rgba(0, 0, 0, 0.08);
+    --glass-backdrop: blur(28px) saturate(1.3);
+    --gradient-shimmer: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
+    --gradient-hero: linear-gradient(135deg, #1e293b, #3730a3, #4338ca);
+    --global-bg: #f0f2ff;
+    --global-text: #1e293b;
+    --grid-line: rgba(15, 23, 42, 0.025);
+    --bg-aurora-1: rgba(99, 102, 241, 0.14);
+    --bg-aurora-2: rgba(236, 72, 153, 0.08);
+    --bg-aurora-3: rgba(14, 165, 233, 0.1);
+    --bg-vignette: rgba(203, 213, 225, 0.35);
+    --selection-bg: rgba(99, 102, 241, 0.25);
+    --selection-color: #1e293b;
+  }
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  line-height: 1.7;
+  color: var(--global-text);
+  background-color: var(--global-bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 15% -5%, var(--bg-aurora-1), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 85% 5%, var(--bg-aurora-2), transparent 60%),
+    radial-gradient(ellipse 85% 60% at 50% 108%, var(--bg-aurora-3), transparent 65%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, var(--bg-vignette) 100%);
+}
+
+::selection { background: var(--selection-bg); color: var(--selection-color); }
+
+/* ── Glass container ─────────────────────────────────────────── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  background: var(--bg-secondary);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--border-primary);
+  border-radius: 24px;
+  box-shadow:
+    0 12px 40px var(--shadow-primary),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ── Typography ──────────────────────────────────────────────── */
+h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0.5rem 0 0.75rem;
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  color: var(--text-accent);
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  color: var(--text-primary);
+}
+
+p, li { color: var(--text-muted); }
+
+strong { color: var(--text-secondary); }
+
+a { color: var(--text-accent); text-decoration: none; transition: opacity 0.2s ease; }
+a:hover { opacity: 0.8; text-decoration: underline; }
+
+.lede { font-size: 1.05rem; color: var(--text-secondary); }
+
+.breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+.article-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+/* ── Lists ───────────────────────────────────────────────────── */
+ul { padding-left: 1.25rem; }
+li { margin-bottom: 0.4rem; }
+li::marker { color: var(--text-accent); }
+
+/* ── Tables ──────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.92rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th, td {
+  border: 1px solid var(--border-primary);
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+th {
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  font-weight: 600;
+}
+
+/* ── Disclaimer box ──────────────────────────────────────────── */
+.disclaimer {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-left: 3px solid var(--text-accent);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 2.5rem;
+}
+
+/* ── Related guides ──────────────────────────────────────────── */
+.related {
+  border-top: 1px solid var(--border-secondary);
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+}
+
+/* ── Back link ───────────────────────────────────────────────── */
+.back {
+  display: inline-flex;
+  margin-top: 2rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-accent);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-accent);
+  border-radius: 12px;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+
+.back:hover {
+  text-decoration: none;
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow-primary);
+}
+
+/* ── Guide cards grid ────────────────────────────────────────── */
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.guide-card {
+  display: block;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 1.1rem 1.3rem;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guide-card:hover {
+  text-decoration: none;
+  opacity: 1;
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+  box-shadow: 0 12px 32px var(--shadow-primary);
+}
+
+.guide-card strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.98rem;
+}
+
+.guide-card span { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; }
+
+/* ── Contact card ────────────────────────────────────────────── */
+.contact-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.contact-card a { font-weight: 600; }
+
+/* ── FAQ items ───────────────────────────────────────────────── */
+.faq-item {
+  border-bottom: 1px solid var(--border-secondary);
+  padding: 0.9rem 0;
+}
+
+.faq-item:last-of-type { border-bottom: none; }
+
+.faq-item h3 { margin: 0 0 0.4rem; }
+.faq-item p { margin: 0; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .guide-grid { grid-template-columns: 1fr 1fr; }
+  .container { padding: 3rem 2.75rem; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 1rem 0.6rem; }
+  .container { padding: 1.75rem 1.25rem; border-radius: 20px; }
+  h1 { font-size: 1.55rem; }
+  table { font-size: 0.82rem; }
+  th, td { padding: 0.5rem 0.6rem; }
+}
