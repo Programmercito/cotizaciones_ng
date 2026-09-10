@@ -31,7 +31,9 @@ import { Cotizacion } from './models/cotizacion.model';
 import { RecomendacionesComponent } from './components/recomendaciones.component';
 import { RecomendacionesOtrosComponent } from './components/recomendaciones-otros/recomendaciones-otros.component';
 import { TodosIntroComponent } from './components/todos-intro/todos-intro.component';
-import { CurrencyCardComponent } from './components/currency-card/currency-card.component';
+import { UsdQuoteCardComponent } from './components/usd-quote-card/usd-quote-card.component';
+import { ReferenceQuoteCardComponent } from './components/reference-quote-card/reference-quote-card.component';
+import { QuoteDetails, QuoteDetailsModalComponent } from './components/quote-details-modal/quote-details-modal.component';
 
 Chart.register(
   LineController,
@@ -189,7 +191,7 @@ export const CURRENCIES: CurrencyConfig[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent, CurrencyCardComponent],
+  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent, UsdQuoteCardComponent, ReferenceQuoteCardComponent, QuoteDetailsModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -227,10 +229,34 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   readonly currentYear = new Date().getFullYear();
   readonly currencies = CURRENCIES;
   readonly showScrollTop = signal(false);
+  readonly selectedQuote = signal<QuoteDetails | null>(null);
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.showScrollTop.set(window.scrollY > 200);
+  }
+
+  @HostListener('document:keydown.escape')
+  closeQuoteDetailsOnEscape(): void {
+    this.closeQuoteDetails();
+  }
+
+  openQuoteDetails(label: string, source: string, quote: Cotizacion, stats: ReturnType<AppComponent['buildStats']>, priceFormat: string, hasBuySell: boolean): void {
+    this.selectedQuote.set({
+      label,
+      source,
+      quote,
+      dailyChange: stats.dailyChange,
+      maxSell: stats.maxSell,
+      minSell: stats.minSell,
+      count: stats.count,
+      priceFormat,
+      hasBuySell,
+    });
+  }
+
+  closeQuoteDetails(): void {
+    this.selectedQuote.set(null);
   }
 
   scrollToTop(): void {

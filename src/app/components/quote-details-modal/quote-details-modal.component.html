@@ -1,0 +1,27 @@
+<div class="quote-modal-backdrop" (click)="closeFromBackdrop($event)">
+  <section class="quote-modal" role="dialog" aria-modal="true" [attr.aria-labelledby]="'quote-modal-title-' + details.label">
+    <header class="quote-modal__header">
+      <div>
+        <p class="quote-modal__eyebrow">Detalle de cotización</p>
+        <h2 [id]="'quote-modal-title-' + details.label">{{ details.label }}</h2>
+      </div>
+      <button class="quote-modal__close" type="button" (click)="closed.emit()" aria-label="Cerrar detalles">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </header>
+    <dl class="quote-modal__details">
+      <div><dt>Fuente</dt><dd>{{ details.source }}</dd></div>
+      <div><dt>Actualizado</dt><dd>{{ details.quote.datetime }}</dd></div>
+      @if (details.hasBuySell) {
+        <div><dt>Compra</dt><dd>{{ details.quote.purchase | number:details.priceFormat }} {{ unit }}</dd></div>
+        <div><dt>Venta</dt><dd>{{ details.quote.cotizacion | number:details.priceFormat }} {{ unit }}</dd></div>
+      } @else {
+        <div><dt>Compra / Venta</dt><dd>{{ details.quote.cotizacion | number:details.priceFormat }} {{ unit }}</dd></div>
+      }
+      <div><dt>Variación diaria</dt><dd [class.quote-modal__change--up]="details.dailyChange.direction === 'up'" [class.quote-modal__change--down]="details.dailyChange.direction === 'down'" [class.quote-modal__change--flat]="details.dailyChange.direction === 'flat'">{{ details.dailyChange.amount > 0 ? '+' : '' }}{{ details.dailyChange.amount | number:details.priceFormat }} BOB</dd></div>
+      <div><dt>Máximo</dt><dd>{{ details.maxSell | number:details.priceFormat }} {{ unit }}</dd></div>
+      <div><dt>Mínimo</dt><dd>{{ details.minSell | number:details.priceFormat }} {{ unit }}</dd></div>
+      <div><dt>Registros</dt><dd>{{ details.count }}</dd></div>
+    </dl>
+  </section>
+</div>

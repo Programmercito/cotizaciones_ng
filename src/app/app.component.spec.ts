@@ -27,6 +27,32 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Cotizaciones');
   });
+
+  it('opens and closes quote details from parent-owned state', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    const quote = { moneda: 'oro', cotizacion: 100, purchase: 0, datetime: '2026-09-10 10:00:00', exchange: 'BCB' };
+    const stats = { maxSell: 110, minSell: 90, maxBuy: 0, minBuy: 0, count: 3, dailyChange: { amount: 0.1234, direction: 'up' as const }, avgSell: 100, avgBuy: 0, spread: 0, lastUpdate: quote.datetime };
+
+    app.openQuoteDetails('Oro', 'BCB', quote, stats, '1.4-4', false);
+    expect(app.selectedQuote()?.label).toBe('Oro');
+    expect(app.selectedQuote()?.hasBuySell).toBeFalse();
+
+    app.closeQuoteDetails();
+    expect(app.selectedQuote()).toBeNull();
+  });
+
+  it('closes quote details when Escape is handled', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    const quote = { moneda: 'USDT', cotizacion: 7.2, purchase: 7.1, datetime: '2026-09-10 10:00:00', exchange: 'Binance P2P' };
+    const stats = { maxSell: 7.3, minSell: 7, maxBuy: 7.2, minBuy: 6.9, count: 2, dailyChange: { amount: -0.1, direction: 'down' as const }, avgSell: 7.1, avgBuy: 7, spread: 0.1, lastUpdate: quote.datetime };
+
+    app.openQuoteDetails('USDT', 'Binance P2P', quote, stats, '1.2-2', true);
+    app.closeQuoteDetailsOnEscape();
+
+    expect(app.selectedQuote()).toBeNull();
+  });
 });
 
 describe('computeCountUpStart', () => {

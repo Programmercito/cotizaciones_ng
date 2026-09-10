@@ -1202,6 +1202,10 @@ app-root {
     position: relative;
   }
 
+  &__title {
+    min-width: 0;
+  }
+
   &__icon {
     width: 42px;
     height: 42px;
@@ -1299,6 +1303,9 @@ app-root {
     padding: 0.3rem 0.7rem;
     border-radius: 8px;
     font-variant-numeric: tabular-nums;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
 
     &--up {
       color: var(--color-success);
@@ -1314,6 +1321,46 @@ app-root {
       color: #facc15;
       background: rgba(250, 204, 21, 0.1);
       border: 1px solid rgba(250, 204, 21, 0.2);
+    }
+  }
+
+  &--oro &__variation-chip,
+  &--plata &__variation-chip,
+  &--euro &__variation-chip,
+  &--ufv &__variation-chip {
+    gap: 0.2rem;
+    font-size: 0.65rem;
+    padding: 0.22rem 0.45rem;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+
+    .currency-card__variation-icon {
+      width: 0.85rem;
+      height: 0.85rem;
+    }
+  }
+
+  &__details-btn {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    padding: 0;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: rgba(99, 102, 241, 0.1);
+      outline: none;
     }
   }
 
@@ -1477,6 +1524,117 @@ app-root {
     background: linear-gradient(90deg, #14b8a6, #2dd4bf);
   }
 }
+
+.quote-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(10, 14, 27, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.quote-modal {
+  width: min(100%, 38rem);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+.quote-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.quote-modal__eyebrow,
+.quote-modal h2 {
+  margin: 0;
+}
+
+.quote-modal__eyebrow {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quote-modal h2 {
+  margin-top: 0.25rem;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+}
+
+.quote-modal__close {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 2.25rem;
+  padding: 0;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.quote-modal__close:hover,
+.quote-modal__close:focus-visible {
+  color: var(--text-primary);
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.quote-modal__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 1rem 0 0;
+}
+
+.quote-modal__details div {
+  min-width: 0;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.quote-modal__details div:nth-child(odd) {
+  padding-right: 1rem;
+}
+
+.quote-modal__details div:nth-child(even) {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-secondary);
+}
+
+.quote-modal dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.quote-modal dd {
+  margin: 0.25rem 0 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.quote-modal__change--up { color: var(--color-success) !important; }
+.quote-modal__change--down { color: var(--color-error) !important; }
+.quote-modal__change--flat { color: #facc15 !important; }
 
 .stat-card {
   padding: 1.6rem 1.5rem;
@@ -2160,6 +2318,21 @@ app-root {
 }
 
 @media (max-width: 480px) {
+  .quote-modal {
+    padding: 1.1rem;
+  }
+
+  .quote-modal__details {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-modal__details div:nth-child(odd),
+  .quote-modal__details div:nth-child(even) {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: 0;
+  }
+
   .dashboard {
     padding: 1rem 0.75rem 2.5rem;
   }

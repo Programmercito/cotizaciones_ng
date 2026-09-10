@@ -1,0 +1,48 @@
+<article class="currency-card currency-card--{{ kind }} glass-panel animate-in"
+  [class.currency-card--highlight]="highlight"
+  [style.--delay]="delay">
+  <div class="currency-card__glow"></div>
+  <div class="currency-card__header">
+    <div class="currency-card__icon currency-card__icon--{{ kind }}">
+      @if (kind === 'oficial') {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+      } @else {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      }
+    </div>
+    <div class="currency-card__title"><span class="currency-card__name">{{ label }}</span></div>
+    <div class="currency-card__variation-chip"
+      [class.currency-card__variation-chip--up]="stats.dailyChange.direction === 'up'"
+      [class.currency-card__variation-chip--down]="stats.dailyChange.direction === 'down'"
+      [class.currency-card__variation-chip--flat]="stats.dailyChange.direction === 'flat'">
+      <svg class="currency-card__variation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        @if (stats.dailyChange.direction === 'up') { <path d="M5 17 17 5M9 5h8v8"/> }
+        @if (stats.dailyChange.direction === 'down') { <path d="m5 7 12 12M17 11v8H9"/> }
+        @if (stats.dailyChange.direction === 'flat') { <path d="M5 12h14"/> }
+      </svg>
+      {{ stats.dailyChange.amount > 0 ? '+' : '' }}{{ stats.dailyChange.amount | number:'1.2-2' }} BOB
+    </div>
+    <button class="currency-card__details-btn" type="button" (click)="detailsRequested.emit()" [attr.aria-label]="'Ver detalles de ' + label">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="currency-card__prices">
+    <div class="currency-card__price-block">
+      <span class="currency-card__price-label">Compra</span>
+      <span class="currency-card__price-value currency-card__price-value--buy price-animated">{{ buyAmount | number:'1.2-2' }}</span>
+      <span class="currency-card__price-unit">{{ unit }}</span>
+    </div>
+    <div class="currency-card__divider"></div>
+    <div class="currency-card__price-block">
+      <span class="currency-card__price-label">Venta</span>
+      <span class="currency-card__price-value currency-card__price-value--sell price-animated">{{ sellAmount | number:'1.2-2' }}</span>
+      <span class="currency-card__price-unit">{{ unit }}</span>
+    </div>
+  </div>
+  <div class="currency-card__info"><span class="currency-card__info-source">{{ source }}</span><span class="currency-card__info-time">{{ quote.datetime }}</span></div>
+  <div class="currency-card__footer">
+    <div class="currency-card__stat"><span class="currency-card__stat-icon currency-card__stat-icon--up">&#9650;</span><span class="currency-card__stat-label">Máx</span><span class="currency-card__stat-value">{{ stats.maxSell | number:'1.2-2' }}</span></div>
+    <div class="currency-card__stat"><span class="currency-card__stat-icon currency-card__stat-icon--down">&#9660;</span><span class="currency-card__stat-label">Mín</span><span class="currency-card__stat-value">{{ stats.minSell | number:'1.2-2' }}</span></div>
+    <div class="currency-card__stat"><span class="currency-card__stat-icon currency-card__stat-icon--neutral">&#9679;</span><span class="currency-card__stat-label">Reg</span><span class="currency-card__stat-value">{{ stats.count }}</span></div>
+  </div>
+</article>

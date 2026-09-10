@@ -210,10 +210,10 @@
   @if (activeTab() === 'usd' || activeTab() === 'todo') {
   <div class="currency-cards currency-cards--3">
     @if (latestOficial(); as ofi) {
-    <app-currency-card kind="oficial" label="USD Oficial" [quote]="ofi" [stats]="statsOficial()" [buyAmount]="animOfiBuy()" [sellAmount]="animOfiSell()" [highlight]="oficialCheaper()"></app-currency-card>
+    <app-usd-quote-card kind="oficial" label="USD Oficial" [quote]="ofi" [stats]="statsOficial()" [buyAmount]="animOfiBuy()" [sellAmount]="animOfiSell()" [highlight]="oficialCheaper()" (detailsRequested)="openQuoteDetails('USD Oficial', 'BCB', ofi, statsOficial(), '1.2-2', true)"></app-usd-quote-card>
     }
     @if (latestUsdt(); as usdt) {
-    <app-currency-card kind="usdt" label="USDT" source="Binance P2P" [quote]="usdt" [stats]="statsUsdt()" [buyAmount]="animUsdtBuy()" [sellAmount]="animUsdtSell()" [highlight]="usdtCheaper()" [delay]="1"></app-currency-card>
+    <app-usd-quote-card kind="usdt" label="USDT" source="Binance P2P" [quote]="usdt" [stats]="statsUsdt()" [buyAmount]="animUsdtBuy()" [sellAmount]="animUsdtSell()" [highlight]="usdtCheaper()" [delay]="1" (detailsRequested)="openQuoteDetails('USDT', 'Binance P2P', usdt, statsUsdt(), '1.2-2', true)"></app-usd-quote-card>
     }
   </div>
   }
@@ -404,19 +404,19 @@
   <div class="currency-cards currency-cards--4">
 
     @if (latestOro(); as oro) {
-    <app-currency-card kind="oro" label="Oro" [quote]="oro" [stats]="statsOro()" [sellAmount]="animOroSell()" [delay]="7"></app-currency-card>
+    <app-reference-quote-card kind="oro" label="Oro" [quote]="oro" [stats]="statsOro()" [amount]="animOroSell()" [delay]="7"></app-reference-quote-card>
     }
 
     @if (latestPlata(); as plata) {
-    <app-currency-card kind="plata" label="Plata" [quote]="plata" [stats]="statsPlata()" [sellAmount]="animPlataSell()" [delay]="8" priceFormat="1.4-4"></app-currency-card>
+    <app-reference-quote-card kind="plata" label="Plata" [quote]="plata" [stats]="statsPlata()" [amount]="animPlataSell()" [delay]="8" priceFormat="1.4-4"></app-reference-quote-card>
     }
 
     @if (latestEuro(); as euro) {
-    <app-currency-card kind="euro" label="Euro" [quote]="euro" [stats]="statsEuro()" [sellAmount]="animEuroSell()" [delay]="9" priceFormat="1.4-4"></app-currency-card>
+    <app-reference-quote-card kind="euro" label="Euro" [quote]="euro" [stats]="statsEuro()" [amount]="animEuroSell()" [delay]="9" priceFormat="1.4-4"></app-reference-quote-card>
     }
 
     @if (latestUfv(); as ufv) {
-    <app-currency-card kind="ufv" label="UFV" [quote]="ufv" [stats]="statsUfv()" [sellAmount]="animUfvSell()" [delay]="10" priceFormat="1.4-4"></app-currency-card>
+    <app-reference-quote-card kind="ufv" label="UFV" [quote]="ufv" [stats]="statsUfv()" [amount]="animUfvSell()" [delay]="10" priceFormat="1.4-4"></app-reference-quote-card>
     }
   </div>
   }
@@ -739,6 +739,10 @@
 
   @if (activeTab() === 'todo') {
     <app-todos-intro></app-todos-intro>
+  }
+
+  @if (selectedQuote(); as details) {
+    <app-quote-details-modal [details]="details" (closed)="closeQuoteDetails()"></app-quote-details-modal>
   }
 
   <!-- Scroll to top -->
