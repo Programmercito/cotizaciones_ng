@@ -34,6 +34,7 @@ import { TodosIntroComponent } from './components/todos-intro/todos-intro.compon
 import { UsdQuoteCardComponent } from './components/usd-quote-card/usd-quote-card.component';
 import { ReferenceQuoteCardComponent } from './components/reference-quote-card/reference-quote-card.component';
 import { QuoteDetails, QuoteDetailsModalComponent } from './components/quote-details-modal/quote-details-modal.component';
+import { BgParticlesComponent } from './components/bg-particles/bg-particles.component';
 
 Chart.register(
   LineController,
@@ -191,7 +192,7 @@ export const CURRENCIES: CurrencyConfig[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent, UsdQuoteCardComponent, ReferenceQuoteCardComponent, QuoteDetailsModalComponent],
+  imports: [CommonModule, RecomendacionesComponent, RecomendacionesOtrosComponent, TodosIntroComponent, UsdQuoteCardComponent, ReferenceQuoteCardComponent, QuoteDetailsModalComponent, BgParticlesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

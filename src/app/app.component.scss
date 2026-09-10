@@ -5,10 +5,72 @@ app-root {
   overflow-x: hidden;
   background-color: var(--global-bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 30px 30px;
+    radial-gradient(ellipse 90% 55% at 15% -5%, var(--bg-aurora-1), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 85% 5%, var(--bg-aurora-2), transparent 60%),
+    radial-gradient(ellipse 85% 60% at 50% 108%, var(--bg-aurora-3), transparent 65%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    30px 30px,
+    30px 30px;
   background-attachment: fixed;
+
+  // Slow rotating aurora beam behind everything
+  &::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 180vmax;
+    height: 180vmax;
+    translate: -50% -50%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--aurora-beam-opacity);
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      var(--bg-aurora-1) 40deg,
+      transparent 90deg,
+      var(--bg-aurora-2) 160deg,
+      transparent 210deg,
+      var(--bg-aurora-3) 290deg,
+      transparent 340deg
+    );
+    filter: blur(90px);
+    animation: aurora-spin 90s linear infinite;
+    mask-image: radial-gradient(circle at center, black 25%, transparent 62%);
+    -webkit-mask-image: radial-gradient(circle at center, black 25%, transparent 62%);
+  }
+
+  // Soft vignette to frame the content
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, var(--bg-vignette) 100%);
+  }
+}
+
+@keyframes aurora-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  app-root::before {
+    animation: none;
+  }
+
+  .orb {
+    animation: none;
+  }
 }
 
 
@@ -50,6 +112,12 @@ app-root {
   --global-selection-bg: rgba(168, 85, 247, 0.4);
   --global-selection-color: #fff;
   --noise-opacity: 0.04;
+  --grid-line: rgba(255, 255, 255, 0.02);
+  --bg-aurora-1: rgba(99, 102, 241, 0.16);
+  --bg-aurora-2: rgba(168, 85, 247, 0.13);
+  --bg-aurora-3: rgba(56, 189, 248, 0.09);
+  --bg-vignette: rgba(0, 0, 0, 0.5);
+  --aurora-beam-opacity: 0.5;
 }
 
 .theme-light {
@@ -89,6 +157,12 @@ app-root {
   --global-selection-bg: rgba(99, 102, 241, 0.25);
   --global-selection-color: #1e293b;
   --noise-opacity: 0.03;
+  --grid-line: rgba(15, 23, 42, 0.025);
+  --bg-aurora-1: rgba(99, 102, 241, 0.14);
+  --bg-aurora-2: rgba(236, 72, 153, 0.08);
+  --bg-aurora-3: rgba(14, 165, 233, 0.1);
+  --bg-vignette: rgba(203, 213, 225, 0.35);
+  --aurora-beam-opacity: 0.25;
 }
 
 // ── Animated background orbs ────────────────
