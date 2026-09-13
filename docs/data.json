@@ -50902,5 +50902,21 @@
     "datetime": "2026-09-13",
     "exchange": "bcb",
     "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "usd oficial",
+    "cotizacion": 11.53,
+    "purchase": 11.629999999999999,
+    "datetime": "2026-09-13",
+    "exchange": "bcb",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 11.65,
+    "purchase": 11.7076,
+    "datetime": "2026-09-13 00:00:05",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
   }
 ]
