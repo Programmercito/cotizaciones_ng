@@ -55550,5 +55550,13 @@
     "datetime": "2026-09-18 18:30:12",
     "exchange": "binancep2p",
     "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 11.71,
+    "purchase": 11.72,
+    "datetime": "2026-09-18 18:45:05",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
   }
 ]
