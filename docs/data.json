@@ -55680,6 +55680,14 @@
     "moneda_dest": "BOB"
   },
   {
+    "moneda": "USDT",
+    "cotizacion": 11.78,
+    "purchase": 11.8151,
+    "datetime": "2026-09-18 22:45:05",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
+  },
+  {
     "moneda": "eur",
     "cotizacion": 12.63685,
     "purchase": 12.63685,
