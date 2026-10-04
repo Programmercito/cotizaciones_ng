@@ -67865,10 +67865,26 @@
   },
   {
     "moneda": "ufv",
-    "cotizacion": 3.35273,
-    "purchase": 3.35273,
+    "cotizacion": 3.35317,
+    "purchase": 3.35317,
     "datetime": "2026-10-04",
     "exchange": "bcb",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "usd oficial",
+    "cotizacion": 12,
+    "purchase": 12.1,
+    "datetime": "2026-10-04",
+    "exchange": "bcb",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 11.98,
+    "purchase": 12.0161,
+    "datetime": "2026-10-04 00:00:07",
+    "exchange": "binancep2p",
     "moneda_dest": "BOB"
   }
 ]
