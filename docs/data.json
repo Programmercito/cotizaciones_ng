@@ -3,14 +3,6 @@
     "moneda": "USDT",
     "cotizacion": 11.53,
     "purchase": 11.58,
-    "datetime": "2026-07-26 14:00:06",
-    "exchange": "binancep2p",
-    "moneda_dest": "BOB"
-  },
-  {
-    "moneda": "USDT",
-    "cotizacion": 11.53,
-    "purchase": 11.58,
     "datetime": "2026-07-26 14:15:03",
     "exchange": "binancep2p",
     "moneda_dest": "BOB"
@@ -72884,6 +72876,14 @@
     "cotizacion": 11.95,
     "purchase": 11.9858,
     "datetime": "2026-10-24 14:00:05",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 11.96,
+    "purchase": 11.99,
+    "datetime": "2026-10-24 14:15:04",
     "exchange": "binancep2p",
     "moneda_dest": "BOB"
   }
