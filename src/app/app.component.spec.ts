@@ -53,6 +53,36 @@ describe('AppComponent', () => {
 
     expect(app.selectedQuote()).toBeNull();
   });
+
+  it('calculates spread as the user buy price minus the sell price', () => {
+    const app = TestBed.createComponent(AppComponent).componentInstance;
+    app.allCotizaciones.set([
+      { moneda: 'usd oficial', cotizacion: 12.11, purchase: 12.21, datetime: '2026-10-30', exchange: 'BCB' },
+      { moneda: 'USDT', cotizacion: 12, purchase: 11.96, datetime: '2026-10-30 23:00:00', exchange: 'binancep2p' },
+    ]);
+
+    expect(app.statsOficial().spread).toBeCloseTo(0.10);
+    expect(app.statsUsdt().spread).toBeCloseTo(-0.04);
+
+    app.allCotizaciones.set([
+      { moneda: 'USDT', cotizacion: 11.96, purchase: 12, datetime: '2026-10-30 23:00:00', exchange: 'binancep2p' },
+    ]);
+    expect(app.statsUsdt().spread).toBeCloseTo(0.04);
+  });
+
+  it('keeps information links available while loading and after an error', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+    app.loading.set(true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('a[href="/privacy-policy.html"]')).not.toBeNull();
+
+    app.loading.set(false);
+    app.error.set('Error al cargar las cotizaciones.');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('a[href="/contact.html"]')).not.toBeNull();
+  });
 });
 
 describe('computeCountUpStart', () => {

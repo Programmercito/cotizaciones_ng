@@ -530,7 +530,7 @@
           </div>
           <div class="stat-card__content">
             <span class="stat-card__label">Spread Oro</span>
-            <span class="stat-card__value">{{ statsOro().spread | number:'1.2-2' }} <small>BOB</small></span>
+            <span class="stat-card__value">{{ statsOro().spread | number:'1.2-2' }} <small>{{ latestOro()?.moneda_dest || 'BOB' }}</small></span>
           </div>
         </div>
 
@@ -542,7 +542,7 @@
           </div>
           <div class="stat-card__content">
             <span class="stat-card__label">Spread Plata</span>
-            <span class="stat-card__value">{{ statsPlata().spread | number:'1.2-2' }} <small>BOB</small></span>
+            <span class="stat-card__value">{{ statsPlata().spread | number:'1.2-2' }} <small>{{ latestPlata()?.moneda_dest || 'BOB' }}</small></span>
           </div>
         </div>
 
@@ -580,7 +580,7 @@
           </div>
           <div class="stat-card__content">
             <span class="stat-card__label">Promedio Oro</span>
-            <span class="stat-card__value">{{ statsOro().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+            <span class="stat-card__value">{{ statsOro().avgSell | number:'1.2-2' }} <small>{{ latestOro()?.moneda_dest || 'BOB' }}</small></span>
           </div>
         </div>
 
@@ -592,7 +592,7 @@
           </div>
           <div class="stat-card__content">
             <span class="stat-card__label">Promedio Plata</span>
-            <span class="stat-card__value">{{ statsPlata().avgSell | number:'1.2-2' }} <small>BOB</small></span>
+            <span class="stat-card__value">{{ statsPlata().avgSell | number:'1.2-2' }} <small>{{ latestPlata()?.moneda_dest || 'BOB' }}</small></span>
           </div>
         </div>
 
@@ -759,6 +759,8 @@
     </svg>
   </button>
 
+  }
+
   <!-- Footer -->
   <footer class="footer animate-in" style="--delay: 16">
     <div class="footer__divider">
@@ -771,7 +773,10 @@
       <div class="footer__divider-line"></div>
     </div>
     <p class="footer__data-info">
-      Datos de <strong>BCB</strong> y <strong>Binance P2P</strong> &mdash; Actualizado: <strong>{{ latestUsdt()?.datetime }}</strong>
+      Datos de <strong>BCB</strong> y <strong>Binance P2P</strong>
+      @if (latestUsdt(); as usdt) {
+        &mdash; USDT actualizado: <strong>{{ usdt.datetime }}</strong>
+      }
     </p>
     <nav class="footer__legal" aria-label="Información legal">
       <a href="/guias.html">Guías</a>
@@ -792,5 +797,4 @@
       &nbsp;&middot;&nbsp; &copy; {{ currentYear }}
     </p>
   </footer>
-  }
 </main>

@@ -213,7 +213,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial y USDT en BOB';
   private readonly seoDescription =
-    'Consulta cotizaciones en Bolivia del dólar oficial y USDT en bolivianos (BOB). Precios en tiempo real, gráficos históricos, máximos, mínimos y variación del mercado.';
+    'Consulta cotizaciones en Bolivia del dólar oficial y USDT en bolivianos (BOB). Últimos precios disponibles, gráficos históricos, máximos, mínimos y variación del mercado.';
   private readonly seoKeywords =
     'cotizaciones dolar oficial bolivia, usdt bolivia, precio usdt bolivianos, tipo de cambio usd bolivia, cotizacion usdt bob, cotizaciones cripto bolivia, dolar boliviano';
   private pollSub?: Subscription;
@@ -367,7 +367,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     const dailyChange = calculateDailyChange(data, usePreviousDayAverage);
     const avgSell = sells.length ? sells.reduce((a, b) => a + b, 0) / sells.length : 0;
     const avgBuy = buys.length ? buys.reduce((a, b) => a + b, 0) / buys.length : 0;
-    const spread = (last.cotizacion > 0 && last.purchase > 0) ? last.cotizacion - last.purchase : 0;
+    const spread = (last.cotizacion > 0 && last.purchase > 0) ? last.purchase - last.cotizacion : 0;
     return {
       maxSell: sells.length ? Math.max(...sells) : 0,
       minSell: sells.length ? Math.min(...sells) : 0,
@@ -722,7 +722,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
             borderWidth: 1,
             callbacks: {
               title: (items) => data[items[0].dataIndex]?.datetime ?? '',
-              label: (item) => `${item.dataset.label}: BOB ${(item.parsed.y ?? 0).toFixed(2)}`,
+              label: (item) => `${item.dataset.label}: ${data[item.dataIndex]?.moneda_dest || 'BOB'} ${(item.parsed.y ?? 0).toFixed(2)}`,
             },
           },
         },

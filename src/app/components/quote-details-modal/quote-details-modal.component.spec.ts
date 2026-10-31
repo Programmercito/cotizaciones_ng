@@ -38,10 +38,21 @@ describe('QuoteDetailsModalComponent', () => {
     const backdrop = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.quote-modal-backdrop')!;
     const dialog = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.quote-modal')!;
 
-    component.closeFromBackdrop({ target: dialog, currentTarget: backdrop } as MouseEvent);
+    dialog.click();
     expect(closed).not.toHaveBeenCalled();
 
     backdrop.click();
     expect(closed).toHaveBeenCalled();
+  });
+
+  it('uses the quote currency for the daily change', () => {
+    fixture.componentRef.setInput('details', {
+      ...component.details,
+      quote: { ...component.details.quote, moneda_dest: 'USD' },
+      dailyChange: { amount: 1.5, direction: 'up' },
+    });
+    fixture.detectChanges();
+
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('+1.50 USD');
   });
 });

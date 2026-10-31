@@ -18,7 +18,7 @@
       } @else {
         <div><dt>Compra / Venta</dt><dd>{{ details.quote.cotizacion | number:details.priceFormat }} {{ unit }}</dd></div>
       }
-      <div><dt>Variación diaria</dt><dd [class.quote-modal__change--up]="details.dailyChange.direction === 'up'" [class.quote-modal__change--down]="details.dailyChange.direction === 'down'" [class.quote-modal__change--flat]="details.dailyChange.direction === 'flat'">{{ details.dailyChange.amount > 0 ? '+' : '' }}{{ details.dailyChange.amount | number:details.priceFormat }} BOB</dd></div>
+      <div><dt>Variación diaria</dt><dd [class.quote-modal__change--up]="details.dailyChange.direction === 'up'" [class.quote-modal__change--down]="details.dailyChange.direction === 'down'" [class.quote-modal__change--flat]="details.dailyChange.direction === 'flat'">{{ details.dailyChange.amount > 0 ? '+' : '' }}{{ details.dailyChange.amount | number:details.priceFormat }} {{ unit }}</dd></div>
       <div><dt>Máximo</dt><dd>{{ details.maxSell | number:details.priceFormat }} {{ unit }}</dd></div>
       <div><dt>Mínimo</dt><dd>{{ details.minSell | number:details.priceFormat }} {{ unit }}</dd></div>
       <div><dt>Registros</dt><dd>{{ details.count }}</dd></div>

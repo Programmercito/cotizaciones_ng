@@ -19,7 +19,7 @@
         @if (stats.dailyChange.direction === 'down') { <path d="m5 7 12 12M17 11v8H9"/> }
         @if (stats.dailyChange.direction === 'flat') { <path d="M5 12h14"/> }
       </svg>
-      {{ stats.dailyChange.amount > 0 ? '+' : '' }}{{ stats.dailyChange.amount | number:priceFormat }} BOB
+      {{ stats.dailyChange.amount > 0 ? '+' : '' }}{{ stats.dailyChange.amount | number:priceFormat }} {{ unit }}
     </div>
   </div>
   <div class="currency-card__prices">
