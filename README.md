@@ -194,11 +194,28 @@ ng build --configuration production
 
 ## 🌐 Deployment
 
-El proyecto se despliega automáticamente en **GitHub Pages** usando GitHub Actions.
+El sitio usa **GitHub Pages** y el dominio canónico `https://dolarbolivia.org/`.
+La compilación de Angular genera los archivos publicados en `docs/`. El backend
+actualiza `docs/data.json` por separado: conservá ese archivo al regenerar el sitio.
+
+### SEO
+
+- La portada y sus metadatos se mantienen en `src/index.html`; las páginas
+  informativas, `robots.txt` y `sitemap.xml` están en `public/`.
+- Mantené las URL canónicas y el sitemap en el dominio publicado. Agregá una
+  página al sitemap cuando sea pública e indexable; incluí `lastmod` solo si
+  conocés la fecha de su última modificación significativa.
+- Ejecutá `npm run test:seo` para comprobar el sitemap, las URL canónicas, los
+  metadatos y el contenido rastreable de la portada.
+- Al editar una guía, mantené su título, autor y ruta de navegación coherentes
+  con los datos estructurados `Article` y `BreadcrumbList` de la misma página.
+- Después del despliegue, enviá `https://dolarbolivia.org/sitemap.xml` en
+  Google Search Console y comprobá la indexación de las páginas principales.
+  La indexación y la posición en resultados no están garantizadas.
 
 ```bash
 # El frontend está disponible en:
-https://programmercito.github.io/cotizaciones_ng/
+https://dolarbolivia.org/
 ```
 
 ---

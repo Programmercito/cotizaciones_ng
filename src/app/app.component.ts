@@ -13,7 +13,6 @@ import {
   effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Meta, Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import {
   Chart,
@@ -206,16 +205,9 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   @ViewChild('chartEuro') chartEuroCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartUfv') chartUfvCanvas?: ElementRef<HTMLCanvasElement>;
 
-  private readonly titleService = inject(Title);
-  private readonly metaService = inject(Meta);
   private readonly cotizacionService = inject(CotizacionService);
   private charts: Record<string, Chart | null> = { oficial: null, usdt: null, oro: null, plata: null, euro: null, ufv: null };
 
-  private readonly seoTitle = 'Cotizaciones en Bolivia: Dólar oficial y USDT en BOB';
-  private readonly seoDescription =
-    'Consulta cotizaciones en Bolivia del dólar oficial y USDT en bolivianos (BOB). Últimos precios disponibles, gráficos históricos, máximos, mínimos y variación del mercado.';
-  private readonly seoKeywords =
-    'cotizaciones dolar oficial bolivia, usdt bolivia, precio usdt bolivianos, tipo de cambio usd bolivia, cotizacion usdt bob, cotizaciones cripto bolivia, dolar boliviano';
   private pollSub?: Subscription;
 
   readonly allCotizaciones = signal<Cotizacion[]>([]);
@@ -387,7 +379,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     if (savedTheme) this.theme.set(savedTheme);
     this.applyTheme();
 
-    this.setSeoMetadata();
 
     this.pollSub = this.cotizacionService.cotizaciones$.subscribe({
       next: (result: CotizacionResult) => {
@@ -597,19 +588,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     document.documentElement.classList.add(`theme-${t}`);
     document.body.classList.remove('theme-light', 'theme-dark');
     document.body.classList.add(`theme-${t}`);
-  }
-
-  private setSeoMetadata(): void {
-    this.titleService.setTitle(this.seoTitle);
-    this.metaService.updateTag({ name: 'description', content: this.seoDescription });
-    this.metaService.updateTag({ name: 'keywords', content: this.seoKeywords });
-    this.metaService.updateTag({ property: 'og:title', content: this.seoTitle });
-    this.metaService.updateTag({ property: 'og:description', content: this.seoDescription });
-    this.metaService.updateTag({ property: 'og:image', content: 'https://dolarbolivia.org/og-image.png' });
-    this.metaService.updateTag({ property: 'og:image:type', content: 'image/png' });
-    this.metaService.updateTag({ name: 'twitter:title', content: this.seoTitle });
-    this.metaService.updateTag({ name: 'twitter:description', content: this.seoDescription });
-    this.metaService.updateTag({ name: 'twitter:image', content: 'https://dolarbolivia.org/og-image.png' });
   }
 
   private buildCurrencyChart(
