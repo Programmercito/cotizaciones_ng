@@ -202,6 +202,8 @@ actualiza `docs/data.json` por separado: conservá ese archivo al regenerar el s
 
 - La portada y sus metadatos se mantienen en `src/index.html`; las páginas
   informativas, `robots.txt` y `sitemap.xml` están en `public/`.
+- La aplicación se publica en la raíz del dominio y utiliza `<base href="/">`;
+  mantené esta ruta al compilar para no resolver recursos relativos a otra URL.
 - Mantené las URL canónicas y el sitemap en el dominio publicado. Agregá una
   página al sitemap cuando sea pública e indexable; incluí `lastmod` solo si
   conocés la fecha de su última modificación significativa.

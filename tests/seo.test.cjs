@@ -32,8 +32,13 @@ test('home page provides crawlable content and valid site structured data', () =
   const html = read('src', 'index.html');
   const fallback = html.match(/<app-root>([\s\S]*?)<\/app-root>/)[1];
   assert.match(fallback, /<h1>Cotizaciones Bolivia<\/h1>/);
+  const title = html.match(/<title>([^<]+)<\/title>/)[1];
+  assert.ok(title.includes('Cotizaciones Bolivia'));
+  assert.ok(html.includes(`<meta property="og:title" content="${title}">`));
+  assert.ok(html.includes(`<meta name="twitter:title" content="${title}">`));
   assert.match(fallback, /dólar oficial/i);
   assert.match(fallback, /USDT/);
+  assert.match(fallback, /bolivianos \(BOB\)/);
   assert.match(fallback, /href="\/guias\.html"/);
   const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
   const graph = JSON.parse(json)['@graph'];
@@ -86,6 +91,7 @@ test('published SEO files match their sources and the home bundle exists', () =>
   const source = read('src', 'index.html');
   const published = read('docs', 'index.html');
   assert.equal(published.match(/<title>([^<]+)<\/title>/)[1], source.match(/<title>([^<]+)<\/title>/)[1]);
+  assert.match(published, /<base href="\/">/);
   assert.match(published, /<app-root>[\s\S]*?<h1>Cotizaciones Bolivia<\/h1>/);
   const bundle = published.match(/src="(main-[^"]+\.js)"/)[1];
   assert.ok(fs.existsSync(path.join(root, 'docs', bundle)), bundle);
