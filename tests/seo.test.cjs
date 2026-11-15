@@ -28,6 +28,55 @@ test('sitemap lists each indexable page once with its canonical URL', () => {
   }
 });
 
+test('every page has consistent navigation and sitemap pages are reachable from home', () => {
+  const paths = [...read('public', 'sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((match) => new URL(match[1]).pathname);
+  const menuPaths = [
+    '/', '/guias.html', '/preguntas-frecuentes.html', '/contact.html',
+    '/about.html', '/privacy-policy.html', '/terms-of-service.html',
+  ];
+  const links = (html) => [...html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)]
+    .map((match) => new URL(match[1], origin))
+    .filter((url) => url.origin === origin)
+    .map((url) => url.pathname);
+  const home = read('src', 'index.html');
+  const homeMenu = read('src', 'app', 'app.component.html')
+    .match(/<nav class="footer__legal"[^>]*>([\s\S]*?)<\/nav>/);
+  assert.ok(homeMenu, 'home navigation');
+  assert.deepEqual(links(homeMenu[1]), menuPaths);
+  const fallbackMenu = home.match(/<nav aria-label="Información del sitio">([\s\S]*?)<\/nav>/);
+  assert.ok(fallbackMenu, 'home fallback navigation');
+  assert.deepEqual(links(fallbackMenu[1]), menuPaths);
+
+  const pages = new Map([['/', home]]);
+  for (const pathname of paths.filter((value) => value !== '/')) {
+    const html = read('public', ...pathname.slice(1).split('/'));
+    const header = html.match(/<header class="site-header">([\s\S]*?)<\/header>/);
+    const footer = html.match(/<footer class="site-footer">([\s\S]*?)<\/footer>/);
+    assert.ok(header, `header missing: ${pathname}`);
+    assert.ok(footer, `footer missing: ${pathname}`);
+    assert.ok(html.indexOf(header[0]) < html.indexOf('<h1>'), pathname);
+    assert.ok(html.indexOf(footer[0]) > html.indexOf('<h1>'), pathname);
+    assert.ok(links(header[1]).includes('/'), pathname);
+    const menu = footer[1].match(/<nav class="site-nav" aria-label="Navegación del sitio">([\s\S]*?)<\/nav>/);
+    assert.ok(menu, `footer navigation missing: ${pathname}`);
+    assert.deepEqual(links(menu[1]), menuPaths, pathname);
+    pages.set(pathname, html);
+  }
+
+  const visited = new Set();
+  const pending = ['/'];
+  while (pending.length) {
+    const pathname = pending.shift();
+    if (visited.has(pathname)) continue;
+    visited.add(pathname);
+    for (const target of links(pages.get(pathname))) {
+      if (pages.has(target) && !visited.has(target)) pending.push(target);
+    }
+  }
+  assert.deepEqual(new Set(paths.filter((pathname) => !visited.has(pathname))), new Set());
+});
+
 test('home page provides crawlable content and valid site structured data', () => {
   const html = read('src', 'index.html');
   const fallback = html.match(/<app-root>([\s\S]*?)<\/app-root>/)[1];

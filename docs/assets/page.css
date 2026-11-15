@@ -2,53 +2,53 @@
 
 /* ── Theme tokens (mirror of app.component.scss) ─────────────── */
 :root {
-  --bg-primary: #05050a;
-  --bg-secondary: rgba(10, 10, 18, 0.45);
-  --bg-tertiary: rgba(99, 102, 241, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
+  --bg-primary: #05070d;
+  --bg-secondary: rgba(15, 20, 32, 0.6);
+  --bg-tertiary: rgba(34, 211, 238, 0.06);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
-  --text-accent: #a78bfa;
-  --border-primary: rgba(255, 255, 255, 0.08);
-  --border-secondary: rgba(255, 255, 255, 0.03);
-  --border-accent: rgba(168, 85, 247, 0.4);
+  --text-accent: #67e8f9;
+  --border-primary: rgba(148, 163, 184, 0.12);
+  --border-secondary: rgba(148, 163, 184, 0.06);
+  --border-accent: rgba(34, 211, 238, 0.4);
   --shadow-primary: rgba(0, 0, 0, 0.5);
   --glass-backdrop: blur(40px) saturate(200%);
-  --gradient-shimmer: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
-  --gradient-hero: linear-gradient(135deg, #ffffff, #c7d2fe, #a78bfa);
-  --global-bg: #030308;
+  --gradient-shimmer: linear-gradient(135deg, #22d3ee, #818cf8, #e879f9);
+  --gradient-hero: linear-gradient(135deg, #ffffff, #a5f3fc, #c4b5fd);
+  --global-bg: #05070d;
   --global-text: #f8fafc;
   --grid-line: rgba(255, 255, 255, 0.02);
-  --bg-aurora-1: rgba(99, 102, 241, 0.16);
-  --bg-aurora-2: rgba(168, 85, 247, 0.13);
-  --bg-aurora-3: rgba(56, 189, 248, 0.09);
+  --bg-aurora-1: rgba(34, 211, 238, 0.14);
+  --bg-aurora-2: rgba(129, 140, 248, 0.14);
+  --bg-aurora-3: rgba(232, 121, 249, 0.07);
   --bg-vignette: rgba(0, 0, 0, 0.5);
-  --selection-bg: rgba(168, 85, 247, 0.4);
+  --selection-bg: rgba(34, 211, 238, 0.35);
   --selection-color: #fff;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-primary: #f8fafc;
+    --bg-primary: #f4f8fb;
     --bg-secondary: rgba(255, 255, 255, 0.88);
-    --bg-tertiary: rgba(99, 102, 241, 0.04);
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
+    --bg-tertiary: rgba(8, 145, 178, 0.05);
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
     --text-muted: #64748b;
-    --text-accent: #6366f1;
+    --text-accent: #0e7490;
     --border-primary: rgba(0, 0, 0, 0.08);
     --border-secondary: rgba(0, 0, 0, 0.05);
-    --border-accent: rgba(99, 102, 241, 0.25);
+    --border-accent: rgba(8, 145, 178, 0.3);
     --shadow-primary: rgba(0, 0, 0, 0.08);
     --glass-backdrop: blur(28px) saturate(1.3);
-    --gradient-shimmer: linear-gradient(135deg, #6366f1, #818cf8, #a78bfa);
-    --gradient-hero: linear-gradient(135deg, #1e293b, #3730a3, #4338ca);
-    --global-bg: #f0f2ff;
+    --gradient-shimmer: linear-gradient(135deg, #0891b2, #6366f1, #c026d3);
+    --gradient-hero: linear-gradient(135deg, #0f172a, #0e7490, #4338ca);
+    --global-bg: #f4f8fb;
     --global-text: #1e293b;
     --grid-line: rgba(15, 23, 42, 0.025);
-    --bg-aurora-1: rgba(99, 102, 241, 0.14);
-    --bg-aurora-2: rgba(236, 72, 153, 0.08);
-    --bg-aurora-3: rgba(14, 165, 233, 0.1);
+    --bg-aurora-1: rgba(34, 211, 238, 0.16);
+    --bg-aurora-2: rgba(129, 140, 248, 0.12);
+    --bg-aurora-3: rgba(52, 211, 153, 0.1);
     --bg-vignette: rgba(203, 213, 225, 0.35);
     --selection-bg: rgba(99, 102, 241, 0.25);
     --selection-color: #1e293b;
@@ -144,6 +144,113 @@ a:hover { opacity: 0.8; text-decoration: underline; }
 .lede { font-size: 1.05rem; color: var(--text-secondary); }
 
 .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+.site-header {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto 1.25rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 20px;
+  box-shadow: 0 12px 40px var(--shadow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  color: var(--text-primary);
+}
+
+.site-brand:hover { opacity: 1; text-decoration: none; }
+
+.site-brand__logo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  color: var(--text-accent);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-accent);
+  border-radius: 14px;
+}
+
+.site-brand__name { display: block; font-size: 1rem; font-weight: 800; line-height: 1.3; }
+.site-brand__name span { color: var(--text-accent); }
+.site-brand__subtitle { display: block; color: var(--text-muted); font-size: 0.7rem; font-weight: 500; }
+
+.site-header__link {
+  flex-shrink: 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border-accent);
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.site-footer__divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-accent);
+  margin-bottom: 1.25rem;
+}
+
+.site-footer__divider::before, .site-footer__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.site-footer__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-accent);
+  border-radius: 11px;
+  background: var(--bg-tertiary);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem 1.25rem;
+  font-size: 0.8rem;
+}
+
+.site-nav a { color: var(--text-muted); font-weight: 500; }
+.site-nav a:hover { color: var(--text-accent); }
+.site-footer__credit { margin: 1rem 0 0; font-size: 0.8rem; }
+.site-footer__credit a { font-weight: 700; }
+
+.site-header a:focus-visible, .site-footer a:focus-visible {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
 
 .article-meta {
   font-size: 0.85rem;
@@ -285,6 +392,12 @@ th {
 
 @media (max-width: 480px) {
   body { padding: 1rem 0.6rem; }
+  .site-header { padding: 0.85rem; gap: 0.5rem; border-radius: 16px; }
+  .site-brand { gap: 0.6rem; }
+  .site-brand__logo { width: 40px; height: 40px; }
+  .site-brand__name { font-size: 0.9rem; }
+  .site-brand__subtitle { font-size: 0.65rem; }
+  .site-header__link { padding: 0.45rem 0.6rem; }
   .container { padding: 1.75rem 1.25rem; border-radius: 20px; }
   h1 { font-size: 1.55rem; }
   table { font-size: 0.82rem; }
