@@ -92,6 +92,8 @@ test('home page provides crawlable content and valid site structured data', () =
   const html = read('src', 'index.html');
   const fallback = html.match(/<app-root>([\s\S]*?)<\/app-root>/)[1];
   assert.match(fallback, /<h1>Cotizaciones Bolivia<\/h1>/);
+  assert.match(fallback, /<main class="fallback">/);
+  assert.match(fallback, /<noscript><p>Activá JavaScript/);
   const title = html.match(/<title>([^<]+)<\/title>/)[1];
   assert.ok(title.includes('Cotizaciones Bolivia'));
   assert.ok(html.includes(`<meta property="og:title" content="${title}">`));
@@ -119,6 +121,21 @@ test('guides have a share image and a large social card', () => {
   assert.ok(home.includes(`<meta property="og:image:height" content="${image.readUInt32BE(20)}">`));
 });
 
+test('guide articles do not repeat substantial paragraphs', () => {
+  const paragraphs = new Map();
+  for (const name of fs.readdirSync(path.join(root, 'public', 'guias'))) {
+    if (!name.endsWith('.html')) continue;
+    const html = read('public', 'guias', name);
+    const article = html.slice(html.indexOf('<h1>'), html.indexOf('<div class="disclaimer">'));
+    for (const match of article.matchAll(/<p(?!\s+class="article-meta")[^>]*>([\s\S]*?)<\/p>/g)) {
+      const text = match[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (text.length < 70) continue;
+      assert.ok(!paragraphs.has(text), `${name} repeats a paragraph from ${paragraphs.get(text)}`);
+      paragraphs.set(text, name);
+    }
+  }
+});
+
 test('guide structured data matches the visible article and navigation', () => {
   for (const name of fs.readdirSync(path.join(root, 'public', 'guias'))) {
     if (!name.endsWith('.html')) continue;
@@ -133,6 +150,9 @@ test('guide structured data matches the visible article and navigation', () => {
     assert.equal(article.mainEntityOfPage, `${origin}/guias/${name}`, name);
     assert.ok(html.includes(`Por el ${article.author.name}`), name);
     assert.equal(article.author.url, `${origin}/about.html`, name);
+    assert.match(article.dateModified, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(html.includes(`<time datetime="${article.dateModified}">`), name);
+    assert.ok(read('public', 'sitemap.xml').includes(`<loc>${origin}/guias/${name}</loc><lastmod>${article.dateModified}</lastmod>`), name);
     assert.deepEqual(breadcrumb.itemListElement.map((item) => item.position), [1, 2, 3], name);
     assert.deepEqual(breadcrumb.itemListElement.map((item) => item.name), ['Inicio', 'Guías', title], name);
     assert.equal(breadcrumb.itemListElement[0].item, `${origin}/`, name);
@@ -141,8 +161,37 @@ test('guide structured data matches the visible article and navigation', () => {
   }
 });
 
+test('FAQ structured data matches the visible questions and answers', () => {
+  const html = read('public', 'preguntas-frecuentes.html');
+  const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
+  const faq = JSON.parse(json);
+  const text = (value) => value.replace(/<[^>]*>/g, '').replace(/&#64;/g, '@').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+  const visible = [...html.matchAll(/<div class="faq-item">\s*<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>\s*<\/div>/g)];
+  assert.equal(faq['@type'], 'FAQPage');
+  assert.equal(faq.mainEntity.length, visible.length);
+  for (const [index, item] of faq.mainEntity.entries()) {
+    assert.equal(item.name, text(visible[index][1]));
+    assert.equal(item.acceptedAnswer.text, text(visible[index][2]));
+  }
+});
+
+test('AdSense publisher matches ads.txt', () => {
+  const html = read('src', 'index.html');
+  const publisher = html.match(/adsbygoogle\.js\?client=ca-(pub-\d+)/)[1];
+  assert.ok(read('public', 'ads.txt').split(/\r?\n/).some((line) =>
+    line.trim() === `google.com, ${publisher}, DIRECT, f08c47fec0942fa0`));
+  for (const name of fs.readdirSync(path.join(root, 'public', 'guias'))) {
+    if (!name.endsWith('.html')) continue;
+    const guide = read('public', 'guias', name);
+    const scripts = [...guide.matchAll(/<script async src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=ca-(pub-\d+)" crossorigin="anonymous"><\/script>/g)];
+    assert.equal(scripts.length, 1, name);
+    assert.equal(scripts[0][1], publisher, name);
+  }
+});
+
 test('published SEO files match their sources and the home bundle exists', () => {
   assert.equal(read('docs', 'sitemap.xml'), read('public', 'sitemap.xml'));
+  assert.equal(read('docs', 'ads.txt'), read('public', 'ads.txt'));
   const pages = fs.readdirSync(path.join(root, 'public'), { recursive: true })
     .filter((name) => name.endsWith('.html'));
   for (const page of pages) {
