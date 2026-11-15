@@ -116,6 +116,34 @@ export function calculateDailyChange(data: Cotizacion[], compareWithPreviousDayA
   };
 }
 
+export function sampleChartData(data: Cotizacion[], maxPoints: number): Cotizacion[] {
+  if (data.length <= maxPoints || maxPoints < 6) return data;
+
+  const bucketCount = Math.floor((maxPoints - 2) / 4);
+  const indices = new Set<number>([0, data.length - 1]);
+  const middleLength = data.length - 2;
+
+  for (let bucket = 0; bucket < bucketCount; bucket++) {
+    const start = 1 + Math.floor(bucket * middleLength / bucketCount);
+    const end = 1 + Math.floor((bucket + 1) * middleLength / bucketCount);
+    let minSell = start;
+    let maxSell = start;
+    let minBuy = start;
+    let maxBuy = start;
+
+    for (let i = start + 1; i < end; i++) {
+      if (data[i].cotizacion < data[minSell].cotizacion) minSell = i;
+      if (data[i].cotizacion > data[maxSell].cotizacion) maxSell = i;
+      if (data[i].purchase < data[minBuy].purchase) minBuy = i;
+      if (data[i].purchase > data[maxBuy].purchase) maxBuy = i;
+    }
+
+    indices.add(minSell).add(maxSell).add(minBuy).add(maxBuy);
+  }
+
+  return [...indices].sort((a, b) => a - b).map((index) => data[index]);
+}
+
 function isToday(date: Date): boolean {
   const today = new Date();
   return (
@@ -220,6 +248,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   readonly calculatorSide = signal<'compra' | 'venta'>('venta');
   readonly calculatorAmount = signal(100);
   readonly currentYear = new Date().getFullYear();
+  readonly isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
   readonly currencies = CURRENCIES;
   readonly showScrollTop = signal(false);
   readonly selectedQuote = signal<QuoteDetails | null>(null);
@@ -599,6 +628,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     if (!canvasRef) return;
     if (this.charts[key]) this.charts[key]!.destroy();
     if (!data.length) { this.charts[key] = null; return; }
+    const chartData = this.isTouchDevice ? sampleChartData(data, 402) : data;
 
     const isDark = this.theme() === 'dark';
     const canvas = canvasRef.nativeElement;
@@ -614,15 +644,15 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     const ctx = canvas.getContext('2d')!;
     const h = height;
 
-    const labels = data.map((c) => {
+    const labels = chartData.map((c) => {
       const d = new Date(c.datetime);
       return key === 'usdt'
         ? d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
         : d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
     });
 
-    const sellVals = data.map((c) => c.cotizacion);
-    const buyVals = data.map((c) => c.purchase);
+    const sellVals = chartData.map((c) => c.cotizacion);
+    const buyVals = chartData.map((c) => c.purchase);
     const hasBuy = buyVals.some((v) => v > 0);
 
     const sellGrad = ctx.createLinearGradient(0, 0, 0, h);
@@ -642,7 +672,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         borderColor: cfg.buyColor,
         backgroundColor: buyGrad,
         borderWidth: 2.5,
-        pointRadius: data.length > 50 ? 0 : 3,
+        pointRadius: chartData.length > 50 ? 0 : 3,
         pointHoverRadius: 6,
         pointBackgroundColor: cfg.buyColor,
         pointBorderColor: isDark ? 'rgba(15,15,30,0.8)' : 'rgba(255,255,255,0.8)',
@@ -659,7 +689,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       borderColor: cfg.sellColor,
       backgroundColor: sellGrad,
       borderWidth: 2.5,
-      pointRadius: data.length > 50 ? 0 : 3,
+      pointRadius: chartData.length > 50 ? 0 : 3,
       pointHoverRadius: 6,
       pointBackgroundColor: cfg.sellColor,
       pointBorderColor: isDark ? 'rgba(15,15,30,0.8)' : 'rgba(255,255,255,0.8)',
@@ -674,6 +704,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        devicePixelRatio: this.isTouchDevice ? Math.min(window.devicePixelRatio || 1, 2) : window.devicePixelRatio,
         animation: { duration: 1000, easing: 'easeInOutQuart' },
         plugins: {
           legend: {
@@ -699,8 +730,8 @@ export class AppComponent implements OnDestroy, AfterViewInit {
             borderColor: isDark ? 'rgba(99,102,241,0.2)' : 'rgba(99,102,241,0.3)',
             borderWidth: 1,
             callbacks: {
-              title: (items) => data[items[0].dataIndex]?.datetime ?? '',
-              label: (item) => `${item.dataset.label}: ${data[item.dataIndex]?.moneda_dest || 'BOB'} ${(item.parsed.y ?? 0).toFixed(2)}`,
+              title: (items) => chartData[items[0].dataIndex]?.datetime ?? '',
+              label: (item) => `${item.dataset.label}: ${chartData[item.dataIndex]?.moneda_dest || 'BOB'} ${(item.parsed.y ?? 0).toFixed(2)}`,
             },
           },
         },

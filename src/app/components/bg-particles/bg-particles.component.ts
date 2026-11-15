@@ -64,6 +64,8 @@ export class BgParticlesComponent implements AfterViewInit, OnChanges, OnDestroy
   private rafId = 0;
   private width = 0;
   private height = 0;
+  private readonly isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  private lastFrame = 0;
   private mouseX: number | null = null;
   private mouseY: number | null = null;
 
@@ -132,9 +134,13 @@ export class BgParticlesComponent implements AfterViewInit, OnChanges, OnDestroy
   private setupCanvas(): void {
     if (!this.canvas || !this.ctx) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, this.isTouchDevice ? 1 : 2);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    if (this.width === width && this.height === height &&
+        this.canvas.width === Math.floor(width * dpr) && this.canvas.height === Math.floor(height * dpr)) return;
+    this.width = width;
+    this.height = height;
     this.canvas.width = Math.floor(this.width * dpr);
     this.canvas.height = Math.floor(this.height * dpr);
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -143,7 +149,9 @@ export class BgParticlesComponent implements AfterViewInit, OnChanges, OnDestroy
   }
 
   private buildParticles(): void {
-    const count = Math.min(110, Math.max(40, Math.round((this.width * this.height) / 16000)));
+    const count = this.isTouchDevice
+      ? Math.min(28, Math.max(16, Math.round((this.width * this.height) / 30000)))
+      : Math.min(110, Math.max(40, Math.round((this.width * this.height) / 16000)));
     this.particles = Array.from({ length: count }, () => this.createParticle());
   }
 
@@ -178,9 +186,12 @@ export class BgParticlesComponent implements AfterViewInit, OnChanges, OnDestroy
 
   private startLoop(): void {
     if (this.rafId || !this.ctx) return;
-    const tick = () => {
-      this.update();
-      this.draw();
+    const tick = (time: number) => {
+      if (!this.isTouchDevice || time - this.lastFrame >= 1000 / 30) {
+        this.update();
+        this.draw();
+        this.lastFrame = time;
+      }
       this.rafId = requestAnimationFrame(tick);
     };
     this.rafId = requestAnimationFrame(tick);

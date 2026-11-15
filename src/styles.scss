@@ -38,6 +38,12 @@ body::before {
   background-size: 256px 256px;
 }
 
+@media (pointer: coarse) {
+  body::before {
+    display: none;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;

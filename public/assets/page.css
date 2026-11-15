@@ -385,6 +385,19 @@ th {
 .faq-item p { margin: 0; }
 
 /* ── Responsive ──────────────────────────────────────────────── */
+@media (pointer: coarse) {
+  body { background-attachment: scroll; }
+  .container, .site-header {
+    background: rgba(15, 20, 32, 0.96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (pointer: coarse) and (prefers-color-scheme: light) {
+  .container, .site-header { background: rgba(255, 255, 255, 0.96); }
+}
+
 @media (min-width: 640px) {
   .guide-grid { grid-template-columns: 1fr 1fr; }
   .container { padding: 3rem 2.75rem; }

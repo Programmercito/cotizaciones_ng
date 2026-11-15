@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 
 const root = path.join(__dirname, '..');
 const origin = 'https://dolarbolivia.org';
@@ -75,6 +76,16 @@ test('every page has consistent navigation and sitemap pages are reachable from 
     }
   }
   assert.deepEqual(new Set(paths.filter((pathname) => !visited.has(pathname))), new Set());
+});
+
+test('static pages request the current stylesheet version', () => {
+  const stylesheet = fs.readFileSync(path.join(root, 'public', 'assets', 'page.css'));
+  const hash = crypto.createHash('sha256').update(stylesheet).digest('hex').slice(0, 12);
+  const pages = fs.readdirSync(path.join(root, 'public'), { recursive: true })
+    .filter((name) => name.endsWith('.html'));
+  for (const page of pages) {
+    assert.ok(read('public', page).includes(`href="/assets/page.css?v=${hash}"`), page);
+  }
 });
 
 test('home page provides crawlable content and valid site structured data', () => {

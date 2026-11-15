@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { AppComponent, calculateDailyChange, computeCountUpStart, clampPositive } from './app.component';
+import { AppComponent, calculateDailyChange, computeCountUpStart, clampPositive, sampleChartData } from './app.component';
 import { CotizacionService } from './services/cotizacion.service';
 
 const cotizacionServiceMock = {
@@ -82,6 +82,34 @@ describe('AppComponent', () => {
     app.error.set('Error al cargar las cotizaciones.');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('a[href="/contact.html"]')).not.toBeNull();
+  });
+});
+
+describe('sampleChartData', () => {
+  const quote = (index: number) => ({
+    moneda: 'USDT', cotizacion: 10, purchase: 9, datetime: String(index), exchange: 'Binance',
+  });
+
+  it('keeps short datasets unchanged', () => {
+    const data = [quote(0), quote(1)];
+    expect(sampleChartData(data, 402)).toBe(data);
+  });
+
+  it('limits points and preserves endpoints and both series extremes in order', () => {
+    const data = Array.from({ length: 9000 }, (_, index) => quote(index));
+    data[501].cotizacion = 1;
+    data[502].cotizacion = 100;
+    data[503].purchase = 2;
+    data[504].purchase = 90;
+
+    const sampled = sampleChartData(data, 402);
+
+    expect(sampled.length).toBeLessThanOrEqual(402);
+    expect(sampled[0]).toBe(data[0]);
+    expect(sampled[sampled.length - 1]).toBe(data[data.length - 1]);
+    for (const index of [501, 502, 503, 504]) expect(sampled).toContain(data[index]);
+    expect(sampled.every((item, index) => index === 0 || Number(sampled[index - 1].datetime) < Number(item.datetime))).toBeTrue();
+    expect(data.length).toBe(9000);
   });
 });
 
