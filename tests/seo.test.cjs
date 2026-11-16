@@ -45,11 +45,8 @@ test('every page has consistent navigation and sitemap pages are reachable from 
     .match(/<nav class="footer__legal"[^>]*>([\s\S]*?)<\/nav>/);
   assert.ok(homeMenu, 'home navigation');
   assert.deepEqual(links(homeMenu[1]), menuPaths);
-  const fallbackMenu = home.match(/<nav aria-label="Información del sitio">([\s\S]*?)<\/nav>/);
-  assert.ok(fallbackMenu, 'home fallback navigation');
-  assert.deepEqual(links(fallbackMenu[1]), menuPaths);
 
-  const pages = new Map([['/', home]]);
+  const pages = new Map([['/', `${home}\n${homeMenu[1]}`]]);
   for (const pathname of paths.filter((value) => value !== '/')) {
     const html = read('public', ...pathname.slice(1).split('/'));
     const header = html.match(/<header class="site-header">([\s\S]*?)<\/header>/);
@@ -88,20 +85,14 @@ test('static pages request the current stylesheet version', () => {
   }
 });
 
-test('home page provides crawlable content and valid site structured data', () => {
+test('home page has no pre-Angular content and valid site metadata', () => {
   const html = read('src', 'index.html');
-  const fallback = html.match(/<app-root>([\s\S]*?)<\/app-root>/)[1];
-  assert.match(fallback, /<h1>Cotizaciones Bolivia<\/h1>/);
-  assert.match(fallback, /<main class="fallback">/);
-  assert.match(fallback, /<noscript><p>Activá JavaScript/);
+  assert.match(html, /<app-root>\s*<\/app-root>/);
+  assert.doesNotMatch(html, /class="fallback"|Activá JavaScript/);
   const title = html.match(/<title>([^<]+)<\/title>/)[1];
   assert.ok(title.includes('Cotizaciones Bolivia'));
   assert.ok(html.includes(`<meta property="og:title" content="${title}">`));
   assert.ok(html.includes(`<meta name="twitter:title" content="${title}">`));
-  assert.match(fallback, /dólar oficial/i);
-  assert.match(fallback, /USDT/);
-  assert.match(fallback, /bolivianos \(BOB\)/);
-  assert.match(fallback, /href="\/guias\.html"/);
   const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
   const graph = JSON.parse(json)['@graph'];
   assert.ok(graph.some((item) => item['@type'] === 'WebSite' && item.url === `${origin}/`));
@@ -201,7 +192,7 @@ test('published SEO files match their sources and the home bundle exists', () =>
   const published = read('docs', 'index.html');
   assert.equal(published.match(/<title>([^<]+)<\/title>/)[1], source.match(/<title>([^<]+)<\/title>/)[1]);
   assert.match(published, /<base href="\/">/);
-  assert.match(published, /<app-root>[\s\S]*?<h1>Cotizaciones Bolivia<\/h1>/);
+  assert.match(published, /<app-root>\s*<\/app-root>/);
   const bundle = published.match(/src="(main-[^"]+\.js)"/)[1];
   assert.ok(fs.existsSync(path.join(root, 'docs', bundle)), bundle);
 });
