@@ -1,14 +1,6 @@
 [
   {
     "moneda": "USDT",
-    "cotizacion": 11.57,
-    "purchase": 11.6046,
-    "datetime": "2026-08-19 20:45:08",
-    "exchange": "binancep2p",
-    "moneda_dest": "BOB"
-  },
-  {
-    "moneda": "USDT",
     "cotizacion": 11.58,
     "purchase": 11.61,
     "datetime": "2026-08-19 21:00:18",
@@ -73085,6 +73077,46 @@
     "purchase": 11.96,
     "datetime": "2026-11-17 20:45:03",
     "exchange": "binancep2p",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "USDT",
+    "cotizacion": 11.92,
+    "purchase": 11.968,
+    "datetime": "2026-11-17 21:00:04",
+    "exchange": "binancep2p",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "eur",
+    "cotizacion": 12.86064,
+    "purchase": 12.86064,
+    "datetime": "2026-11-18",
+    "exchange": "bcb",
+    "moneda_dest": "BOB"
+  },
+  {
+    "moneda": "oro",
+    "cotizacion": 3845.96,
+    "purchase": 3845.96,
+    "datetime": "2026-11-18",
+    "exchange": "bcb",
+    "moneda_dest": "USD"
+  },
+  {
+    "moneda": "plata",
+    "cotizacion": 46.9206,
+    "purchase": 46.9206,
+    "datetime": "2026-11-18",
+    "exchange": "bcb",
+    "moneda_dest": "USD"
+  },
+  {
+    "moneda": "ufv",
+    "cotizacion": 3.37599,
+    "purchase": 3.37599,
+    "datetime": "2026-11-18",
+    "exchange": "bcb",
     "moneda_dest": "BOB"
   }
 ]
